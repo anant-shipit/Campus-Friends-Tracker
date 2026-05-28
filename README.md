@@ -25,7 +25,7 @@ A lightweight, mobile-first web app to check which of your campus friends are cu
 
 ```bash
 # Clone the repo
-git clone <your-repo-url>
+git clone https://github.com/anant-shipit/Campus-Friends-Tracker.git
 cd campus-friends-tracker
 
 # Copy env template
