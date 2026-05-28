@@ -1,0 +1,110 @@
+/* ═══════════════════════════════════════════
+   Friend Detail Overlay Styles
+   ═══════════════════════════════════════════ */
+
+.friend-detail {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  max-height: 90dvh;
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--glass-border);
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+  z-index: var(--z-modal);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.friend-detail__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-xl) var(--space-lg) var(--space-md);
+  flex-shrink: 0;
+}
+
+.friend-detail__identity {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.friend-detail__name {
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+}
+
+.friend-detail__batch {
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+  background: var(--glass-bg);
+  padding: 2px 10px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--glass-border);
+}
+
+/* ─── Day Selector ─── */
+.friend-detail__days {
+  display: flex;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-lg);
+  flex-shrink: 0;
+}
+
+.friend-detail__day-btn {
+  flex: 1;
+  padding: var(--space-sm);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--text-secondary);
+  background: transparent;
+  transition: all var(--transition-fast);
+  text-align: center;
+}
+
+.friend-detail__day-btn:hover {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.friend-detail__day-btn--active {
+  background: var(--gradient-accent);
+  color: white;
+  box-shadow: 0 2px 12px hsla(260, 60%, 55%, 0.3);
+}
+
+/* ─── Body ─── */
+.friend-detail__body {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--space-md) var(--space-lg) var(--space-2xl);
+}
+
+.friend-detail__loading {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.friend-detail__error {
+  text-align: center;
+  padding: var(--space-2xl);
+  color: var(--text-secondary);
+}
+
+@media (min-width: 768px) {
+  .friend-detail {
+    bottom: auto;
+    top: 50%;
+    left: 50%;
+    right: auto;
+    transform: translate(-50%, -50%);
+    width: 500px;
+    max-height: 80vh;
+    border-radius: var(--radius-xl);
+    border: 1px solid var(--glass-border);
+    animation: scaleIn var(--transition-slow) ease-out;
+  }
+}

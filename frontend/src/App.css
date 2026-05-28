@@ -1,0 +1,127 @@
+/* ═══════════════════════════════════════════
+   App Shell Styles
+   ═══════════════════════════════════════════ */
+
+.app {
+  min-height: 100dvh;
+}
+
+/* ─── Header ─── */
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: var(--z-dropdown);
+  background: hsla(230, 25%, 8%, 0.85);
+  backdrop-filter: var(--glass-blur-heavy);
+  -webkit-backdrop-filter: var(--glass-blur-heavy);
+  border-bottom: 1px solid var(--glass-border);
+  padding: var(--space-lg) 0;
+}
+
+.app-header__inner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.app-header__brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.app-header__emoji {
+  font-size: 1.8rem;
+  animation: float 3s ease-in-out infinite;
+}
+
+.app-header__title {
+  font-size: var(--font-size-xl);
+  font-weight: 800;
+  background: var(--gradient-accent);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1.2;
+}
+
+.app-header__subtitle {
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+  font-weight: 400;
+}
+
+.app-header__nav {
+  display: flex;
+  gap: var(--space-sm);
+}
+
+.app-nav-btn {
+  flex: 1;
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--text-secondary);
+  background: transparent;
+  transition: all var(--transition-fast);
+  text-align: center;
+}
+
+.app-nav-btn:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-primary);
+}
+
+.app-nav-btn--active {
+  background: var(--gradient-accent-soft);
+  color: var(--text-primary);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* ─── FAB ─── */
+.fab {
+  position: fixed;
+  bottom: var(--space-xl);
+  right: var(--space-xl);
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--gradient-accent);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 20px hsla(260, 60%, 55%, 0.4);
+  z-index: var(--z-fab);
+  transition: all var(--transition-base);
+}
+
+.fab:hover {
+  transform: scale(1.1) rotate(90deg);
+  box-shadow: 0 6px 28px hsla(260, 60%, 55%, 0.5);
+}
+
+.fab:active {
+  transform: scale(0.95);
+}
+
+.fab__icon {
+  font-size: 1.75rem;
+  font-weight: 300;
+  line-height: 1;
+}
+
+@media (min-width: 768px) {
+  .app-header__inner {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .app-header__nav {
+    flex: 0 0 auto;
+  }
+  .app-nav-btn {
+    flex: 0 0 auto;
+  }
+}

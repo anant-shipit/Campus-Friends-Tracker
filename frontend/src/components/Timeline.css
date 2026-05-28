@@ -1,0 +1,158 @@
+/* ═══════════════════════════════════════════
+   Timeline Styles
+   ═══════════════════════════════════════════ */
+
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  position: relative;
+}
+
+/* Left timeline line */
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 12px;
+  top: 16px;
+  bottom: 16px;
+  width: 2px;
+  background: linear-gradient(180deg, var(--glass-border) 0%, rgba(255,255,255,0.02) 100%);
+  border-radius: 1px;
+}
+
+/* ─── Block ─── */
+.timeline__block {
+  display: flex;
+  gap: var(--space-md);
+  padding: var(--space-md);
+  border-radius: var(--radius-md);
+  position: relative;
+  animation: fadeInUp var(--transition-slow) ease-out both;
+  transition: all var(--transition-fast);
+}
+
+.timeline__block:hover {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+/* Block color accents */
+.timeline__block--lecture {
+  border-left: 3px solid var(--color-lecture);
+  background: var(--color-lecture-bg);
+}
+
+.timeline__block--tutorial {
+  border-left: 3px solid var(--color-tutorial);
+  background: var(--color-tutorial-bg);
+}
+
+.timeline__block--lab {
+  border-left: 3px solid var(--color-lab);
+  background: var(--color-lab-bg);
+}
+
+.timeline__block--other {
+  border-left: 3px solid var(--text-tertiary);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.timeline__block--free {
+  border-left: 3px solid rgba(255, 255, 255, 0.06);
+  opacity: 0.6;
+}
+
+.timeline__block--free:hover {
+  opacity: 0.8;
+}
+
+/* Current slot highlight */
+.timeline__block--current {
+  box-shadow: 0 0 0 1px hsla(210, 80%, 60%, 0.3), 0 0 20px hsla(210, 80%, 60%, 0.1);
+}
+
+/* ─── Time Column ─── */
+.timeline__time {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 56px;
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  flex-shrink: 0;
+}
+
+.timeline__time-separator {
+  color: var(--text-tertiary);
+  font-size: 10px;
+  line-height: 1;
+}
+
+/* ─── Content ─── */
+.timeline__content {
+  flex: 1;
+  min-width: 0;
+}
+
+.timeline__content--free {
+  display: flex;
+  align-items: center;
+}
+
+.timeline__free-label {
+  font-size: var(--font-size-sm);
+  color: var(--text-tertiary);
+  font-weight: 400;
+  font-style: italic;
+}
+
+.timeline__subject {
+  font-weight: 600;
+  font-size: var(--font-size-base);
+  color: var(--text-primary);
+  margin-bottom: 4px;
+  line-height: 1.3;
+}
+
+.timeline__meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+}
+
+.timeline__room {
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
+}
+
+.timeline__code {
+  font-size: var(--font-size-xs);
+  color: var(--text-tertiary);
+  font-family: monospace;
+}
+
+/* ─── NOW Badge ─── */
+.timeline__now-badge {
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  color: var(--color-lab);
+  background: var(--color-lab-bg);
+  padding: 1px 6px;
+  border-radius: var(--radius-full);
+  border: 1px solid hsla(210, 80%, 60%, 0.3);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+/* ─── Empty ─── */
+.timeline__empty {
+  text-align: center;
+  padding: var(--space-2xl);
+  color: var(--text-secondary);
+}

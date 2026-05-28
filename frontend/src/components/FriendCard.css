@@ -1,0 +1,145 @@
+.friend-card {
+  padding: var(--space-lg);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  animation: fadeInUp var(--transition-slow) ease-out both;
+}
+
+.friend-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 3px;
+  height: 100%;
+  border-radius: var(--radius-full) 0 0 var(--radius-full);
+  transition: width var(--transition-fast);
+}
+
+.friend-card--free::before {
+  background: var(--color-free);
+  box-shadow: 0 0 12px var(--color-free-glow);
+}
+
+.friend-card--lecture::before {
+  background: var(--color-lecture);
+}
+
+.friend-card--tutorial::before {
+  background: var(--color-tutorial);
+}
+
+.friend-card--lab::before {
+  background: var(--color-lab);
+}
+
+.friend-card:hover::before {
+  width: 5px;
+}
+
+.friend-card__header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.friend-card__status-dot {
+  flex-shrink: 0;
+}
+
+.friend-card__info {
+  flex: 1;
+  min-width: 0;
+}
+
+.friend-card__name {
+  font-size: var(--font-size-md);
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.3;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.friend-card__batch {
+  font-size: var(--font-size-xs);
+  color: var(--text-tertiary);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.friend-card__actions {
+  flex-shrink: 0;
+}
+
+.friend-card__delete-btn {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  color: var(--text-tertiary);
+  font-size: var(--font-size-sm);
+  transition: all var(--transition-fast);
+  opacity: 0;
+}
+
+.friend-card:hover .friend-card__delete-btn {
+  opacity: 1;
+}
+
+.friend-card__delete-btn:hover {
+  background: hsla(0, 75%, 60%, 0.15);
+  color: var(--color-lecture);
+}
+
+.friend-card__confirm {
+  display: flex;
+  gap: var(--space-xs);
+  animation: scaleIn var(--transition-fast) ease-out;
+}
+
+.friend-card__body {
+  margin-top: var(--space-md);
+  padding-left: 28px;
+}
+
+.friend-card__status-text {
+  font-size: var(--font-size-sm);
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+  line-height: 1.5;
+}
+
+.friend-card__status-text--free {
+  color: var(--color-free);
+  font-weight: 500;
+}
+
+.friend-card__status-text--busy {
+  color: var(--text-secondary);
+}
+
+.friend-card__status-icon {
+  font-size: var(--font-size-sm);
+  flex-shrink: 0;
+}
+
+.friend-card__next {
+  font-size: var(--font-size-xs);
+  color: var(--text-tertiary);
+  margin-top: var(--space-xs);
+}
+
+/* Mobile: always show delete button */
+@media (max-width: 767px) {
+  .friend-card__delete-btn {
+    opacity: 0.5;
+  }
+}

@@ -1,0 +1,193 @@
+/* ═══════════════════════════════════════════
+   Dashboard Styles
+   ═══════════════════════════════════════════ */
+
+.dashboard {
+  padding-top: var(--space-xl);
+}
+
+/* ─── Stats Row ─── */
+.dashboard__stats {
+  display: flex;
+  gap: var(--space-md);
+  margin-bottom: var(--space-xl);
+  animation: fadeInDown var(--transition-slow) ease-out;
+}
+
+.dashboard__stat {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--space-md) var(--space-sm);
+  border-radius: var(--radius-md);
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: var(--glass-blur);
+}
+
+.dashboard__stat-num {
+  font-size: var(--font-size-2xl);
+  font-weight: 800;
+  line-height: 1;
+}
+
+.dashboard__stat-label {
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-top: 2px;
+}
+
+.dashboard__stat--free .dashboard__stat-num {
+  color: var(--color-free);
+}
+
+.dashboard__stat--busy .dashboard__stat-num {
+  color: var(--color-lecture);
+}
+
+.dashboard__stat--total .dashboard__stat-num {
+  background: var(--gradient-accent);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ─── Filters ─── */
+.dashboard__filters {
+  display: flex;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-lg);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.dashboard__filters::-webkit-scrollbar {
+  display: none;
+}
+
+.dashboard__filter-btn {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: var(--space-sm) var(--space-lg);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--text-secondary);
+  background: transparent;
+  border: 1px solid transparent;
+  transition: all var(--transition-fast);
+}
+
+.dashboard__filter-btn:hover {
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text-primary);
+}
+
+.dashboard__filter-btn--active {
+  background: var(--glass-bg);
+  border-color: var(--glass-border);
+  color: var(--text-primary);
+  backdrop-filter: var(--glass-blur);
+}
+
+.dashboard__filter-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: var(--radius-full);
+  background: var(--gradient-accent);
+  color: white;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+/* ─── Friend List ─── */
+.dashboard__list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+/* ─── Empty State ─── */
+.dashboard__empty {
+  text-align: center;
+  padding: var(--space-3xl) var(--space-xl);
+  animation: fadeInUp var(--transition-slow) ease-out;
+}
+
+.dashboard__empty-icon {
+  font-size: 4rem;
+  margin-bottom: var(--space-lg);
+  animation: float 3s ease-in-out infinite;
+}
+
+.dashboard__empty h2 {
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+  margin-bottom: var(--space-sm);
+}
+
+.dashboard__empty p {
+  color: var(--text-secondary);
+  font-size: var(--font-size-base);
+  max-width: 280px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* ─── Error State ─── */
+.dashboard__error {
+  text-align: center;
+  padding: var(--space-2xl);
+  margin-top: var(--space-3xl);
+  animation: fadeIn var(--transition-slow) ease-out;
+}
+
+.dashboard__error-icon {
+  font-size: 2.5rem;
+  display: block;
+  margin-bottom: var(--space-md);
+}
+
+.dashboard__error p {
+  margin-bottom: var(--space-sm);
+}
+
+.dashboard__error-detail {
+  color: var(--text-tertiary);
+  font-size: var(--font-size-sm);
+}
+
+.dashboard__error .btn {
+  margin-top: var(--space-lg);
+}
+
+/* ─── No Results ─── */
+.dashboard__no-results {
+  text-align: center;
+  padding: var(--space-2xl);
+  color: var(--text-secondary);
+}
+
+/* ─── Skeletons ─── */
+.dashboard__skeletons {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  padding-top: var(--space-xl);
+}
+
+.skeleton-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
