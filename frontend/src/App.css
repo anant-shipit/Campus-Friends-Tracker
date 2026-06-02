@@ -125,3 +125,24 @@
     flex: 0 0 auto;
   }
 }
+
+/* ─── User Menu ─── */
+.user-menu {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.user-menu__avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 2px solid rgba(99, 102, 241, 0.4);
+  object-fit: cover;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.user-menu__avatar:hover {
+  border-color: rgba(99, 102, 241, 0.8);
+}

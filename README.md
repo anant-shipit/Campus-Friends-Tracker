@@ -1,80 +1,56 @@
 # 🎓 Campus Friends Tracker
 
-A lightweight, mobile-first web app to check which of your campus friends are currently free or in class, view their daily schedules, and find common free time slots.
+A mobile-first web app built for TIET students to figure out which of your friends are currently free or stuck in class. Check their daily schedules, find common free time slots to hang out, and manage your campus circle securely.
 
 ![Go](https://img.shields.io/badge/Go-1.22+-00ADD8?style=flat-square&logo=go)
 ![React](https://img.shields.io/badge/React-18-61DAFB?style=flat-square&logo=react)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-4169E1?style=flat-square&logo=postgresql)
 
-## Features
+## What's New?
 
-- **Real-time Friend Status** — See who's free and who's in class right now
-- **Visual Day Timeline** — Beautiful vertical timeline of any friend's daily schedule
-- **Common Free Time** — Select multiple friends to find when everyone is free
-- **Smart Filtering** — Quick filter to show only free friends
-- **Mobile-First Design** — Gorgeous dark glassmorphism UI optimized for phones
-- **Batch-Based Lookup** — Just enter a friend's name and batch code
+- **Google Workspace Sign-In** — Secured strictly to `@thapar.edu` email addresses.
+- **Private Friend Networks** — Build your own friend list by sharing unique invite links and scanning QR codes (no public directories).
+- **Admin Controls** — Role-based dashboard to moderate the platform, view usage stats, and manage accounts.
 
-## Quick Start
+## Core Features
 
-### Prerequisites
+- **Real-time Friend Status** — Instantly see who's free and who's in class right now.
+- **Visual Day Timeline** — Clean vertical timeline of any friend's daily schedule.
+- **Common Free Time** — Select multiple friends to find out when everyone is free at the same time.
+- **Smart Filtering** — Quick filter to show only free friends.
+- **Mobile-First Design** — Gorgeous dark glassmorphism UI optimized for phones.
 
-- [Docker](https://docs.docker.com/get-docker/) & [Docker Compose](https://docs.docker.com/compose/install/)
+## Quick Start (Local Development)
 
-### Run with Docker (Recommended)
+### 1. Google Cloud Setup
+You'll need a Google Client ID to enable sign-ins:
+1. Go to Google Cloud Console and create OAuth 2.0 Credentials (Web Application).
+2. Set Authorized JavaScript Origins to `http://localhost:5173`.
 
-```bash
-# Clone the repo
-git clone https://github.com/anant-shipit/Campus-Friends-Tracker.git
-cd campus-friends-tracker
-
-# Copy env template
-cp .env.example .env
-
-# Start everything
-docker-compose up -d
-
-# Seed the timetable data (first time only)
-docker exec campus-tracker-backend ./campus-tracker --seed
-
-# Open the app
-open http://localhost:3000
-```
-
-### Run Locally (Development)
-
-#### Backend
-
+### 2. Backend Setup
 ```bash
 # Prerequisites: Go 1.22+, PostgreSQL running on localhost:5432
 
 cd backend
-
-# Create the database
 createdb campus_tracker
 
-# Copy env
-cp ../.env.example .env
+# Copy env and add your Google Client ID + a secure JWT secret
+cp .env.example .env
 
-# Install dependencies
 go mod tidy
 
-# Run with seeding (first time)
+# Run and seed the timetable data (first time)
 go run . --seed
-
-# Run without seeding (subsequent times)
-go run .
 ```
 
-#### Frontend
-
+### 3. Frontend Setup
 ```bash
 cd frontend
 
-# Install dependencies
-npm install
+# Create the frontend env file
+echo "VITE_GOOGLE_CLIENT_ID=your_client_id_here" > .env
 
-# Start dev server
+npm install
 npm run dev
 ```
 
@@ -84,57 +60,30 @@ The frontend dev server runs on `http://localhost:5173` and proxies API requests
 
 | Layer | Technology |
 |-------|-----------|
-| Backend | Go + [Gin](https://github.com/gin-gonic/gin) |
+| Backend | Go + [Gin](https://github.com/gin-gonic/gin), JWT Auth |
 | Database | PostgreSQL 16 |
 | Frontend | React 18 + [Vite](https://vitejs.dev/) |
 | Styling | Vanilla CSS (Dark Glassmorphism) |
-| Deployment | Docker Compose |
 
-## API Endpoints
+## Key API Routes
+
+All endpoints (except Google login) require a Bearer JWT token.
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| `GET` | `/api/batches` | List all batches grouped by year |
-| `GET` | `/api/friends` | List all friends with current status |
-| `POST` | `/api/friends` | Add a friend |
-| `DELETE` | `/api/friends/:id` | Remove a friend |
+| `POST` | `/api/auth/google` | Google One Tap / Login |
+| `GET` | `/api/friends` | List your private friends & their status |
+| `POST` | `/api/friends/invite/:code` | Accept a friend's invite |
+| `GET` | `/api/friends/invite-info` | Get your personal invite QR/link |
 | `GET` | `/api/friends/:id/schedule` | Friend's day schedule |
-| `GET` | `/api/friends/free-now` | Friends currently free |
-| `POST` | `/api/friends/common-free` | Common free slots |
+| `POST` | `/api/friends/common-free` | Common free slots among selected friends |
+| `GET` | `/api/admin/stats` | (Admin) View total users and active links |
 
 ## Data Source
 
 Timetable data is sourced from [utkarsh-1905/time-table](https://github.com/utkarsh-1905/time-table) and covers:
-
-- 1st Year (Sections A & B)
-- 2nd Year (Sections A & B)
-- 3rd Year (Sections A & B)
-- 4th Year (Section A)
-- PG Programs
-
-**425+ batches** with complete Monday–Friday schedules.
-
-## Project Structure
-
-```
-campus-friends-tracker/
-├── backend/
-│   ├── main.go              # Entry point
-│   ├── config/              # Environment config
-│   ├── database/            # DB connection & migrations
-│   ├── models/              # Data structs
-│   ├── handlers/            # HTTP handlers
-│   ├── services/            # Business logic & seeding
-│   └── data/                # Timetable JSON files
-├── frontend/
-│   ├── src/
-│   │   ├── components/      # React components
-│   │   ├── api/             # API client
-│   │   └── index.css        # Design system
-│   └── index.html
-├── docker-compose.yml
-└── .env.example
-```
+- 1st to 4th Year B.E. Sections + PG Programs
+- **425+ batches** with complete Monday–Friday schedules.
 
 ## License
 

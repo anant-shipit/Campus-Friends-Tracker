@@ -5,14 +5,18 @@ import (
 	"strconv"
 	"time"
 
+	"campus-friends-tracker/backend/middleware"
 	"campus-friends-tracker/backend/services"
 
 	"github.com/gin-gonic/gin"
 )
 
 // GetFriendSchedule returns the full day schedule for a friend's batch.
+// The requested friend must be in the authenticated user's friend list.
 // GET /api/friends/:id/schedule?day=0
 func GetFriendSchedule(c *gin.Context) {
+	userID := middleware.GetUserID(c)
+
 	idStr := c.Param("id")
 	friendID, err := strconv.Atoi(idStr)
 	if err != nil {
@@ -20,18 +24,41 @@ func GetFriendSchedule(c *gin.Context) {
 		return
 	}
 
-	// Get the batch code for this friend.
-	batchCode, err := services.GetBatchIDForFriend(friendID)
+	// Validate friendship.
+	areFriends, err := services.AreFriends(userID, friendID)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "failed to verify friendship"})
+		return
+	}
+	if !areFriends {
+		c.JSON(http.StatusForbidden, gin.H{"error": "this user is not in your friend list"})
+		return
+	}
+
+	// Get the friend's user record to find their batch.
+	friend, err := services.GetUserByID(friendID)
 	if err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": "friend not found"})
 		return
 	}
 
+	if friend.BatchCode == nil || *friend.BatchCode == "" {
+		c.JSON(http.StatusOK, gin.H{
+			"batchCode": "",
+			"day":       0,
+			"dayName":   "Monday",
+			"slots":     []any{},
+			"message":   "this friend has not set their batch yet",
+		})
+		return
+	}
+
+	batchCode := *friend.BatchCode
+
 	// Parse day parameter, default to today.
 	dayStr := c.DefaultQuery("day", "")
 	var day int
 	if dayStr == "" {
-		// Use IST timezone for default day.
 		loc, _ := time.LoadLocation("Asia/Kolkata")
 		now := time.Now().In(loc)
 		wd := now.Weekday()
@@ -79,8 +106,11 @@ type commonFreeRequest struct {
 }
 
 // GetCommonFreeSlots finds time slots where all specified friends are free.
+// All friend IDs must be in the authenticated user's friend list.
 // POST /api/friends/common-free
 func GetCommonFreeSlots(c *gin.Context) {
+	userID := middleware.GetUserID(c)
+
 	var req commonFreeRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "friendIds array is required"})
@@ -90,6 +120,18 @@ func GetCommonFreeSlots(c *gin.Context) {
 	if len(req.FriendIDs) == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "friendIds cannot be empty"})
 		return
+	}
+
+	// Validate all friends belong to this user.
+	for _, fid := range req.FriendIDs {
+		areFriends, err := services.AreFriends(userID, fid)
+		if err != nil || !areFriends {
+			c.JSON(http.StatusForbidden, gin.H{
+				"error":    "one or more users are not in your friend list",
+				"friendId": fid,
+			})
+			return
+		}
 	}
 
 	// Determine the day.
@@ -120,15 +162,22 @@ func GetCommonFreeSlots(c *gin.Context) {
 		}
 	}
 
-	// Collect batch codes for all friends.
+	// Collect batch codes for all friends (skip those without a batch).
 	var batchCodes []string
 	for _, fid := range req.FriendIDs {
-		code, err := services.GetBatchIDForFriend(fid)
+		friend, err := services.GetUserByID(fid)
 		if err != nil {
-			c.JSON(http.StatusNotFound, gin.H{"error": "friend not found", "friendId": fid})
-			return
+			continue
 		}
-		batchCodes = append(batchCodes, code)
+		if friend.BatchCode != nil && *friend.BatchCode != "" {
+			batchCodes = append(batchCodes, *friend.BatchCode)
+		}
+	}
+
+	// Also include the requesting user's batch if they have one.
+	me, err := services.GetUserByID(userID)
+	if err == nil && me.BatchCode != nil && *me.BatchCode != "" {
+		batchCodes = append(batchCodes, *me.BatchCode)
 	}
 
 	freeSlots, err := services.GetCommonFreeSlots(batchCodes, day)

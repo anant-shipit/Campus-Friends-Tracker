@@ -1,28 +1,73 @@
-import { useState, useEffect, useRef, useMemo } from 'react';
-import { addFriend, fetchBatches } from '../api/api';
+import { useState, useEffect, useMemo, useRef } from 'react';
+import { useAuth } from '../contexts/AuthContext';
+import { fetchBatches, updateBatch } from '../api/api';
 import { useToast } from './ToastProvider';
-import './AddFriend.css';
+import './BatchReminder.css';
 
-export default function AddFriend({ onClose, onAdded }) {
-  const [name, setName] = useState('');
+export default function BatchReminder() {
+  const { user, refreshUser } = useAuth();
+  const [showModal, setShowModal] = useState(false);
+
+  // Don't show if user already has a batch.
+  if (user?.batchCode) return null;
+
+  // Check if already dismissed today.
+  const dismissKey = `batch_reminder_dismissed_${new Date().toDateString()}`;
+  const [dismissed, setDismissed] = useState(
+    () => localStorage.getItem(dismissKey) === 'true'
+  );
+
+  if (dismissed) return null;
+
+  const handleDismiss = () => {
+    localStorage.setItem(dismissKey, 'true');
+    setDismissed(true);
+  };
+
+  return (
+    <>
+      <div className="batch-reminder">
+        <span className="batch-reminder__icon">⚠️</span>
+        <div className="batch-reminder__text">
+          <p className="batch-reminder__title">Set your batch</p>
+          <p className="batch-reminder__desc">
+            Add your batch code to see schedule data and let friends track your availability.
+          </p>
+        </div>
+        <button className="batch-reminder__btn" onClick={() => setShowModal(true)}>
+          Set Batch
+        </button>
+      </div>
+
+      {showModal && (
+        <BatchSetupModal
+          onClose={() => setShowModal(false)}
+          onDone={() => {
+            setShowModal(false);
+            refreshUser();
+          }}
+        />
+      )}
+    </>
+  );
+}
+
+function BatchSetupModal({ onClose, onDone }) {
   const [batchCode, setBatchCode] = useState('');
   const [batchGroups, setBatchGroups] = useState([]);
   const [showDropdown, setShowDropdown] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [loadingBatches, setLoadingBatches] = useState(true);
-  const nameRef = useRef(null);
   const dropdownRef = useRef(null);
   const { showToast } = useToast();
 
   useEffect(() => {
-    nameRef.current?.focus();
     fetchBatches()
       .then((data) => setBatchGroups(data.groups || []))
       .catch(() => showToast('Failed to load batches', 'error'))
       .finally(() => setLoadingBatches(false));
   }, []);
 
-  // Close dropdown on outside click
   useEffect(() => {
     const handler = (e) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
@@ -44,59 +89,34 @@ export default function AddFriend({ onClose, onAdded }) {
       .filter((g) => g.batches.length > 0);
   }, [batchCode, batchGroups]);
 
-  const isValid = name.trim().length >= 2 && batchCode.trim().length >= 2;
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!isValid || submitting) return;
+    if (!batchCode.trim() || submitting) return;
 
     setSubmitting(true);
     try {
-      await addFriend(name.trim(), batchCode.trim());
-      showToast(`${name.trim()} added!`, 'success');
-      onAdded();
+      await updateBatch(batchCode.trim());
+      showToast('Batch set successfully!', 'success');
+      onDone();
     } catch (err) {
-      showToast(err.message || 'Failed to add friend', 'error');
+      showToast(err.message || 'Failed to set batch', 'error');
     } finally {
       setSubmitting(false);
     }
   };
 
-  const selectBatch = (code) => {
-    setBatchCode(code);
-    setShowDropdown(false);
-  };
-
   return (
-    <>
-      <div className="overlay-backdrop" onClick={onClose} />
-      <div className="add-friend-modal slide-in-up">
-        <div className="add-friend-modal__header">
-          <h2>Add Friend</h2>
-          <button className="btn btn-ghost btn-icon" onClick={onClose}>✕</button>
-        </div>
+    <div className="batch-setup-modal">
+      <div className="batch-setup-modal__backdrop" onClick={onClose} />
+      <div className="batch-setup-modal__card">
+        <h2 className="batch-setup-modal__title">Select Your Batch</h2>
+        <p className="batch-setup-modal__desc">
+          Choose your batch/section so your friends can see when you&apos;re free.
+        </p>
 
-        <form onSubmit={handleSubmit} className="add-friend-modal__form">
-          <div className="add-friend-modal__field">
-            <label className="input-label" htmlFor="friend-name">Name</label>
+        <form onSubmit={handleSubmit}>
+          <div className="batch-setup-modal__field" ref={dropdownRef}>
             <input
-              ref={nameRef}
-              id="friend-name"
-              className="input-field"
-              type="text"
-              placeholder="e.g. Rahul"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              required
-              minLength={2}
-              autoComplete="off"
-            />
-          </div>
-
-          <div className="add-friend-modal__field" ref={dropdownRef}>
-            <label className="input-label" htmlFor="friend-batch">Batch Code</label>
-            <input
-              id="friend-batch"
               className="input-field"
               type="text"
               placeholder="e.g. 1A11, 3CS21"
@@ -106,7 +126,6 @@ export default function AddFriend({ onClose, onAdded }) {
                 setShowDropdown(true);
               }}
               onFocus={() => setShowDropdown(true)}
-              required
               autoComplete="off"
             />
             {showDropdown && !loadingBatches && (
@@ -123,7 +142,10 @@ export default function AddFriend({ onClose, onAdded }) {
                             key={b}
                             type="button"
                             className={`batch-dropdown__item ${batchCode === b ? 'batch-dropdown__item--selected' : ''}`}
-                            onClick={() => selectBatch(b)}
+                            onClick={() => {
+                              setBatchCode(b);
+                              setShowDropdown(false);
+                            }}
                           >
                             {b}
                           </button>
@@ -136,22 +158,20 @@ export default function AddFriend({ onClose, onAdded }) {
             )}
           </div>
 
-          <button
-            type="submit"
-            className="btn btn-primary add-friend-modal__submit"
-            disabled={!isValid || submitting}
-          >
-            {submitting ? (
-              <>
-                <span className="spinner spinner-sm" />
-                Adding...
-              </>
-            ) : (
-              '+ Add Friend'
-            )}
-          </button>
+          <div className="batch-setup-modal__actions">
+            <button type="button" className="btn btn-ghost" onClick={onClose}>
+              Later
+            </button>
+            <button
+              type="submit"
+              className="btn btn-primary"
+              disabled={!batchCode.trim() || submitting}
+            >
+              {submitting ? 'Saving...' : 'Save'}
+            </button>
+          </div>
         </form>
       </div>
-    </>
+    </div>
   );
 }

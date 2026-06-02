@@ -1,0 +1,139 @@
+.invite-modal {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  max-height: 85vh;
+  z-index: 100;
+  background: rgba(20, 20, 40, 0.98);
+  backdrop-filter: blur(20px);
+  border-top-left-radius: 24px;
+  border-top-right-radius: 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 28px 24px 36px;
+  overflow-y: auto;
+}
+
+.invite-modal__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.invite-modal__header h2 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #fff;
+  margin: 0;
+}
+
+.invite-modal__body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+.invite-modal__qr-container {
+  background: #fff;
+  border-radius: 16px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.invite-modal__link-box {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.invite-modal__link-text {
+  flex: 1;
+  color: #a5b4fc;
+  font-size: 0.85rem;
+  font-family: monospace;
+  word-break: break-all;
+  line-height: 1.4;
+}
+
+.invite-modal__copy-btn {
+  padding: 8px 16px;
+  background: rgba(99, 102, 241, 0.2);
+  border: 1px solid rgba(99, 102, 241, 0.35);
+  border-radius: 8px;
+  color: #a5b4fc;
+  font-weight: 600;
+  font-size: 0.8rem;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s;
+}
+
+.invite-modal__copy-btn:hover {
+  background: rgba(99, 102, 241, 0.35);
+}
+
+.invite-modal__copy-btn--copied {
+  background: rgba(34, 197, 94, 0.2);
+  border-color: rgba(34, 197, 94, 0.35);
+  color: #86efac;
+}
+
+.invite-modal__expiry {
+  text-align: center;
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 0.8rem;
+}
+
+.invite-modal__expiry strong {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.invite-modal__expired {
+  text-align: center;
+  padding: 16px;
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.25);
+  border-radius: 12px;
+  color: #fca5a5;
+  font-size: 0.85rem;
+}
+
+.invite-modal__regenerate-btn {
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  border: none;
+  border-radius: 12px;
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.invite-modal__regenerate-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(99, 102, 241, 0.3);
+}
+
+.invite-modal__regenerate-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.invite-modal__info {
+  text-align: center;
+  color: rgba(255, 255, 255, 0.35);
+  font-size: 0.75rem;
+  line-height: 1.5;
+}

@@ -3,10 +3,12 @@ package main
 import (
 	"log"
 	"os"
+	"time"
 
 	"campus-friends-tracker/backend/config"
 	"campus-friends-tracker/backend/database"
 	"campus-friends-tracker/backend/handlers"
+	"campus-friends-tracker/backend/middleware"
 	"campus-friends-tracker/backend/services"
 
 	"github.com/gin-contrib/cors"
@@ -47,16 +49,19 @@ func main() {
 	// Set up Gin router.
 	r := gin.Default()
 
-	// CORS middleware — allow all origins for development.
+	// CORS middleware — allow frontend origin.
 	r.Use(cors.New(cors.Config{
-		AllowOrigins:     []string{"*"},
+		AllowOrigins:     []string{cfg.FrontendURL, "http://localhost:5173", "http://localhost:3000"},
 		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
 		AllowHeaders:     []string{"Origin", "Content-Type", "Accept", "Authorization"},
 		ExposeHeaders:    []string{"Content-Length"},
-		AllowCredentials: false,
+		AllowCredentials: true,
 	}))
 
-	// Health check.
+	// Rate limiter for invite endpoints (10 requests per minute).
+	inviteLimiter := middleware.NewRateLimiter(10, time.Minute)
+
+	// Health check (public).
 	r.GET("/api/health", func(c *gin.Context) {
 		c.JSON(200, gin.H{"status": "ok"})
 	})
@@ -64,22 +69,45 @@ func main() {
 	// Register API routes.
 	api := r.Group("/api")
 	{
-		// Batches
-		api.GET("/batches", handlers.GetBatches)
+		// === Public routes (no auth) ===
+		api.POST("/auth/google", handlers.GoogleLogin(cfg))
 
-		// Friends
-		api.GET("/friends", handlers.GetFriends)
-		api.POST("/friends", handlers.AddFriend)
-		api.DELETE("/friends/:id", handlers.DeleteFriend)
+		// === Protected routes (auth required) ===
+		protected := api.Group("/")
+		protected.Use(middleware.AuthRequired(cfg))
+		{
+			// Auth / User
+			protected.GET("/auth/me", handlers.GetMe)
+			protected.PUT("/auth/batch", handlers.UpdateBatch)
 
-		// Free now
-		api.GET("/friends/free-now", handlers.GetFreeNow)
+			// Batches (list all available batches)
+			protected.GET("/batches", handlers.GetBatches)
 
-		// Schedule
-		api.GET("/friends/:id/schedule", handlers.GetFriendSchedule)
+			// Friends
+			protected.GET("/friends", handlers.GetFriends)
+			protected.DELETE("/friends/:id", handlers.DeleteFriend)
+			protected.GET("/friends/free-now", handlers.GetFreeNow)
+			protected.GET("/friends/invite-info", handlers.GetInviteInfo)
+			protected.POST("/friends/invite-regenerate", handlers.RegenerateInvite)
 
-		// Common free slots
-		api.POST("/friends/common-free", handlers.GetCommonFreeSlots)
+			// Invite accept (rate-limited)
+			protected.POST("/friends/invite/:code", inviteLimiter.Middleware(), handlers.AcceptInvite)
+
+			// Schedule
+			protected.GET("/friends/:id/schedule", handlers.GetFriendSchedule)
+			protected.POST("/friends/common-free", handlers.GetCommonFreeSlots)
+		}
+
+		// === Admin routes (auth + admin required) ===
+		admin := api.Group("/admin")
+		admin.Use(middleware.AuthRequired(cfg))
+		admin.Use(middleware.AdminRequired())
+		{
+			admin.GET("/stats", handlers.GetSystemStats)
+			admin.GET("/users", handlers.GetAllUsers)
+			admin.PUT("/users/:id/role", handlers.UpdateUserRole)
+			admin.DELETE("/users/:id", handlers.DeleteUser)
+		}
 	}
 
 	// Start server.

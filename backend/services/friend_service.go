@@ -104,7 +104,7 @@ func GetFriendByID(id int) (*models.Friend, error) {
 // GetFriendStatuses returns all friends with their current real-time status.
 func GetFriendStatuses(friends []models.Friend) []models.FriendStatus {
 	now := time.Now().In(istLocation)
-	dayOfWeek := weekdayToIndex(now.Weekday()) // 0=Mon..4=Fri, -1 for weekends
+	dayOfWeek := WeekdayToIndex(now.Weekday()) // 0=Mon..4=Fri, -1 for weekends
 
 	statuses := make([]models.FriendStatus, 0, len(friends))
 
@@ -127,7 +127,7 @@ func GetFriendStatuses(friends []models.Friend) []models.FriendStatus {
 			continue
 		}
 
-		currentSlotIdx := getCurrentSlotIndex(now)
+		currentSlotIdx := GetCurrentSlotIndex(now)
 
 		// Check current slot.
 		if currentSlotIdx >= 0 && currentSlotIdx < len(slots) {
@@ -186,8 +186,8 @@ func GetFreeNowFriends() ([]models.FriendStatus, error) {
 	return free, nil
 }
 
-// weekdayToIndex converts Go's time.Weekday (Sunday=0) to our scheme (Mon=0..Fri=4, -1 for weekends).
-func weekdayToIndex(wd time.Weekday) int {
+// WeekdayToIndex converts Go's time.Weekday (Sunday=0) to our scheme (Mon=0..Fri=4, -1 for weekends).
+func WeekdayToIndex(wd time.Weekday) int {
 	switch wd {
 	case time.Monday:
 		return 0
@@ -204,8 +204,8 @@ func weekdayToIndex(wd time.Weekday) int {
 	}
 }
 
-// getCurrentSlotIndex returns which time slot index (0-13) the current time falls into, or -1.
-func getCurrentSlotIndex(now time.Time) int {
+// GetCurrentSlotIndex returns which time slot index (0-13) the current time falls into, or -1.
+func GetCurrentSlotIndex(now time.Time) int {
 	currentMinutes := now.Hour()*60 + now.Minute()
 
 	slotMinutes := [][2]int{
