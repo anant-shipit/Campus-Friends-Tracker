@@ -91,10 +91,14 @@ func GetFriendSchedule(c *gin.Context) {
 	}
 
 	dayNames := []string{"Monday", "Tuesday", "Wednesday", "Thursday", "Friday"}
+	dayName := "Monday"
+	if day >= 0 && day < len(dayNames) {
+		dayName = dayNames[day]
+	}
 	c.JSON(http.StatusOK, gin.H{
 		"batchCode": batchCode,
 		"day":       day,
-		"dayName":   dayNames[day],
+		"dayName":   dayName,
 		"slots":     slots,
 	})
 }
@@ -191,9 +195,13 @@ func GetCommonFreeSlots(c *gin.Context) {
 	}
 
 	dayNames := []string{"Monday", "Tuesday", "Wednesday", "Thursday", "Friday"}
+	dayName := "Monday"
+	if day >= 0 && day < len(dayNames) {
+		dayName = dayNames[day]
+	}
 	c.JSON(http.StatusOK, gin.H{
 		"day":       day,
-		"dayName":   dayNames[day],
+		"dayName":   dayName,
 		"freeSlots": freeSlots,
 	})
 }

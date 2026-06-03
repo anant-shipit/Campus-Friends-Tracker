@@ -204,7 +204,9 @@ func seedTimetable(subjectCodes map[string]string) error {
 						nilIfEmpty(parsed.room), nilIfEmpty(courseText),
 					)
 					if err != nil {
-						tx.Rollback(ctx)
+						if rbErr := tx.Rollback(ctx); rbErr != nil {
+							log.Printf("rollback failed for batch=%s: %v", batchCode, rbErr)
+						}
 						return fmt.Errorf("insert slot batch=%s day=%d slot=%d: %w",
 							batchCode, dayOfWeek, slotIndex, err)
 					}
