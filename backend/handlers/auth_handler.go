@@ -48,13 +48,7 @@ func GoogleLogin(cfg *config.Config) gin.HandlerFunc {
 			return
 		}
 
-		// Enforce @thapar.edu domain.
-		if !strings.HasSuffix(strings.ToLower(payload.Email), "@thapar.edu") {
-			c.JSON(http.StatusForbidden, gin.H{
-				"error": "only @thapar.edu email addresses are allowed",
-			})
-			return
-		}
+
 
 		// Create or find user.
 		user, err := services.FindOrCreateUser(payload.Sub, payload.Email, payload.Name, payload.Picture)
