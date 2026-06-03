@@ -36,19 +36,19 @@
   gap: 16px;
 }
 
-.form-group {
+.add-friend-modal .form-group {
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
 
-.form-group label {
+.add-friend-modal .form-group label {
   font-size: 0.875rem;
   font-weight: 500;
   color: var(--text-secondary);
 }
 
-.input {
+.add-friend-modal .input {
   padding: 10px 12px;
   border: 1px solid var(--border-color);
   border-radius: var(--radius-md);
@@ -58,13 +58,13 @@
   transition: border-color 0.2s, box-shadow 0.2s;
 }
 
-.input:focus {
+.add-friend-modal .input:focus {
   outline: none;
-  border-color: var(--color-primary);
-  box-shadow: 0 0 0 2px rgba(var(--color-primary-rgb), 0.2);
+  border-color: var(--color-primary, var(--brand-primary));
+  box-shadow: 0 0 0 2px rgba(var(--color-primary-rgb, var(--brand-primary-rgb)), 0.2);
 }
 
-.input:disabled {
+.add-friend-modal .input:disabled {
   opacity: 0.7;
   cursor: not-allowed;
 }

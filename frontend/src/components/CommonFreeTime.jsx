@@ -6,7 +6,7 @@ import './CommonFreeTime.css';
 const DAY_NAMES = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
 
 export default function CommonFreeTime({ timetable }) {
-  const friends = useMemo(() => getFriends(), []);
+  const friends = getFriends();
   const [selectedIds, setSelectedIds] = useState(new Set());
   const [day, setDay] = useState(getTodayIndex());
   const [showResults, setShowResults] = useState(false);
@@ -126,7 +126,16 @@ export default function CommonFreeTime({ timetable }) {
                   <div className="common-free__slot-time">
                     {formatTime(slot.startTime)} — {formatTime(slot.endTime)}
                   </div>
-                  <span className="common-free__slot-duration">50 min</span>
+                  <span className="common-free__slot-duration">
+                    {(() => {
+                      if (!slot.startTime || !slot.endTime) return '50 min';
+                      const start = new Date(`1970-01-01T${slot.startTime}Z`);
+                      const end = new Date(`1970-01-01T${slot.endTime}Z`);
+                      if (isNaN(start) || isNaN(end)) return '50 min';
+                      const diffMins = Math.round((end - start) / 60000);
+                      return `${diffMins} min`;
+                    })()}
+                  </span>
                 </div>
               ))}
             </div>

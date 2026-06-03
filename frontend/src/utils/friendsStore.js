@@ -19,10 +19,11 @@ function saveAll(friends) {
 /** Add a friend to the local list. Returns the new friend object. */
 export function addFriend(name, batchCode, isRoommate = false) {
   const friends = getAll();
+  const normalizedName = name.trim();
 
   // Check for duplicate.
   const exists = friends.some(
-    (f) => f.name.toLowerCase() === name.toLowerCase() && f.batchCode === batchCode
+    (f) => f.name.toLowerCase() === normalizedName.toLowerCase() && f.batchCode === batchCode
   );
   if (exists) {
     throw new Error('This friend is already in your list');
@@ -30,7 +31,7 @@ export function addFriend(name, batchCode, isRoommate = false) {
 
   const friend = {
     id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
-    name: name.trim(),
+    name: normalizedName,
     batchCode,
     isRoommate,
     createdAt: new Date().toISOString(),

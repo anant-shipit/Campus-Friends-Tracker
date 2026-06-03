@@ -17,6 +17,11 @@ export async function fetchAndCacheTimetable() {
     if (!res.ok) throw new Error('Failed to fetch timetable');
     const data = await res.json();
 
+    if (!data || !data.timetable) {
+      console.warn('Server returned invalid timetable data, using cache.');
+      return getCachedTimetable();
+    }
+
     localStorage.setItem(TIMETABLE_KEY, JSON.stringify(data.timetable));
     localStorage.setItem(TIMETABLE_TS_KEY, new Date().toISOString());
 

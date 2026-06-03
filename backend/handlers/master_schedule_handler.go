@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"context"
 	"net/http"
 
 	"campus-friends-tracker/backend/database"
@@ -31,7 +30,7 @@ type scheduleSlotJSON struct {
 // GET /api/schedules/all
 func GetAllSchedules(c *gin.Context) {
 	db := database.GetDB()
-	ctx := context.Background()
+	ctx := c.Request.Context()
 
 	// Query all schedule slots joined with batch code.
 	rows, err := db.Query(ctx, `
@@ -80,11 +79,16 @@ func GetAllSchedules(c *gin.Context) {
 		})
 	}
 
+	if err := rows.Err(); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "failed to iterate schedules", "detail": err.Error()})
+		return
+	}
+
 	// Also include batch groups for the AddFriendModal dropdown.
 	batchRows, err := db.Query(ctx,
 		"SELECT code, year_group FROM batches ORDER BY year_group, code")
 	if err != nil {
-		c.JSON(http.StatusOK, gin.H{"timetable": timetable, "batches": []any{}})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "failed to query batches", "detail": err.Error()})
 		return
 	}
 	defer batchRows.Close()
@@ -94,12 +98,18 @@ func GetAllSchedules(c *gin.Context) {
 	for batchRows.Next() {
 		var code, yearGroup string
 		if err := batchRows.Scan(&code, &yearGroup); err != nil {
-			continue
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "failed to scan batch details", "detail": err.Error()})
+			return
 		}
 		if _, exists := groupMap[yearGroup]; !exists {
 			order = append(order, yearGroup)
 		}
 		groupMap[yearGroup] = append(groupMap[yearGroup], code)
+	}
+
+	if err := batchRows.Err(); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "failed to iterate batches", "detail": err.Error()})
+		return
 	}
 
 	groups := make([]batchGroup, 0, len(order))

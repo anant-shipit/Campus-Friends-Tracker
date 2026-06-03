@@ -70,17 +70,19 @@ export default function FriendCard({ friend, onTap, onDelete, onToggleRoommate, 
           <StatusBadge type={classType} size="md" />
         </div>
         <div className="friend-card__info">
-          <h3 className="friend-card__name">{friend.name}</h3>
+          <h2 className="friend-card__name">{friend.name}</h2>
           <span className="friend-card__batch">{friend.batchCode}</span>
         </div>
         <div className="friend-card__actions" style={{ display: 'flex', gap: '8px' }}>
           <button
+            type="button"
             className={`btn btn-icon ${friend.isRoommate ? 'btn-primary' : 'btn-ghost'}`}
             onClick={handleToggleRoommate}
             title={friend.isRoommate ? "Remove Roommate" : "Add as Roommate"}
+            aria-label={friend.isRoommate ? "Remove roommate" : "Add as roommate"}
             style={{ fontSize: '1.2rem', padding: '4px' }}
           >
-            🏠
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
           </button>
           {showConfirm ? (
             <div className="friend-card__confirm">
@@ -95,7 +97,7 @@ export default function FriendCard({ friend, onTap, onDelete, onToggleRoommate, 
                 className="btn btn-ghost btn-sm"
                 onClick={handleCancelDelete}
               >
-                ✕
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
               </button>
             </div>
           ) : (
@@ -105,7 +107,7 @@ export default function FriendCard({ friend, onTap, onDelete, onToggleRoommate, 
               aria-label="Delete friend"
               title="Remove friend"
             >
-              ✕
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
             </button>
           )}
         </div>
@@ -114,15 +116,21 @@ export default function FriendCard({ friend, onTap, onDelete, onToggleRoommate, 
       <div className="friend-card__body">
         {isFree ? (
           <p className="friend-card__status-text friend-card__status-text--free">
-            <span className="friend-card__status-icon">🟢</span>
+            <span className="friend-card__status-icon" style={{display: 'inline-flex', alignItems: 'center'}}>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" style={{color: 'var(--color-free)'}}><polyline points="20 6 9 17 4 12"></polyline></svg>
+            </span>
             {friend.nextClass
               ? `Free until ${formatTime(friend.nextClass.startsAt)}`
               : 'Free for the rest of the day'}
           </p>
         ) : (
           <p className="friend-card__status-text friend-card__status-text--busy">
-            <span className="friend-card__status-icon">
-              {classType === 'lecture' ? '📕' : classType === 'tutorial' ? '📙' : '🔬'}
+            <span className="friend-card__status-icon" style={{display: 'inline-flex', alignItems: 'center'}}>
+              {classType === 'lab' ? (
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M10 2v7.31"></path><path d="M14 9.3V1.99"></path><path d="M8.5 2h7"></path><path d="M14 9.3a6.5 6.5 0 1 1-4 0"></path><line x1="5.52" y1="16" x2="18.48" y2="16"></line></svg>
+              ) : (
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+              )}
             </span>
             In: {friend.currentClass?.subjectName || 'Class'}{' '}
             <span className={`chip chip-${classType}`}>

@@ -76,7 +76,8 @@
 .app-nav-btn--active {
   background: var(--gradient-accent-soft);
   color: var(--text-primary);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 12px hsla(260, 60%, 55%, 0.3);
 }
 
 /* ─── FAB ─── */

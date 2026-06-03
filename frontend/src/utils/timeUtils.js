@@ -97,9 +97,9 @@ export function computeFriendStatus(friend, timetable, now = new Date()) {
   const currentSlotIdx = getCurrentSlotIndex(now);
 
   // Check current slot.
-  if (currentSlotIdx >= 0 && currentSlotIdx < slots.length) {
-    const slot = slots[currentSlotIdx];
-    if (slot.classType && slot.classType !== 'free') {
+  if (currentSlotIdx >= 0) {
+    const slot = slots.find((s) => s.slotIndex === currentSlotIdx) || slots[currentSlotIdx];
+    if (slot && slot.classType && slot.classType !== 'free') {
       status.currentStatus = 'in_class';
       status.currentClass = {
         subjectName: slot.subjectName || '',
@@ -112,15 +112,16 @@ export function computeFriendStatus(friend, timetable, now = new Date()) {
   }
 
   // Find next non-free slot.
-  let searchFrom = (currentSlotIdx >= 0 ? currentSlotIdx : -1) + 1;
-  for (let i = searchFrom; i < slots.length; i++) {
-    if (slots[i].classType && slots[i].classType !== 'free') {
+  let searchFrom = currentSlotIdx >= 0 ? currentSlotIdx + 1 : 0;
+  for (let i = searchFrom; i < 14; i++) {
+    const slot = slots.find((s) => s.slotIndex === i) || slots[i];
+    if (slot && slot.classType && slot.classType !== 'free') {
       status.nextClass = {
-        subjectName: slots[i].subjectName || '',
-        classType: slots[i].classType,
-        room: slots[i].room || '',
-        startsAt: slots[i].startTime || '',
-        endsAt: slots[i].endTime || '',
+        subjectName: slot.subjectName || '',
+        classType: slot.classType,
+        room: slot.room || '',
+        startsAt: slot.startTime || '',
+        endsAt: slot.endTime || '',
       };
       break;
     }
@@ -152,7 +153,7 @@ export function findCommonFreeSlots(timetable, batchCodes, dayIndex) {
   }
 
   const freeSlots = [];
-  for (let i = 0; i < 14; i++) {
+  for (let i = 0; i < SLOT_TIMES.length; i++) {
     if (!busySlots.has(i)) {
       freeSlots.push({
         slotIndex: i,
@@ -173,7 +174,7 @@ export function getPrivateSessionSlots(timetable, roommateBatchCodes, dayIndex) 
 
   const privateSlots = [];
   
-  for (let i = 0; i < 14; i++) {
+  for (let i = 0; i < SLOT_TIMES.length; i++) {
     let allInClass = true;
     for (const code of roommateBatchCodes) {
       const slots = getDaySchedule(timetable, code, dayIndex);

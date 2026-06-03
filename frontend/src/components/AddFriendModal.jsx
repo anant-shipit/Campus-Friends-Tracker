@@ -13,16 +13,26 @@ export default function AddFriendModal({ onClose, onSuccess, defaultIsRoommate =
   const { showToast } = useToast();
 
   useEffect(() => {
+    let isMounted = true;
     // Try cached batches first, then try fetching.
     const cached = getCachedBatches();
     if (cached.length > 0) {
       setGroups(cached);
     } else {
       // Try to fetch if online.
-      fetchAndCacheTimetable().then(() => {
-        setGroups(getCachedBatches());
-      });
+      fetchAndCacheTimetable()
+        .then(() => {
+          if (isMounted) {
+            setGroups(getCachedBatches());
+          }
+        })
+        .catch((err) => {
+          console.error("Failed to fetch batches:", err);
+        });
     }
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   const handleSubmit = async (e) => {
@@ -51,7 +61,9 @@ export default function AddFriendModal({ onClose, onSuccess, defaultIsRoommate =
       <div className="add-friend-modal slide-in-up">
         <div className="add-friend-modal__header">
           <h2>Add Friend</h2>
-          <button className="btn btn-ghost btn-icon" onClick={onClose}>✕</button>
+          <button className="btn btn-ghost btn-icon" onClick={onClose} aria-label="Close modal">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
         </div>
 
         <form className="add-friend-modal__body" onSubmit={handleSubmit}>
@@ -112,8 +124,9 @@ export default function AddFriendModal({ onClose, onSuccess, defaultIsRoommate =
               disabled={loading}
               style={{ width: '20px', height: '20px', accentColor: 'var(--brand-primary)' }}
             />
-            <label htmlFor="isRoommate" style={{ marginBottom: 0, cursor: 'pointer' }}>
-              Add as Roommate 🏠
+            <label htmlFor="isRoommate" style={{ marginBottom: 0, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }}>
+              Add as Roommate
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{color: 'var(--brand-primary)'}}><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
             </label>
           </div>
 

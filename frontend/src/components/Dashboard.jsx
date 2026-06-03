@@ -16,9 +16,9 @@ export default function Dashboard({ refreshKey, timetable, onSelectFriend, onRef
   const loadFriends = useCallback(() => {
     const raw = getFriends();
     // Compute live status for each friend using cached timetable.
-    const withStatus = raw.map((f) => computeFriendStatus(f, timetable, new Date()));
+    const withStatus = raw.map((f) => computeFriendStatus(f, timetable, currentTime));
     setFriends(withStatus);
-  }, [timetable]);
+  }, [timetable, currentTime]);
 
   useEffect(() => {
     loadFriends();
@@ -28,10 +28,9 @@ export default function Dashboard({ refreshKey, timetable, onSelectFriend, onRef
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentTime(new Date());
-      loadFriends();
     }, 60000);
     return () => clearInterval(interval);
-  }, [loadFriends]);
+  }, []);
 
   const handleDelete = async (id) => {
     try {

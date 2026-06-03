@@ -4,7 +4,9 @@ import { getPrivateSessionSlots, getTodayIndex, formatTime } from '../utils/time
 import FriendCard from './FriendCard';
 import './PrivateSession.css';
 
-export default function PrivateSession({ timetable, onAddRoommate, onSelectFriend, onRefresh }) {
+const DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
+
+export default function PrivateSession({ refreshKey, timetable, onAddRoommate, onSelectFriend }) {
   const [roommates, setRoommates] = useState([]);
   const [slots, setSlots] = useState([]);
   const [dayIndex, setDayIndex] = useState(getTodayIndex());
@@ -21,12 +23,15 @@ export default function PrivateSession({ timetable, onAddRoommate, onSelectFrien
     } else {
       setSlots([]);
     }
-  }, [timetable, dayIndex, onRefresh]); // Depend on onRefresh to re-trigger when toggle changes
+  }, [timetable, dayIndex, refreshKey]);
 
   return (
     <div className="private-session fade-in-up">
       <div className="private-session__header">
-        <h2>🏠 Roommates</h2>
+        <h2 style={{display: 'flex', alignItems: 'center', gap: '8px'}}>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{color: 'var(--brand-primary)'}}><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+          Roommates
+        </h2>
         <p>Your room is free when all roommates are in class.</p>
         <button className="btn btn-primary btn-sm" onClick={onAddRoommate}>
           + Add Roommate
@@ -54,7 +59,7 @@ export default function PrivateSession({ timetable, onAddRoommate, onSelectFrien
         <h3>Upcoming Free Room Slots</h3>
         
         <div className="day-selector">
-          {['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'].map((day, idx) => (
+          {DAYS.map((day, idx) => (
             <button
               key={day}
               className={`day-btn ${dayIndex === idx ? 'day-btn--active' : ''}`}
@@ -69,7 +74,7 @@ export default function PrivateSession({ timetable, onAddRoommate, onSelectFrien
           <p className="private-session__info">Add roommates to calculate free room time.</p>
         ) : slots.length === 0 ? (
           <div className="private-session__no-slots">
-            <p>No intersecting classes found for today.</p>
+            <p>No intersecting classes found for {DAYS[dayIndex] || 'today'}.</p>
             <p>Someone will always be in the room!</p>
           </div>
         ) : (
