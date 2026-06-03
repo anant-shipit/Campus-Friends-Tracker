@@ -25,7 +25,9 @@ A mobile-first web app built for TIET students to figure out which of your frien
 ### 1. Google Cloud Setup
 You'll need a Google Client ID to enable sign-ins:
 1. Go to Google Cloud Console and create OAuth 2.0 Credentials (Web Application).
-2. Set Authorized JavaScript Origins to `http://localhost:5173`.
+2. Set Authorized JavaScript Origins to `http://localhost:5173` (and your production frontend URL).
+3. In the **OAuth Consent Screen** settings, set the **User Type** to **External** (so that users outside your Google Cloud Console organization Workspace, such as `@thapar.edu` accounts, can log in).
+4. Add your email address and any test accounts to the **Test Users** list if your app's publishing status is in "Testing".
 
 ### 2. Backend Setup
 ```bash
@@ -56,6 +58,15 @@ npm run dev
 
 The frontend dev server runs on `http://localhost:5173` and proxies API requests to `http://localhost:8080`.
 
+### 4. Vercel & Production Deployment
+When deploying the frontend to Vercel, configure the following **Environment Variables** in the Vercel dashboard:
+- `VITE_GOOGLE_CLIENT_ID`: Your Google OAuth Client ID.
+- `VITE_API_BASE_URL`: The URL of your publicly deployed backend (e.g., `https://your-backend.render.com/api`).
+
+Also, ensure that:
+1. Your Vercel deployment URL (e.g. `https://campus-friends-tracker.vercel.app`) is added to the **Authorized JavaScript Origins** in your Google Cloud Console.
+2. The `FRONTEND_URL` environment variable on your backend is set to your Vercel URL to allow CORS.
+
 ## Tech Stack
 
 | Layer | Technology |
@@ -79,9 +90,6 @@ All endpoints (except Google login) require a Bearer JWT token.
 | `POST` | `/api/friends/common-free` | Common free slots among selected friends |
 | `GET` | `/api/admin/stats` | (Admin) View total users and active links |
 
-## Data Source
-
-Timetable data is sourced from [utkarsh-1905/time-table](https://github.com/utkarsh-1905/time-table) and covers:
 - 1st to 4th Year B.E. Sections + PG Programs
 - **425+ batches** with complete Monday–Friday schedules.
 

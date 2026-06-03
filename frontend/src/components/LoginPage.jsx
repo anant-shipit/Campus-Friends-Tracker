@@ -40,6 +40,12 @@ export default function LoginPage() {
           Sign in with your <strong>@thapar.edu</strong> Google account to get started.
         </p>
 
+        {!import.meta.env.VITE_GOOGLE_CLIENT_ID && (
+          <div className="login-card__error" style={{ background: 'rgba(245, 158, 11, 0.15)', borderColor: 'rgba(245, 158, 11, 0.4)', color: '#fcd34d' }}>
+            ⚠️ Configuration Warning: Google Client ID is missing. Please set VITE_GOOGLE_CLIENT_ID in your environment variables.
+          </div>
+        )}
+
         {error && (
           <div className="login-card__error">
             ⚠️ {error}

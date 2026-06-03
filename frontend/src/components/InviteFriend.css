@@ -4,7 +4,7 @@
   left: 0;
   right: 0;
   max-height: 85vh;
-  z-index: 100;
+  z-index: var(--z-modal);
   background: rgba(20, 20, 40, 0.98);
   backdrop-filter: blur(20px);
   border-top-left-radius: 24px;
