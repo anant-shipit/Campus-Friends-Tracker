@@ -1,39 +1,15 @@
-import { useState, useEffect, useMemo } from 'react';
-import { fetchFriends, fetchCommonFree } from '../api/api';
+import { useState, useMemo } from 'react';
+import { getFriends } from '../utils/friendsStore';
+import { findCommonFreeSlots, formatTime, getTodayIndex } from '../utils/timeUtils';
 import './CommonFreeTime.css';
 
 const DAY_NAMES = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
 
-function formatTime(timeStr) {
-  if (!timeStr) return '';
-  const parts = timeStr.split(':');
-  const h = parseInt(parts[0], 10);
-  const m = parts[1];
-  const ampm = h >= 12 ? 'PM' : 'AM';
-  const h12 = h % 12 || 12;
-  return `${h12}:${m} ${ampm}`;
-}
-
-function getTodayIndex() {
-  const d = new Date().getDay();
-  if (d >= 1 && d <= 5) return d - 1;
-  return 0;
-}
-
-export default function CommonFreeTime() {
-  const [friends, setFriends] = useState([]);
+export default function CommonFreeTime({ timetable }) {
+  const friends = useMemo(() => getFriends(), []);
   const [selectedIds, setSelectedIds] = useState(new Set());
   const [day, setDay] = useState(getTodayIndex());
-  const [freeSlots, setFreeSlots] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [loadingFriends, setLoadingFriends] = useState(true);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    fetchFriends()
-      .then((data) => setFriends(data.friends || []))
-      .finally(() => setLoadingFriends(false));
-  }, []);
+  const [showResults, setShowResults] = useState(false);
 
   const toggleFriend = (id) => {
     setSelectedIds((prev) => {
@@ -42,7 +18,7 @@ export default function CommonFreeTime() {
       else next.add(id);
       return next;
     });
-    setFreeSlots(null);
+    setShowResults(false);
   };
 
   const selectedNames = useMemo(() => {
@@ -51,18 +27,16 @@ export default function CommonFreeTime() {
       .map((f) => f.name);
   }, [friends, selectedIds]);
 
-  const handleFind = async () => {
-    if (selectedIds.size < 2) return;
-    setLoading(true);
-    setError(null);
-    try {
-      const data = await fetchCommonFree([...selectedIds], day);
-      setFreeSlots(data.freeSlots || []);
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
+  const freeSlots = useMemo(() => {
+    if (!showResults || selectedIds.size < 2) return null;
+    const batchCodes = friends
+      .filter((f) => selectedIds.has(f.id))
+      .map((f) => f.batchCode);
+    return findCommonFreeSlots(timetable, batchCodes, day);
+  }, [showResults, selectedIds, friends, timetable, day]);
+
+  const handleFind = () => {
+    setShowResults(true);
   };
 
   return (
@@ -78,7 +52,7 @@ export default function CommonFreeTime() {
           <button
             key={i}
             className={`common-free__day-btn ${day === i ? 'common-free__day-btn--active' : ''}`}
-            onClick={() => { setDay(i); setFreeSlots(null); }}
+            onClick={() => { setDay(i); setShowResults(false); }}
           >
             {name}
           </button>
@@ -86,13 +60,7 @@ export default function CommonFreeTime() {
       </div>
 
       {/* Friend selection */}
-      {loadingFriends ? (
-        <div className="common-free__loading">
-          {[1, 2, 3].map((i) => (
-            <div key={i} className="skeleton skeleton-line long" style={{ height: 40, marginBottom: 8 }} />
-          ))}
-        </div>
-      ) : friends.length === 0 ? (
+      {friends.length === 0 ? (
         <div className="common-free__empty">
           <p>Add some friends first to use this feature.</p>
         </div>
@@ -124,26 +92,16 @@ export default function CommonFreeTime() {
 
           <button
             className="btn btn-primary common-free__find-btn"
-            disabled={selectedIds.size < 2 || loading}
+            disabled={selectedIds.size < 2}
             onClick={handleFind}
           >
-            {loading ? (
-              <><span className="spinner spinner-sm" /> Finding...</>
-            ) : (
-              `📅 Find Free Slots (${selectedIds.size} selected)`
-            )}
+            📅 Find Free Slots ({selectedIds.size} selected)
           </button>
         </>
       )}
 
       {/* Results */}
-      {error && (
-        <div className="common-free__error glass-card">
-          <p>⚠️ {error}</p>
-        </div>
-      )}
-
-      {freeSlots !== null && !error && (
+      {freeSlots !== null && (
         <div className="common-free__results fade-in-up">
           <h3 className="common-free__results-title">
             {freeSlots.length > 0

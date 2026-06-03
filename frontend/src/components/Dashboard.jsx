@@ -1,47 +1,59 @@
 import { useState, useEffect, useCallback } from 'react';
-import { fetchFriends, deleteFriend } from '../api/api';
+import { getFriends, removeFriend, toggleRoommate } from '../utils/friendsStore';
+import { computeFriendStatus } from '../utils/timeUtils';
 import FriendCard from './FriendCard';
 import { useToast } from './ToastProvider';
 import './Dashboard.css';
 
 const FILTER_OPTIONS = ['All', 'Free Now', 'In Class'];
 
-export default function Dashboard({ refreshKey, onSelectFriend, onRefresh }) {
+export default function Dashboard({ refreshKey, timetable, onSelectFriend, onRefresh }) {
   const [friends, setFriends] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
   const [filter, setFilter] = useState('All');
+  const [currentTime, setCurrentTime] = useState(new Date());
   const { showToast } = useToast();
 
-  const loadFriends = useCallback(async () => {
-    try {
-      setError(null);
-      const data = await fetchFriends();
-      setFriends(data.friends || []);
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
-  }, []);
+  const loadFriends = useCallback(() => {
+    const raw = getFriends();
+    // Compute live status for each friend using cached timetable.
+    const withStatus = raw.map((f) => computeFriendStatus(f, timetable, new Date()));
+    setFriends(withStatus);
+  }, [timetable]);
 
   useEffect(() => {
     loadFriends();
   }, [loadFriends, refreshKey]);
 
-  // Auto-refresh every 60 seconds
+  // Auto-refresh every 60 seconds to update statuses.
   useEffect(() => {
-    const interval = setInterval(loadFriends, 60000);
+    const interval = setInterval(() => {
+      setCurrentTime(new Date());
+      loadFriends();
+    }, 60000);
     return () => clearInterval(interval);
   }, [loadFriends]);
 
   const handleDelete = async (id) => {
     try {
-      await deleteFriend(id);
+      removeFriend(id);
       showToast('Friend removed', 'success');
       onRefresh();
     } catch {
       showToast('Failed to remove friend', 'error');
+    }
+  };
+
+  const handleToggleRoommate = (id, isRoommate) => {
+    try {
+      toggleRoommate(id, isRoommate);
+      if (isRoommate) {
+        showToast('Added as roommate 🏠', 'success');
+      } else {
+        showToast('Removed from roommates', 'info');
+      }
+      onRefresh();
+    } catch {
+      showToast('Failed to update roommate status', 'error');
     }
   };
 
@@ -53,43 +65,6 @@ export default function Dashboard({ refreshKey, onSelectFriend, onRefresh }) {
 
   const freeCount = friends.filter((f) => f.currentStatus === 'free').length;
   const busyCount = friends.filter((f) => f.currentStatus === 'in_class').length;
-
-  if (loading) {
-    return (
-      <div className="dashboard">
-        <div className="dashboard__skeletons">
-          {[1, 2, 3].map((i) => (
-            <div key={i} className="skeleton-card" style={{ animationDelay: `${i * 100}ms` }}>
-              <div className="skeleton-row">
-                <div className="skeleton skeleton-circle" />
-                <div style={{ flex: 1 }}>
-                  <div className="skeleton skeleton-line medium" />
-                  <div className="skeleton skeleton-line short" style={{ marginTop: 8 }} />
-                </div>
-              </div>
-              <div className="skeleton skeleton-line long" />
-              <div className="skeleton skeleton-line short" />
-            </div>
-          ))}
-        </div>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="dashboard">
-        <div className="dashboard__error glass-card">
-          <span className="dashboard__error-icon">⚠️</span>
-          <p>Failed to load friends</p>
-          <p className="dashboard__error-detail">{error}</p>
-          <button className="btn btn-primary" onClick={loadFriends}>
-            Retry
-          </button>
-        </div>
-      </div>
-    );
-  }
 
   if (friends.length === 0) {
     return (
@@ -153,6 +128,7 @@ export default function Dashboard({ refreshKey, onSelectFriend, onRefresh }) {
               friend={friend}
               onTap={onSelectFriend}
               onDelete={handleDelete}
+              onToggleRoommate={handleToggleRoommate}
               style={{ animationDelay: `${i * 60}ms` }}
             />
           ))

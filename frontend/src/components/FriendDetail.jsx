@@ -1,24 +1,22 @@
-import { useState, useEffect } from 'react';
-import { fetchFriendSchedule } from '../api/api';
+import { useState, useMemo } from 'react';
+import { getDaySchedule } from '../utils/timeUtils';
 import Timeline from './Timeline';
 import './FriendDetail.css';
 
 const DAY_NAMES = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
 
-export default function FriendDetail({ friend, onClose, initialDay = 0 }) {
+export default function FriendDetail({ friend, timetable, onClose, initialDay = 0 }) {
   const [day, setDay] = useState(initialDay);
-  const [schedule, setSchedule] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
 
-  useEffect(() => {
-    setLoading(true);
-    setError(null);
-    fetchFriendSchedule(friend.id, day)
-      .then((data) => setSchedule(data))
-      .catch((err) => setError(err.message))
-      .finally(() => setLoading(false));
-  }, [friend.id, day]);
+  const schedule = useMemo(() => {
+    const slots = getDaySchedule(timetable, friend.batchCode, day);
+    return {
+      batchCode: friend.batchCode,
+      day,
+      dayName: DAY_NAMES[day],
+      slots,
+    };
+  }, [friend.batchCode, timetable, day]);
 
   return (
     <>
@@ -47,22 +45,13 @@ export default function FriendDetail({ friend, onClose, initialDay = 0 }) {
 
         {/* Schedule */}
         <div className="friend-detail__body">
-          {loading ? (
-            <div className="friend-detail__loading">
-              {[...Array(5)].map((_, i) => (
-                <div key={i} className="skeleton-card" style={{ padding: '12px' }}>
-                  <div className="skeleton skeleton-line short" />
-                  <div className="skeleton skeleton-line medium" style={{ marginTop: 6 }} />
-                </div>
-              ))}
-            </div>
-          ) : error ? (
+          {schedule.slots.length === 0 ? (
             <div className="friend-detail__error">
-              <p>⚠️ {error}</p>
+              <p>📋 No schedule data available for this batch.</p>
             </div>
-          ) : schedule ? (
-            <Timeline slots={schedule.slots || []} dayName={schedule.dayName} currentDay={day} />
-          ) : null}
+          ) : (
+            <Timeline slots={schedule.slots} dayName={schedule.dayName} currentDay={day} />
+          )}
         </div>
       </div>
     </>

@@ -20,7 +20,7 @@ function classTypeLabel(type) {
   return type;
 }
 
-export default function FriendCard({ friend, onTap, onDelete, style }) {
+export default function FriendCard({ friend, onTap, onDelete, onToggleRoommate, style }) {
   const [showConfirm, setShowConfirm] = useState(false);
   const [deleting, setDeleting] = useState(false);
 
@@ -49,6 +49,13 @@ export default function FriendCard({ friend, onTap, onDelete, style }) {
     setShowConfirm(false);
   };
 
+  const handleToggleRoommate = (e) => {
+    e.stopPropagation();
+    if (onToggleRoommate) {
+      onToggleRoommate(friend.id, !friend.isRoommate);
+    }
+  };
+
   return (
     <div
       className={`friend-card glass-card friend-card--${classType} fade-in-up`}
@@ -66,7 +73,15 @@ export default function FriendCard({ friend, onTap, onDelete, style }) {
           <h3 className="friend-card__name">{friend.name}</h3>
           <span className="friend-card__batch">{friend.batchCode}</span>
         </div>
-        <div className="friend-card__actions">
+        <div className="friend-card__actions" style={{ display: 'flex', gap: '8px' }}>
+          <button
+            className={`btn btn-icon ${friend.isRoommate ? 'btn-primary' : 'btn-ghost'}`}
+            onClick={handleToggleRoommate}
+            title={friend.isRoommate ? "Remove Roommate" : "Add as Roommate"}
+            style={{ fontSize: '1.2rem', padding: '4px' }}
+          >
+            🏠
+          </button>
           {showConfirm ? (
             <div className="friend-card__confirm">
               <button

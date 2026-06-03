@@ -12,10 +12,7 @@ type Config struct {
 	DBPass          string
 	DBName          string
 	Port            string
-	GoogleClientID  string
-	JWTSecret       string
 	FrontendURL     string
-	SuperAdminEmail string
 }
 
 // Load reads configuration from environment variables with sensible defaults.
@@ -27,10 +24,7 @@ func Load() *Config {
 		DBPass:          getEnv("DB_PASS", "postgres"),
 		DBName:          getEnv("DB_NAME", "campus_tracker"),
 		Port:            getEnv("PORT", "8080"),
-		GoogleClientID:  getEnv("GOOGLE_CLIENT_ID", ""),
-		JWTSecret:       getEnv("JWT_SECRET", "change-me-to-a-random-secret-in-production"),
 		FrontendURL:     getEnv("FRONTEND_URL", "http://localhost:5173"),
-		SuperAdminEmail: getEnv("SUPER_ADMIN_EMAIL", ""),
 	}
 }
 

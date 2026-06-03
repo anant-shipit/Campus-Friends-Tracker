@@ -34,42 +34,6 @@ CREATE TABLE IF NOT EXISTS schedule_slots (
     UNIQUE(batch_id, day_of_week, slot_index)
 );
 
-CREATE TABLE IF NOT EXISTS users (
-    id SERIAL PRIMARY KEY,
-    google_id VARCHAR(255) UNIQUE NOT NULL,
-    email VARCHAR(255) UNIQUE NOT NULL,
-    name VARCHAR(200) NOT NULL,
-    picture_url TEXT,
-    role VARCHAR(20) DEFAULT 'user',
-    batch_code VARCHAR(100),
-    invite_code VARCHAR(20) UNIQUE NOT NULL,
-    invite_code_expires_at TIMESTAMP NOT NULL DEFAULT (NOW() + INTERVAL '6 hours'),
-    created_at TIMESTAMP DEFAULT NOW(),
-    updated_at TIMESTAMP DEFAULT NOW()
-);
-ALTER TABLE users ADD COLUMN IF NOT EXISTS role VARCHAR(20) DEFAULT 'user';
-CREATE INDEX IF NOT EXISTS idx_users_invite_code ON users(invite_code);
-CREATE INDEX IF NOT EXISTS idx_users_email ON users(email);
-
-CREATE TABLE IF NOT EXISTS friendships (
-    id SERIAL PRIMARY KEY,
-    user_id INT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-    friend_id INT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-    created_at TIMESTAMP DEFAULT NOW(),
-    UNIQUE(user_id, friend_id),
-    CHECK(user_id != friend_id)
-);
-CREATE INDEX IF NOT EXISTS idx_friendships_user ON friendships(user_id);
-CREATE INDEX IF NOT EXISTS idx_friendships_friend ON friendships(friend_id);
-
--- Legacy table kept for reference; no longer used by the app.
-CREATE TABLE IF NOT EXISTS friends (
-    id SERIAL PRIMARY KEY,
-    name VARCHAR(100) NOT NULL,
-    batch_code VARCHAR(100) NOT NULL,
-    created_at TIMESTAMP DEFAULT NOW(),
-    UNIQUE(name, batch_code)
-);
 `
 
 // RunMigrations creates all required tables if they don't already exist.

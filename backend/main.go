@@ -3,12 +3,10 @@ package main
 import (
 	"log"
 	"os"
-	"time"
 
 	"campus-friends-tracker/backend/config"
 	"campus-friends-tracker/backend/database"
 	"campus-friends-tracker/backend/handlers"
-	"campus-friends-tracker/backend/middleware"
 	"campus-friends-tracker/backend/services"
 
 	"github.com/gin-contrib/cors"
@@ -58,8 +56,7 @@ func main() {
 		AllowCredentials: true,
 	}))
 
-	// Rate limiter for invite endpoints (10 requests per minute).
-	inviteLimiter := middleware.NewRateLimiter(10, time.Minute)
+
 
 	// Health check (public).
 	r.GET("/api/health", func(c *gin.Context) {
@@ -69,45 +66,8 @@ func main() {
 	// Register API routes.
 	api := r.Group("/api")
 	{
-		// === Public routes (no auth) ===
-		api.POST("/auth/google", handlers.GoogleLogin(cfg))
-
-		// === Protected routes (auth required) ===
-		protected := api.Group("/")
-		protected.Use(middleware.AuthRequired(cfg))
-		{
-			// Auth / User
-			protected.GET("/auth/me", handlers.GetMe)
-			protected.PUT("/auth/batch", handlers.UpdateBatch)
-
-			// Batches (list all available batches)
-			protected.GET("/batches", handlers.GetBatches)
-
-			// Friends
-			protected.GET("/friends", handlers.GetFriends)
-			protected.DELETE("/friends/:id", handlers.DeleteFriend)
-			protected.GET("/friends/free-now", handlers.GetFreeNow)
-			protected.GET("/friends/invite-info", handlers.GetInviteInfo)
-			protected.POST("/friends/invite-regenerate", handlers.RegenerateInvite)
-
-			// Invite accept (rate-limited)
-			protected.POST("/friends/invite/:code", inviteLimiter.Middleware(), handlers.AcceptInvite)
-
-			// Schedule
-			protected.GET("/friends/:id/schedule", handlers.GetFriendSchedule)
-			protected.POST("/friends/common-free", handlers.GetCommonFreeSlots)
-		}
-
-		// === Admin routes (auth + admin required) ===
-		admin := api.Group("/admin")
-		admin.Use(middleware.AuthRequired(cfg))
-		admin.Use(middleware.AdminRequired())
-		{
-			admin.GET("/stats", handlers.GetSystemStats)
-			admin.GET("/users", handlers.GetAllUsers)
-			admin.PUT("/users/:id/role", handlers.UpdateUserRole)
-			admin.DELETE("/users/:id", handlers.DeleteUser)
-		}
+		// === Public routes ===
+		api.GET("/schedules/all", handlers.GetAllSchedules)
 	}
 
 	// Start server.

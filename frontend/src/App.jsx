@@ -1,88 +1,52 @@
 import { useState, useEffect, useCallback, createContext, useContext } from 'react';
-import { Routes, Route, useNavigate } from 'react-router-dom';
 import './App.css';
-import { useAuth } from './contexts/AuthContext';
-import LoginPage from './components/LoginPage';
 import Dashboard from './components/Dashboard';
-import InviteFriend from './components/InviteFriend';
+import AddFriendModal from './components/AddFriendModal';
 import FriendDetail from './components/FriendDetail';
 import CommonFreeTime from './components/CommonFreeTime';
-import BatchReminder from './components/BatchReminder';
-import AcceptInvitePage from './components/AcceptInvitePage';
-import AdminDashboard from './components/AdminDashboard';
+import PrivateSession from './components/PrivateSession';
 import { ToastProvider } from './components/ToastProvider';
-import { acceptInvite } from './api/api';
+import { fetchAndCacheTimetable, getCachedTimetable } from './utils/timetableCache';
+import { getTodayIndex } from './utils/timeUtils';
 
 const ViewContext = createContext();
 export const useView = () => useContext(ViewContext);
 
 const DAY_NAMES = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
 
-function getTodayIndex() {
-  const d = new Date().getDay(); // 0=Sun, 1=Mon...
-  if (d >= 1 && d <= 5) return d - 1;
-  return 0; // default to Monday on weekends
-}
-
 function App() {
   return (
     <ToastProvider>
-      <Routes>
-        <Route path="/invite/:code" element={<AcceptInvitePage />} />
-        <Route path="/*" element={<MainApp />} />
-      </Routes>
+      <MainApp />
     </ToastProvider>
   );
 }
 
 function MainApp() {
-  const { user, isAuthenticated, loading, logout } = useAuth();
-  const navigate = useNavigate();
-  const [view, setView] = useState('dashboard'); // 'dashboard' | 'common' | 'admin'
-  const [showInvite, setShowInvite] = useState(false);
+  const [view, setView] = useState('dashboard');
+  const [showAddFriend, setShowAddFriend] = useState(false);
+  const [addFriendDefaultRoommate, setAddFriendDefaultRoommate] = useState(false);
   const [selectedFriend, setSelectedFriend] = useState(null);
   const [refreshKey, setRefreshKey] = useState(0);
   const [currentTime, setCurrentTime] = useState(new Date());
+  const [timetable, setTimetable] = useState(() => getCachedTimetable());
 
-  // Update clock every minute
+  // Update clock every minute.
   useEffect(() => {
     const timer = setInterval(() => setCurrentTime(new Date()), 60000);
     return () => clearInterval(timer);
   }, []);
 
-  // Handle pending invite after login.
+  // Fetch and cache timetable on mount (will use cache if offline).
   useEffect(() => {
-    if (isAuthenticated) {
-      const pendingInvite = localStorage.getItem('pending_invite');
-      if (pendingInvite) {
-        localStorage.removeItem('pending_invite');
-        navigate(`/invite/${pendingInvite}`);
-      }
-    }
-  }, [isAuthenticated, navigate]);
+    fetchAndCacheTimetable().then((tt) => {
+      if (tt) setTimetable(tt);
+    });
+  }, []);
 
   const triggerRefresh = useCallback(() => {
     setRefreshKey((k) => k + 1);
   }, []);
-
-  // Show loading spinner while checking auth.
-  if (loading) {
-    return (
-      <div className="app" style={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        minHeight: '100vh',
-      }}>
-        <span className="spinner" />
-      </div>
-    );
-  }
-
-  // Show login page if not authenticated.
-  if (!isAuthenticated) {
-    return <LoginPage />;
-  }
 
   const now = currentTime;
   const dayIndex = now.getDay();
@@ -99,7 +63,7 @@ function MainApp() {
   });
 
   return (
-    <ViewContext.Provider value={{ view, setView, triggerRefresh }}>
+    <ViewContext.Provider value={{ view, setView, triggerRefresh, timetable }}>
       <div className="app">
         {/* Header */}
         <header className="app-header">
@@ -128,76 +92,69 @@ function MainApp() {
                 >
                   📅 Common Free
                 </button>
-                {user?.role === 'admin' && (
-                  <button
-                    className={`app-nav-btn ${view === 'admin' ? 'app-nav-btn--active' : ''}`}
-                    style={{ color: view === 'admin' ? 'var(--text-primary)' : 'var(--color-tutorial)' }}
-                    onClick={() => setView('admin')}
-                  >
-                    ⚙️ Admin
-                  </button>
-                )}
-              </nav>
-              {/* User avatar + logout */}
-              <div className="user-menu">
-                {user?.pictureUrl && (
-                  <img
-                    src={user.pictureUrl}
-                    alt={user.name}
-                    className="user-menu__avatar"
-                    title={`${user.name}\n${user.email}`}
-                  />
-                )}
                 <button
-                  className="btn btn-ghost btn-sm"
-                  onClick={logout}
-                  title="Sign out"
-                  style={{ fontSize: '0.75rem', padding: '4px 10px' }}
+                  className={`app-nav-btn ${view === 'private' ? 'app-nav-btn--active' : ''}`}
+                  onClick={() => setView('private')}
                 >
-                  ↪ Out
+                  🏠 Private Session
                 </button>
-              </div>
+              </nav>
             </div>
           </div>
         </header>
 
         {/* Main Content */}
         <main className="app-container">
-          <BatchReminder />
-
           {view === 'dashboard' && (
             <Dashboard
               refreshKey={refreshKey}
+              timetable={timetable}
               onSelectFriend={setSelectedFriend}
               onRefresh={triggerRefresh}
             />
           )}
-          {view === 'common' && <CommonFreeTime />}
-          {view === 'admin' && user?.role === 'admin' && <AdminDashboard />}
+          {view === 'common' && <CommonFreeTime timetable={timetable} />}
+          {view === 'private' && (
+            <PrivateSession 
+              timetable={timetable} 
+              onAddRoommate={() => {
+                setAddFriendDefaultRoommate(true);
+                setShowAddFriend(true);
+              }}
+              onSelectFriend={setSelectedFriend}
+              onRefresh={triggerRefresh}
+            />
+          )}
         </main>
 
-        {/* FAB — Invite Friend */}
+        {/* FAB — Add Friend */}
         {view === 'dashboard' && (
           <button
             className="fab"
-            onClick={() => setShowInvite(true)}
-            aria-label="Invite friend"
-            id="invite-friend-fab"
+            onClick={() => {
+              setAddFriendDefaultRoommate(false);
+              setShowAddFriend(true);
+            }}
+            aria-label="Add friend"
+            id="add-friend-fab"
           >
             <span className="fab__icon">+</span>
           </button>
         )}
 
         {/* Modals */}
-        {showInvite && (
-          <InviteFriend
-            onClose={() => setShowInvite(false)}
+        {showAddFriend && (
+          <AddFriendModal
+            onClose={() => setShowAddFriend(false)}
+            onSuccess={triggerRefresh}
+            defaultIsRoommate={addFriendDefaultRoommate}
           />
         )}
 
         {selectedFriend && (
           <FriendDetail
             friend={selectedFriend}
+            timetable={timetable}
             onClose={() => setSelectedFriend(null)}
             initialDay={isWeekend ? 0 : getTodayIndex()}
           />
