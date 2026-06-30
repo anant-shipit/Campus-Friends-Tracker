@@ -1,78 +1,90 @@
 # 🎓 Campus Friends Tracker
 
-A premium, interactive web application for university students to track, compare, and coordinate schedules with friends. Built with high-fidelity aesthetics, glassmorphism UI, robust caching, and smooth micro-animations.
+A mobile-first PWA for TIET students to track friends' class schedules in real-time, find common free slots, and figure out when the room is empty — built with a dark glassmorphism UI that works offline.
 
-## 🌟 Key Features
+## ✨ Features
 
-- **Dynamic Interactive Timetables**: View your personal schedule and quickly compare it with friends.
-- **Glassmorphism UI/UX**: Premium aesthetic styling with HSL tailored color schemes, subtle glow effects, and modern layouts.
-- **Integrated Peer Coordination**: Identify common free time slots instantly for group study or hangout sessions.
-- **Private Roommate Sessions**: Dedicated sub-views for managing private study group sessions or roommate schedules.
-- **Optimized Caching & Performance**: Custom cache layer for lightning-fast schedule loading and offline compatibility.
-- **PWA-Ready & Optimized**: Optimized heading structures, PWA manifest configurations, and Robots.txt targeting standard SEO / accessibility checklists.
+- **Friends Dashboard** — Add friends by batch code, see real-time status (Free / In Lecture / Tutorial / Lab), filter by availability, and manage roommates
+- **Common Free Time** — Select 2+ friends and a day to instantly find overlapping free slots with duration
+- **Private Session** — Mark roommates and see when everyone is in class (room is empty), with merged consecutive slots
+- **Friend Detail Timeline** — Tap a friend to view their full day schedule with a NOW badge on the current slot
+- **Offline-First** — Timetable cached in localStorage after first fetch; friends list stored client-side; works fully offline
+- **PWA** — Installable on mobile, service worker with Workbox, auto-updating
+- **Toast Notifications** — Contextual feedback on all user actions
+- **SEO Optimized** — Proper meta tags, Open Graph, heading hierarchy, robots.txt, font preloading
 
----
+## 🏗️ Tech Stack
+
+| Layer    | Technology                                        |
+|----------|---------------------------------------------------|
+| Frontend | React 19, Vite 6, Vanilla CSS, vite-plugin-pwa    |
+| Backend  | Go (Gin), PostgreSQL (pgx)                        |
+| Data     | Embedded JSON timetable seeded into PostgreSQL     |
+| Deploy   | Docker Compose, Vercel-ready                       |
 
 ## 🛠️ Local Development
 
 ### Prerequisites
-- [Go](https://go.dev/) (1.20+)
-- [Node.js](https://nodejs.org/) (v18+)
-- [PostgreSQL](https://www.postgresql.org/) (Running local instance or cloud URI)
+- Go 1.22+, Node.js 18+, PostgreSQL 16 (or Docker)
 
-### 1. Google Cloud Setup (OAuth)
-1. Create OAuth 2.0 Credentials (Web Application) in the [Google Cloud Console](https://console.cloud.google.com/).
-2. Add Authorized JavaScript Origin: `http://localhost:5173`.
-3. In **OAuth Consent Screen**, set **User Type** to **External**. Add your email under **Test Users**.
+### Start PostgreSQL
+```bash
+docker compose up -d postgres
+```
 
-### 2. Run Backend
-1. Navigate to the backend directory:
-   ```bash
-   cd backend
-   ```
-2. Create and fill out your `.env` file based on `.env.example`:
-   ```bash
-   cp .env.example .env
-   # Update DB_HOST, DB_USER, DB_PASSWORD, GOOGLE_CLIENT_ID, and JWT_SECRET
-   ```
-3. Fetch dependencies and run:
-   ```bash
-   go mod tidy
-   go run . --seed      # Seeds the database automatically on first startup
-   ```
+### Run Backend
+```bash
+cd backend
+cp .env.example .env
+go mod tidy
+go run . --seed         # Seeds DB from embedded JSON (first run only)
+```
 
-### 3. Run Frontend
-1. Navigate to the frontend directory:
-   ```bash
-   cd frontend
-   ```
-2. Create your `.env` file:
-   ```bash
-   echo "VITE_GOOGLE_CLIENT_ID=your_client_id_here" > .env
-   ```
-3. Install dependencies and start the development server:
-   ```bash
-   npm install
-   npm run dev
-   ```
+### Run Frontend
+```bash
+cd frontend
+npm install
+npm run dev             # http://localhost:5173 (proxies /api → :8080)
+```
 
----
+### Production Build
+```bash
+cd frontend
+npm run build && npm run preview
+```
 
-## 🌐 Production & Vercel Deployment
+## 🐳 Docker Compose
+```bash
+docker compose up --build
+# PostgreSQL :5432 | Backend :8080 | Frontend :3000
+```
 
-Deploy your backend publicly (e.g., Render, Railway, Fly.io) and configure the following environment variables on Vercel:
+## 🌍 Environment Variables
 
-- `VITE_GOOGLE_CLIENT_ID`: Your Google OAuth Client ID.
-- `VITE_API_BASE_URL`: Your deployed backend URL + `/api` (e.g., `https://your-backend.com/api`).
+| Variable           | Default             | Description              |
+|--------------------|---------------------|--------------------------|
+| `DB_HOST`          | `localhost`         | PostgreSQL host          |
+| `DB_PORT`          | `5432`              | PostgreSQL port          |
+| `DB_USER`          | `postgres`          | Database user            |
+| `DB_PASS`          | `postgres`          | Database password        |
+| `DB_NAME`          | `campus_tracker`    | Database name            |
+| `PORT`             | `8080`              | Backend port             |
+| `FRONTEND_URL`     | `http://localhost:5173` | CORS allowed origin (set to `http://localhost:3000` for Docker) |
+| `VITE_API_BASE_URL`| `/api`              | Frontend API base URL    |
 
-**Important Configuration Steps**:
-1. Add your Vercel URL (e.g., `https://your-app.vercel.app`) to **Authorized JavaScript origins** in the Google Cloud Console.
-2. Set `FRONTEND_URL` on your backend to your Vercel URL to allow CORS.
+## 📡 API
 
----
+| Method | Endpoint             | Description                                    |
+|--------|----------------------|------------------------------------------------|
+| GET    | `/api/health`        | Health check                                   |
+| GET    | `/api/schedules/all` | Full timetable + batch groups (cached by frontend) |
 
-## ❓ Troubleshooting
+## 🚀 Deployment
 
-- **`Error 401: invalid_client`**: `VITE_GOOGLE_CLIENT_ID` environment variable is missing on Vercel. Ensure it is defined and redeployed.
-- **`Error 403: org_internal`**: Google OAuth user type is "Internal". Change it to **External** on the OAuth Consent Screen and add your email to **Test Users**.
-- **Origin not allowed / `origin_mismatch`**: Your Vercel URL or `http://localhost:5173` is not added under **Authorized JavaScript origins** in Google Cloud. Settings take 5–10 mins to apply.
+1. Deploy backend to Render / Railway / Fly.io
+2. Deploy frontend to Vercel with `VITE_API_BASE_URL` pointing to your backend
+3. Set `FRONTEND_URL` on backend to your Vercel URL for CORS
+
+## 👤 Author
+
+**Anant Singh Rathore** — [@anant-shipit](https://github.com/anant-shipit) · anantsinghrathore97@gmail.com
