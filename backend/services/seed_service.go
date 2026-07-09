@@ -157,6 +157,8 @@ func seedTimetable(subjectCodes map[string]string) error {
 	totalSlots := 0
 
 	for yearGroup, batches := range timetable {
+		yearBatches := 0
+		yearSlots := 0
 		for batchCode, grid := range batches {
 			// Insert batch.
 			var batchID int
@@ -170,6 +172,7 @@ func seedTimetable(subjectCodes map[string]string) error {
 				return fmt.Errorf("insert batch %s: %w", batchCode, err)
 			}
 			totalBatches++
+			yearBatches++
 
 			// Grid: row 0 = header, rows 1-14 = time slots.
 			// Columns: 0 = time label, 1-5 = Mon-Fri.
@@ -231,11 +234,13 @@ func seedTimetable(subjectCodes map[string]string) error {
 			}
 			br.Close()
 			totalSlots += slotsQueued
+			yearSlots += slotsQueued
 
 			if err := tx.Commit(ctx); err != nil {
 				return err
 			}
 		}
+		log.Printf("    📅 %s: %d batches, %d slots inserted", yearGroup, yearBatches, yearSlots)
 	}
 
 	log.Printf("  📅 Inserted %d batches, %d schedule slots", totalBatches, totalSlots)
