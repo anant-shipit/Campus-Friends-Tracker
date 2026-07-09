@@ -15,7 +15,7 @@ var pool *pgxpool.Pool
 // InitDB creates a connection pool to PostgreSQL using the provided config.
 func InitDB(cfg *config.Config) error {
 	connStr := fmt.Sprintf(
-		"postgres://%s:%s@%s:%s/%s?sslmode=disable",
+		"postgres://%s:%s@%s:%s/%s?sslmode=require",
 		cfg.DBUser, cfg.DBPass, cfg.DBHost, cfg.DBPort, cfg.DBName,
 	)
 
