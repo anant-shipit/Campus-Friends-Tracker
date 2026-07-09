@@ -10,6 +10,8 @@ import (
 
 	"campus-friends-tracker/backend/data"
 	"campus-friends-tracker/backend/database"
+
+	"github.com/jackc/pgx/v5"
 )
 
 // Fixed 14 time slots (50 minutes each).
@@ -91,11 +93,12 @@ func seedSubjects() (map[string]string, error) {
 	}
 	defer tx.Rollback(ctx)
 
+	batch := &pgx.Batch{}
 	for code, s := range subjects {
 		isCore := strings.EqualFold(s.IsCore, "true")
 		codeToName[code] = s.Name
 
-		_, err := tx.Exec(ctx,
+		batch.Queue(
 			`INSERT INTO subjects (code, name, credit, is_core)
 			 VALUES ($1, $2, $3, $4)
 			 ON CONFLICT (code) DO UPDATE SET
@@ -104,9 +107,16 @@ func seedSubjects() (map[string]string, error) {
 			   is_core = EXCLUDED.is_core`,
 			code, s.Name, s.Credit, isCore,
 		)
-		if err != nil {
-			return nil, fmt.Errorf("insert subject %s: %w", code, err)
+	}
+	br := tx.SendBatch(ctx, batch)
+	for range subjects {
+		if _, err := br.Exec(); err != nil {
+			br.Close()
+			return nil, fmt.Errorf("batch insert subjects: %w", err)
 		}
+	}
+	if err := br.Close(); err != nil {
+		return nil, fmt.Errorf("close subjects batch: %w", err)
 	}
 
 	if err := tx.Commit(ctx); err != nil {
@@ -172,6 +182,8 @@ func seedTimetable(subjectCodes map[string]string) error {
 			if err != nil {
 				return err
 			}
+			slotBatch := &pgx.Batch{}
+			slotsQueued := 0
 
 			for rowIdx := 1; rowIdx < len(grid) && rowIdx <= 14; rowIdx++ {
 				row := grid[rowIdx]
@@ -186,7 +198,7 @@ func seedTimetable(subjectCodes map[string]string) error {
 
 					parsed := parseCell(courseText, color, subjectCodes)
 
-					_, err := tx.Exec(ctx,
+					slotBatch.Queue(
 						`INSERT INTO schedule_slots
 						 (batch_id, day_of_week, slot_index, start_time, end_time,
 						  subject_code, subject_name, class_type, room, raw_text)
@@ -203,16 +215,22 @@ func seedTimetable(subjectCodes map[string]string) error {
 						parsed.classType,
 						nilIfEmpty(parsed.room), nilIfEmpty(courseText),
 					)
-					if err != nil {
-						if rbErr := tx.Rollback(ctx); rbErr != nil {
-							log.Printf("rollback failed for batch=%s: %v", batchCode, rbErr)
-						}
-						return fmt.Errorf("insert slot batch=%s day=%d slot=%d: %w",
-							batchCode, dayOfWeek, slotIndex, err)
-					}
-					totalSlots++
+					slotsQueued++
 				}
 			}
+
+			br := tx.SendBatch(ctx, slotBatch)
+			for i := 0; i < slotsQueued; i++ {
+				if _, err := br.Exec(); err != nil {
+					br.Close()
+					if rbErr := tx.Rollback(ctx); rbErr != nil {
+						log.Printf("rollback failed for batch=%s: %v", batchCode, rbErr)
+					}
+					return fmt.Errorf("insert slots batch=%s: %w", batchCode, err)
+				}
+			}
+			br.Close()
+			totalSlots += slotsQueued
 
 			if err := tx.Commit(ctx); err != nil {
 				return err
