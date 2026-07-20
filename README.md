@@ -1,90 +1,58 @@
 # 🎓 Campus Friends Tracker
 
-A mobile-first PWA for TIET students to track friends' class schedules in real-time, find common free slots, and figure out when the room is empty — built with a dark glassmorphism UI that works offline.
+A mobile-first PWA for TIET students to track friends' class schedules in real-time, find common free slots, and figure out when the room is empty — built with a premium dark glassmorphism SaaS UI inspired by Linear and Vercel.
 
 ## ✨ Features
 
-- **Friends Dashboard** — Add friends by batch code, see real-time status (Free / In Lecture / Tutorial / Lab), filter by availability, and manage roommates
-- **Common Free Time** — Select 2+ friends and a day to instantly find overlapping free slots with duration
-- **Private Session** — Mark roommates and see when everyone is in class (room is empty), with merged consecutive slots
-- **Friend Detail Timeline** — Tap a friend to view their full day schedule with a NOW badge on the current slot
-- **Offline-First** — Timetable cached in localStorage after first fetch; friends list stored client-side; works fully offline
-- **PWA** — Installable on mobile, service worker with Workbox, auto-updating
-- **Toast Notifications** — Contextual feedback on all user actions
-- **SEO Optimized** — Proper meta tags, Open Graph, heading hierarchy, robots.txt, font preloading
+- **Premium SaaS Dashboards** — Rebuilt all key views (Friends, Common Free, Roommates) into high-density, CLS-stable dashboards with real-time statistics.
+- **Interactive Cursor Spotlight** — Smooth, performance-tuned radial spotlight that tracks the mouse with low opacity gradients and respects `prefers-reduced-motion`.
+- **Layout Stability (CLS Prevention)** — Enforced container stability with `DashboardContainer` layout primitives and `min-height` reservations.
+- **Common Free Time** — Interactive selector grid to choose multiple friends and locate overlapping availability using a sliding segmented control.
+- **Roommates (Private Session)** — Calculate when the shared room is completely free (consecutive slot merging) with realistic empty state skeleton previews.
+- **Accessbility & Transitions** — Full keyboard navigation (tabbing, arrows, Home/End) on controls, visible focus rings, and smooth `200ms` cross-fades.
+- **Offline-First & PWA** — Offline-ready schedule caching, installable on mobile via Workbox-powered PWAs.
 
 ## 🏗️ Tech Stack
 
 | Layer    | Technology                                        |
 |----------|---------------------------------------------------|
-| Frontend | React 19, Vite 6, Vanilla CSS, vite-plugin-pwa    |
+| Frontend | React 19, Vite 6, Vanilla CSS (Layout Primitives), PWA |
 | Backend  | Go (Gin), PostgreSQL (pgx)                        |
-| Data     | Embedded JSON timetable seeded into PostgreSQL     |
-| Deploy   | Docker Compose, Vercel-ready                       |
+| Styling  | Dark Glassmorphism, CSS Custom Properties, Transitions |
 
 ## 🛠️ Local Development
 
-### Prerequisites
-- Go 1.22+, Node.js 18+, PostgreSQL 16 (or Docker)
-
-### Start PostgreSQL
+### 1. Database & Backend
 ```bash
+# Spin up PostgreSQL
 docker compose up -d postgres
-```
 
-### Run Backend
-```bash
+# Start Go Backend
 cd backend
 cp .env.example .env
 go mod tidy
 go run . --seed         # Seeds DB from embedded JSON (first run only)
 ```
 
-### Run Frontend
+### 2. Frontend
 ```bash
 cd frontend
 npm install
 npm run dev             # http://localhost:5173 (proxies /api → :8080)
 ```
 
-### Production Build
-```bash
-cd frontend
-npm run build && npm run preview
-```
+## 📡 API Overview
 
-## 🐳 Docker Compose
-```bash
-docker compose up --build
-# PostgreSQL :5432 | Backend :8080 | Frontend :3000
-```
+- `GET /api/health` — API health check
+- `GET /api/schedules/all` — Returns the fully consolidated JSON timetable database.
 
-## 🌍 Environment Variables
+## 🚀 Key Layout Architecture
 
-| Variable           | Default             | Description              |
-|--------------------|---------------------|--------------------------|
-| `DB_HOST`          | `localhost`         | PostgreSQL host          |
-| `DB_PORT`          | `5432`              | PostgreSQL port          |
-| `DB_USER`          | `postgres`          | Database user            |
-| `DB_PASS`          | `postgres`          | Database password        |
-| `DB_NAME`          | `campus_tracker`    | Database name            |
-| `PORT`             | `8080`              | Backend port             |
-| `FRONTEND_URL`     | `http://localhost:5173` | CORS allowed origin (set to `http://localhost:3000` for Docker) |
-| `VITE_API_BASE_URL`| `/api`              | Frontend API base URL    |
+To maintain high consistency, the frontend leverages unified layout primitives:
+- `DashboardContainer` — Aligns max-width and screen margins globally.
+- `Stack`, `Section`, `Card` — Standardized structural components.
+- `SegmentedControl` — Standardized accessible tab/weekday control.
+- `EmptyState` — Contract-driven SVG line-art state loader with skeleton previews.
 
-## 📡 API
-
-| Method | Endpoint             | Description                                    |
-|--------|----------------------|------------------------------------------------|
-| GET    | `/api/health`        | Health check                                   |
-| GET    | `/api/schedules/all` | Full timetable + batch groups (cached by frontend) |
-
-## 🚀 Deployment
-
-1. Deploy backend to Render / Railway / Fly.io
-2. Deploy frontend to Vercel with `VITE_API_BASE_URL` pointing to your backend
-3. Set `FRONTEND_URL` on backend to your Vercel URL for CORS
-
-## 👤 Author
-
-**Anant Singh Rathore** — [@anant-shipit](https://github.com/anant-shipit) · anantsinghrathore97@gmail.com
+---
+**Author:** Anant Singh Rathore — [@anant-shipit](https://github.com/anant-shipit)
