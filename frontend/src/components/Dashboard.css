@@ -83,7 +83,7 @@
 /* --- Responsive --- */
 @media (max-width: 768px) {
   .stats-row {
-    flex-direction: column;
+    flex-direction: column !important;
   }
   .section-header {
     flex-direction: column;

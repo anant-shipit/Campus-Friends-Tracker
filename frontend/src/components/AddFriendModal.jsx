@@ -3,6 +3,7 @@ import { addFriend } from '../utils/friendsStore';
 import { getCachedBatches, fetchAndCacheTimetable } from '../utils/timetableCache';
 import { useToast } from './ToastProvider';
 import './AddFriendModal.css';
+import friendsIcon from '../assets/friends_icon.png';
 
 // SVG Icons
 const UserIcon = () => (
@@ -25,7 +26,7 @@ const FriendHeaderIcon = () => (
     boxShadow: '0 4px 12px rgba(0,0,0,0.3)'
   }}>
     <img 
-      src="/src/assets/friends_icon.png" 
+      src={friendsIcon} 
       alt="Friends Icon" 
       style={{ 
         width: 32, 
@@ -113,11 +114,6 @@ export default function AddFriendModal({ onClose, onSuccess, defaultIsRoommate =
   const handleDropdownKeyDown = (e) => {
     if (e.key === 'Escape') {
       setDropdownOpen(false);
-    }
-    // Simple keyboard navigation for opening
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      setDropdownOpen(!dropdownOpen);
     }
   };
 

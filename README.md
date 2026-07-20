@@ -9,7 +9,7 @@ A mobile-first PWA for TIET students to track friends' class schedules in real-t
 - **Layout Stability (CLS Prevention)** — Enforced container stability with `DashboardContainer` layout primitives and `min-height` reservations.
 - **Common Free Time** — Interactive selector grid to choose multiple friends and locate overlapping availability using a sliding segmented control.
 - **Roommates (Private Session)** — Calculate when the shared room is completely free (consecutive slot merging) with realistic empty state skeleton previews.
-- **Accessbility & Transitions** — Full keyboard navigation (tabbing, arrows, Home/End) on controls, visible focus rings, and smooth `200ms` cross-fades.
+- **Accessibility & Transitions** — Full keyboard navigation (tabbing, arrows, Home/End) on controls, visible focus rings, and smooth `200ms` cross-fades.
 - **Offline-First & PWA** — Offline-ready schedule caching, installable on mobile via Workbox-powered PWAs.
 
 ## 🏗️ Tech Stack
@@ -22,6 +22,11 @@ A mobile-first PWA for TIET students to track friends' class schedules in real-t
 
 ## 🛠️ Local Development
 
+### Prerequisites
+- **Docker** (for PostgreSQL)
+- **Go 1.22+**
+- **Node.js 18+ / npm**
+
 ### 1. Database & Backend
 ```bash
 # Spin up PostgreSQL
@@ -30,6 +35,7 @@ docker compose up -d postgres
 # Start Go Backend
 cd backend
 cp .env.example .env
+# Note: The default values in .env.example are sufficient for local development with the Docker setup.
 go mod tidy
 go run . --seed         # Seeds DB from embedded JSON (first run only)
 ```

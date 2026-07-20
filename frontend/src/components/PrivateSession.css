@@ -118,7 +118,7 @@
 /* ─── Responsive ─── */
 @media (max-width: 768px) {
   .hero-top {
-    flex-direction: column;
+    flex-direction: column !important;
     align-items: flex-start;
     gap: var(--space-lg);
   }
@@ -128,11 +128,11 @@
   }
   
   .stats-row {
-    flex-direction: column;
+    flex-direction: column !important;
   }
   
   .schedule-header {
-    flex-direction: column;
+    flex-direction: column !important;
     align-items: flex-start;
     gap: var(--space-md);
   }

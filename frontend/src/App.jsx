@@ -10,6 +10,12 @@ import { fetchAndCacheTimetable, getCachedTimetable } from './utils/timetableCac
 import { getTodayIndex } from './utils/timeUtils';
 import { useCursorSpotlight } from './hooks/useCursorSpotlight';
 
+// Assets
+import headerIcon from './assets/header_icon.png';
+import friendsIcon from './assets/friends_icon.png';
+import commonFreeTimeIcon from './assets/common_free_time_icon.png';
+import privateSessionIcon from './assets/private_session_icon.png';
+
 const ViewContext = createContext();
 export const useView = () => useContext(ViewContext);
 
@@ -76,7 +82,7 @@ function MainApp() {
           <div className="app-header__inner app-container">
             <div className="app-header__brand">
               <span className="app-header__emoji">
-                <img src="/src/assets/header_icon.png" alt="Header Icon" style={{ width: 40, height: 40, objectFit: 'contain' }} />
+                <img src={headerIcon} alt="" aria-hidden="true" style={{ width: 40, height: 40, objectFit: 'contain' }} />
               </span>
               <div>
                 <h1 className="app-header__title">Campus Friends</h1>
@@ -92,21 +98,21 @@ function MainApp() {
                   className={`app-nav-btn ${view === 'dashboard' ? 'app-nav-btn--active' : ''}`}
                   onClick={() => setView('dashboard')}
                 >
-                  <img src="/src/assets/friends_icon.png" alt="Friends Icon" className="nav-icon" style={{ display: 'block', margin: '0 auto 6px', width: 28, height: 28, objectFit: 'contain' }} />
+                  <img src={friendsIcon} alt="" aria-hidden="true" className="nav-icon" style={{ display: 'block', margin: '0 auto 6px', width: 28, height: 28, objectFit: 'contain' }} />
                   Friends
                 </button>
                 <button
                   className={`app-nav-btn ${view === 'common' ? 'app-nav-btn--active' : ''}`}
                   onClick={() => setView('common')}
                 >
-                  <img src="/src/assets/common_free_time_icon.png" alt="Common Free Time Icon" className="nav-icon" style={{ display: 'block', margin: '0 auto 6px', width: 28, height: 28, objectFit: 'contain' }} />
+                  <img src={commonFreeTimeIcon} alt="" aria-hidden="true" className="nav-icon" style={{ display: 'block', margin: '0 auto 6px', width: 28, height: 28, objectFit: 'contain' }} />
                   Common Free
                 </button>
                 <button
                   className={`app-nav-btn ${view === 'private' ? 'app-nav-btn--active' : ''}`}
                   onClick={() => setView('private')}
                 >
-                  <img src="/src/assets/private_session_icon.png" alt="Private Session Icon" className="nav-icon" style={{ display: 'block', margin: '0 auto 6px', width: 28, height: 28, objectFit: 'contain' }} />
+                  <img src={privateSessionIcon} alt="" aria-hidden="true" className="nav-icon" style={{ display: 'block', margin: '0 auto 6px', width: 28, height: 28, objectFit: 'contain' }} />
                   Private Session
                 </button>
               </nav>

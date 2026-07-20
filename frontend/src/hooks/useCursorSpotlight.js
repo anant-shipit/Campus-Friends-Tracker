@@ -23,9 +23,21 @@ export const useCursorSpotlight = (config = {}) => {
     const root = document.documentElement;
 
     const animate = () => {
+      const dx = target.current.x - current.current.x;
+      const dy = target.current.y - current.current.y;
+      
+      if (Math.abs(dx) < 0.1 && Math.abs(dy) < 0.1) {
+        current.current.x = target.current.x;
+        current.current.y = target.current.y;
+        root.style.setProperty('--mouse-x', `${current.current.x}px`);
+        root.style.setProperty('--mouse-y', `${current.current.y}px`);
+        requestRef.current = null;
+        return;
+      }
+
       // Lerp (Linear Interpolation) for smooth movement
-      current.current.x += (target.current.x - current.current.x) * interpolationSpeed;
-      current.current.y += (target.current.y - current.current.y) * interpolationSpeed;
+      current.current.x += dx * interpolationSpeed;
+      current.current.y += dy * interpolationSpeed;
 
       root.style.setProperty('--mouse-x', `${current.current.x}px`);
       root.style.setProperty('--mouse-y', `${current.current.y}px`);
@@ -36,6 +48,10 @@ export const useCursorSpotlight = (config = {}) => {
     const handleMouseMove = (e) => {
       target.current.x = e.clientX;
       target.current.y = e.clientY;
+
+      if (!requestRef.current) {
+        requestRef.current = requestAnimationFrame(animate);
+      }
 
       if (!hasMoved.current) {
         hasMoved.current = true;

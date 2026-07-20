@@ -64,7 +64,7 @@ export default function CommonFreeTime({ timetable }) {
       const diff = Math.round((end - start) / 60000);
       if (diff > max) max = diff;
     }
-    return max > 0 ? `${max} min` : '50 min';
+    return max > 0 ? `${max} min` : '—';
   }, [freeSlots]);
 
   const isEmpty = friends.length === 0;
