@@ -47,8 +47,8 @@ export const SegmentedControl = memo(({ options, selectedIndex, onChange }) => {
       <div 
         className="sc-indicator" 
         style={{ 
-          width: `${100 / options.length}%`, 
-          transform: `translateX(${selectedIndex * 100}%)` 
+          width: `calc((100% - 8px - ${(options.length - 1) * 4}px) / ${options.length})`, 
+          transform: `translateX(calc(${selectedIndex} * 100% + ${selectedIndex * 4}px))` 
         }} 
       />
       {options.map((option, idx) => {
