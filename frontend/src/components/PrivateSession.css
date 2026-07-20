@@ -1,167 +1,144 @@
-.private-session {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
+/* ═══════════════════════════════════════════
+   PrivateSession Redesign (Dashboard)
+   ═══════════════════════════════════════════ */
+
+.dashboard-page {
+  padding-top: var(--space-xl);
+  padding-bottom: var(--space-2xl);
 }
 
-.private-session__header {
-  text-align: center;
-  padding: 16px;
-  background: var(--glass-bg);
-  backdrop-filter: var(--glass-blur);
-  border-radius: 16px;
-  border: 1px solid var(--glass-border);
+/* ─── Hero ─── */
+.hero-top {
+  margin-bottom: var(--space-xl);
 }
 
-.private-session__header h2 {
-  margin-top: 0;
-  margin-bottom: 8px;
-  font-size: 1.5rem;
-}
-
-.private-session__header p {
-  color: var(--text-muted);
-  margin-bottom: 16px;
-  font-size: 0.9rem;
-}
-
-.horizontal-scroll {
-  display: flex;
-  gap: 12px;
-  overflow-x: auto;
-  padding-bottom: 12px;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: thin;
-}
-
-.horizontal-scroll::-webkit-scrollbar {
-  height: 6px;
-}
-
-.horizontal-scroll::-webkit-scrollbar-thumb {
-  background: var(--border-color);
-  border-radius: 4px;
-}
-
-.private-session__friend-chip {
-  flex: 0 0 auto;
-  background: var(--glass-bg);
-  backdrop-filter: var(--glass-blur);
-  border: 1px solid var(--glass-border);
-  padding: 8px 16px;
-  border-radius: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.private-session__friend-chip:hover {
-  border-color: var(--brand-primary);
-  transform: translateY(-2px);
-}
-
-.private-session__friend-chip .name {
-  font-weight: 600;
-  font-size: 0.9rem;
-}
-
-.private-session__friend-chip .batch {
-  font-size: 0.75rem;
-  color: var(--text-muted);
-}
-
-.private-session__empty {
-  text-align: center;
-  color: var(--text-muted);
-  padding: 24px;
-  background: var(--bg-surface);
-  border-radius: 12px;
-  border: 1px dashed var(--border-color);
-}
-
-.private-session__schedule h3 {
-  margin-bottom: 16px;
-  font-size: 1.2rem;
-}
-
-.day-selector {
-  display: flex;
-  gap: 8px;
-  overflow-x: auto;
-  padding-bottom: 12px;
-  margin-bottom: 16px;
-}
-
-.day-btn {
-  padding: 8px 16px;
-  border-radius: 20px;
-  border: 1px solid var(--glass-border);
-  background: var(--glass-bg);
-  backdrop-filter: var(--glass-blur);
+.hero-title {
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
   color: var(--text-primary);
-  font-weight: 500;
+  margin: 0;
+}
+
+.hero-subtitle {
+  font-size: 15px;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+/* ─── Stats Row ─── */
+.stats-row {
+  margin-bottom: var(--space-2xl);
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding-bottom: 8px; /* For focus rings */
+}
+.stats-row::-webkit-scrollbar {
+  display: none;
+}
+
+/* ─── Roommates List ─── */
+.roommate-chip {
+  padding: var(--space-sm) var(--space-lg);
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
   cursor: pointer;
-  transition: all 0.2s ease;
   white-space: nowrap;
 }
 
-.day-btn:hover {
-  background: rgba(255, 255, 255, 0.1);
-}
-
-.day-btn--active {
-  background: var(--brand-primary);
-  color: white;
-  border-color: var(--brand-primary);
-  box-shadow: 0 0 12px rgba(var(--brand-primary-rgb), 0.4);
-}
-
-.private-session__slots {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.private-session__slot-card {
-  padding: 16px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-left: 4px solid var(--success-color);
-}
-
-.private-session__slot-card .time {
-  font-size: 1.1rem;
+.roommate-chip .name {
+  font-size: 14px;
   font-weight: 600;
 }
 
-.private-session__slot-card .label {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 0.9rem;
-  color: var(--text-muted);
+.roommate-chip .batch {
+  font-size: 12px;
+  color: var(--text-secondary);
+  background: rgba(255,255,255,0.05);
+  padding: 2px 8px;
+  border-radius: 12px;
 }
 
-.status-dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  display: inline-block;
+/* ─── Schedule Section ─── */
+.section-title {
+  font-size: 15px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-secondary);
+  margin: 0;
 }
 
-.status-dot.green {
-  background-color: var(--success-color);
-  box-shadow: 0 0 8px rgba(var(--success-color-rgb), 0.4);
+.segmented-control-wrapper {
+  flex-shrink: 0;
 }
 
-.private-session__no-slots {
+/* ─── Empty States ─── */
+.empty-slots {
   text-align: center;
-  padding: 32px;
-  background: var(--bg-surface);
-  border-radius: 16px;
-  border: 1px solid var(--border-color);
-  color: var(--text-muted);
+  padding: var(--space-2xl) var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  align-items: center;
+}
+
+.empty-slots p {
+  margin: 0;
+  font-size: 15px;
+}
+.empty-slots .sub {
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+/* Skeleton Previews in Empty State */
+.skeleton-previews {
+  margin-top: var(--space-xl);
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  pointer-events: none;
+  user-select: none;
+  position: relative;
+}
+
+/* Add a fade-out mask to the skeletons */
+.skeleton-previews::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent, var(--bg-primary) 100%);
+  pointer-events: none;
+}
+
+/* ─── Responsive ─── */
+@media (max-width: 768px) {
+  .hero-top {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-lg);
+  }
+  
+  .hero-cta {
+    align-self: flex-start;
+  }
+  
+  .stats-row {
+    flex-direction: column;
+  }
+  
+  .schedule-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-md);
+  }
+  
+  .segmented-control-wrapper {
+    width: 100%;
+    overflow-x: auto;
+  }
 }

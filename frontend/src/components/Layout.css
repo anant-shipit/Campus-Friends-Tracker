@@ -1,0 +1,51 @@
+/* Layout Primitives */
+.layout-container {
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 var(--space-xl);
+}
+
+.dashboard-container {
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: var(--space-xl) var(--space-xl) var(--space-3xl);
+}
+
+@media (max-width: 768px) {
+  .dashboard-container {
+    padding-left: var(--space-lg);
+    padding-right: var(--space-lg);
+  }
+}
+
+.layout-section {
+  padding-bottom: var(--space-2xl);
+}
+
+/* Card Component (from Design System) */
+.layout-card {
+  background: var(--pm-card, #171A22);
+  border: 1px solid var(--pm-border, rgba(255, 255, 255, 0.06));
+  border-radius: var(--pm-radius-card, 16px);
+  padding: var(--space-xl);
+  transition: transform var(--pm-duration, 200ms) var(--pm-ease, cubic-bezier(.22, 1, .36, 1)), 
+              box-shadow var(--pm-duration, 200ms) var(--pm-ease, cubic-bezier(.22, 1, .36, 1)),
+              border-color var(--pm-duration, 200ms) var(--pm-ease, cubic-bezier(.22, 1, .36, 1));
+}
+
+.layout-card.hoverable:hover {
+  border-color: var(--pm-border-hover, rgba(255, 255, 255, 0.12));
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+.layout-card.hoverable:focus-visible {
+  outline: none;
+  box-shadow: var(--pm-shadow-glow);
+}
+
+.layout-card.hoverable:active {
+  transform: translateY(0) scale(0.98);
+}

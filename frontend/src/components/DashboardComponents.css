@@ -1,0 +1,274 @@
+/* =========================================
+   Dashboard Components CSS
+   ========================================= */
+
+/* --- State Transitions --- */
+.fade-transition {
+  transition: opacity 200ms cubic-bezier(.22,1,.36,1), transform 200ms cubic-bezier(.22,1,.36,1);
+}
+.fade-transition.exiting {
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 100ms ease-out, transform 100ms ease-out;
+}
+.fade-transition.entering {
+  opacity: 0;
+  transform: translateY(8px);
+}
+
+/* --- Dashboard Hero --- */
+.dashboard-hero {
+  padding: var(--space-xl) 0;
+  min-height: 100px;
+}
+.hero-title {
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  margin: 0;
+}
+.hero-subtitle {
+  font-size: 15px;
+  color: var(--text-secondary);
+  margin: 0;
+}
+.hero-icon {
+  margin-right: var(--space-md);
+  opacity: 0.9;
+}
+@media (max-width: 768px) {
+  .dashboard-hero {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: var(--space-lg);
+  }
+  .hero-cta {
+    align-self: flex-start;
+  }
+}
+
+/* --- Section Header --- */
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-md);
+}
+.section-title {
+  font-size: 15px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+/* --- Segmented Control --- */
+.segmented-control {
+  position: relative;
+  display: flex;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--pm-border, rgba(255, 255, 255, 0.06));
+  border-radius: 12px;
+  padding: 4px;
+  gap: 4px;
+  overflow-x: auto;
+  scrollbar-width: none; /* Firefox */
+}
+.segmented-control::-webkit-scrollbar {
+  display: none; /* Chrome/Safari */
+}
+
+.sc-indicator {
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  left: 4px;
+  background: var(--pm-surface, #11131A);
+  border: 1px solid var(--pm-border, rgba(255, 255, 255, 0.06));
+  border-radius: 8px;
+  transition: transform 0.25s cubic-bezier(.22, 1, .36, 1);
+  pointer-events: none;
+}
+
+.sc-btn {
+  flex: 1;
+  min-width: max-content;
+  padding: 8px 16px;
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  color: var(--text-secondary);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  z-index: 1;
+  transition: color 0.2s ease;
+  min-height: 36px; /* Touch target */
+}
+
+.sc-btn.active {
+  color: var(--text-primary);
+}
+
+.sc-btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--brand-primary);
+}
+
+/* Stat Card */
+.stat-card {
+  padding: var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  flex: 1;
+  min-width: 140px;
+}
+
+.stat-title {
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.stat-value {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.stat-desc {
+  font-size: 13px;
+  color: var(--text-secondary);
+  opacity: 0.8;
+}
+
+/* Empty State */
+.empty-state {
+  text-align: center;
+  padding: var(--space-2xl) var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.empty-state-icon {
+  margin-bottom: var(--space-md);
+  opacity: 0.9;
+  filter: drop-shadow(0 4px 12px rgba(0,0,0,0.5));
+}
+
+.empty-state-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.empty-state-desc {
+  font-size: 14px;
+  color: var(--text-secondary);
+  max-width: 320px;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.empty-state-helper {
+  font-size: 13px;
+  color: var(--text-tertiary);
+  font-style: italic;
+  margin: 0;
+  margin-top: var(--space-md);
+}
+
+/* Schedule Card */
+.schedule-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-lg) var(--space-xl);
+  margin-bottom: var(--space-md);
+  /* Entrance animation applied via inline style delay if needed */
+}
+
+.sc-time {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.sc-label {
+  font-size: 14px;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.status-dot.green {
+  background: var(--brand-primary); /* Simplified to brand for consistency */
+  box-shadow: 0 0 8px rgba(var(--brand-primary-rgb), 0.6);
+}
+
+/* --- Skeletons --- */
+@keyframes skeleton-shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.skeleton-card {
+  opacity: 0.5;
+  filter: blur(2px);
+  pointer-events: none;
+  border-color: rgba(255, 255, 255, 0.03);
+}
+
+.skeleton-text,
+.skeleton-dot {
+  background: linear-gradient(90deg, rgba(255,255,255,0.03) 25%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.03) 75%);
+  background-size: 400% 100%;
+  animation: skeleton-shimmer 1.5s ease-in-out infinite;
+  border-radius: var(--radius-sm);
+}
+
+.skeleton-text {
+  height: 14px;
+}
+
+.skeleton-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+/* Skeleton Friend Card */
+.skeleton-friend-card {
+  padding: var(--space-lg);
+  margin-bottom: var(--space-md);
+}
+
+.skeleton-friend-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.skeleton-friend-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.skeleton-friend-body {
+  padding-left: 28px;
+}

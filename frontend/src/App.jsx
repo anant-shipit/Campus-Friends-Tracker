@@ -8,6 +8,7 @@ import PrivateSession from './components/PrivateSession';
 import { ToastProvider } from './components/ToastProvider';
 import { fetchAndCacheTimetable, getCachedTimetable } from './utils/timetableCache';
 import { getTodayIndex } from './utils/timeUtils';
+import { useCursorSpotlight } from './hooks/useCursorSpotlight';
 
 const ViewContext = createContext();
 export const useView = () => useContext(ViewContext);
@@ -23,6 +24,7 @@ function App() {
 }
 
 function MainApp() {
+  useCursorSpotlight();
   const [view, setView] = useState('dashboard');
   const [showAddFriend, setShowAddFriend] = useState(false);
   const [addFriendDefaultRoommate, setAddFriendDefaultRoommate] = useState(false);
@@ -74,7 +76,7 @@ function MainApp() {
           <div className="app-header__inner app-container">
             <div className="app-header__brand">
               <span className="app-header__emoji">
-                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{color: 'var(--brand-primary)'}}><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
+                <img src="/src/assets/header_icon.png" alt="Header Icon" style={{ width: 40, height: 40, objectFit: 'contain' }} />
               </span>
               <div>
                 <h1 className="app-header__title">Campus Friends</h1>
@@ -90,21 +92,21 @@ function MainApp() {
                   className={`app-nav-btn ${view === 'dashboard' ? 'app-nav-btn--active' : ''}`}
                   onClick={() => setView('dashboard')}
                 >
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{marginRight: '6px', verticalAlign: 'text-bottom'}}><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                  <img src="/src/assets/friends_icon.png" alt="Friends Icon" className="nav-icon" style={{ display: 'block', margin: '0 auto 6px', width: 28, height: 28, objectFit: 'contain' }} />
                   Friends
                 </button>
                 <button
                   className={`app-nav-btn ${view === 'common' ? 'app-nav-btn--active' : ''}`}
                   onClick={() => setView('common')}
                 >
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{marginRight: '6px', verticalAlign: 'text-bottom'}}><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                  <img src="/src/assets/common_free_time_icon.png" alt="Common Free Time Icon" className="nav-icon" style={{ display: 'block', margin: '0 auto 6px', width: 28, height: 28, objectFit: 'contain' }} />
                   Common Free
                 </button>
                 <button
                   className={`app-nav-btn ${view === 'private' ? 'app-nav-btn--active' : ''}`}
                   onClick={() => setView('private')}
                 >
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{marginRight: '6px', verticalAlign: 'text-bottom'}}><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                  <img src="/src/assets/private_session_icon.png" alt="Private Session Icon" className="nav-icon" style={{ display: 'block', margin: '0 auto 6px', width: 28, height: 28, objectFit: 'contain' }} />
                   Private Session
                 </button>
               </nav>
@@ -120,6 +122,10 @@ function MainApp() {
               timetable={timetable}
               onSelectFriend={setSelectedFriend}
               onRefresh={triggerRefresh}
+              onAddFriend={() => {
+                setAddFriendDefaultRoommate(false);
+                setShowAddFriend(true);
+              }}
             />
           )}
           {view === 'common' && <CommonFreeTime timetable={timetable} />}
@@ -135,21 +141,6 @@ function MainApp() {
             />
           )}
         </main>
-
-        {/* FAB — Add Friend */}
-        {view === 'dashboard' && (
-          <button
-            className="fab"
-            onClick={() => {
-              setAddFriendDefaultRoommate(false);
-              setShowAddFriend(true);
-            }}
-            aria-label="Add friend"
-            id="add-friend-fab"
-          >
-            <span className="fab__icon">+</span>
-          </button>
-        )}
 
         {/* Modals */}
         {showAddFriend && (

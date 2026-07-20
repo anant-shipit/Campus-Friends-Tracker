@@ -147,3 +147,7 @@
 .user-menu__avatar:hover {
   border-color: rgba(99, 102, 241, 0.8);
 }
+.nav-icon {
+  filter: invert(1) brightness(1.2) drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+}
+

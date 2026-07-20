@@ -691,3 +691,39 @@ img {
   height: 14px;
   border-width: 1.5px;
 }
+
+/* ─── Cursor Spotlight ─── */
+:root {
+  --mouse-x: 50vw;
+  --mouse-y: 50vh;
+  --spotlight-opacity: 0;
+  --spotlight-radius: 600px;
+  --spotlight-color: rgba(var(--brand-primary-rgb), 0.08);
+}
+
+.app::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  background: radial-gradient(
+    circle var(--spotlight-radius) at var(--mouse-x) var(--mouse-y),
+    var(--spotlight-color),
+    transparent 100%
+  );
+  opacity: var(--spotlight-opacity);
+  transition: opacity 0.5s ease;
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .app::before {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .app::before {
+    display: none;
+  }
+}
