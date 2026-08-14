@@ -10,6 +10,7 @@ import (
 	"campus-friends-tracker/backend/config"
 	"campus-friends-tracker/backend/database"
 	"campus-friends-tracker/backend/handlers"
+	"campus-friends-tracker/backend/middleware"
 	"campus-friends-tracker/backend/services"
 
 	"github.com/gin-contrib/cors"
@@ -128,11 +129,16 @@ func main() {
 		}
 	})
 
+	// Keep-alive (external pinger target — lightweight, placed before middleware).
+	r.GET("/api/keepalive", handlers.KeepAlive)
+
 	// Register API routes.
 	api := r.Group("/api")
+	api.Use(middleware.TrafficCounter)
 	{
 		// === Public routes ===
 		api.GET("/schedules/all", handlers.GetAllSchedules)
+		api.GET("/stats", handlers.GetStats)
 	}
 
 	// Start server.

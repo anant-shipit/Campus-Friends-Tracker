@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"time"
 
 	"campus-friends-tracker/backend/config"
 
@@ -13,14 +14,26 @@ import (
 var pool *pgxpool.Pool
 
 // InitDB creates a connection pool to PostgreSQL using the provided config.
+// Pool settings are tuned for Aiven's free-tier connection limits.
 func InitDB(cfg *config.Config) error {
 	connStr := fmt.Sprintf(
 		"postgres://%s:%s@%s:%s/%s?sslmode=require",
 		cfg.DBUser, cfg.DBPass, cfg.DBHost, cfg.DBPort, cfg.DBName,
 	)
 
-	var err error
-	pool, err = pgxpool.New(context.Background(), connStr)
+	poolCfg, err := pgxpool.ParseConfig(connStr)
+	if err != nil {
+		return fmt.Errorf("unable to parse connection string: %w", err)
+	}
+
+	// Aiven free tier allows ~5 connections; keep pool small with headroom.
+	poolCfg.MaxConns = 3
+	poolCfg.MinConns = 1
+	poolCfg.MaxConnLifetime = 30 * time.Minute
+	poolCfg.MaxConnIdleTime = 5 * time.Minute
+	poolCfg.HealthCheckPeriod = 1 * time.Minute
+
+	pool, err = pgxpool.NewWithConfig(context.Background(), poolCfg)
 	if err != nil {
 		return fmt.Errorf("unable to create connection pool: %w", err)
 	}
@@ -31,6 +44,11 @@ func InitDB(cfg *config.Config) error {
 
 	log.Println("✅ Connected to PostgreSQL")
 	return nil
+}
+
+// PingDB executes a lightweight round-trip to verify the database is reachable.
+func PingDB(ctx context.Context) error {
+	return pool.Ping(ctx)
 }
 
 // GetDB returns the active connection pool.
