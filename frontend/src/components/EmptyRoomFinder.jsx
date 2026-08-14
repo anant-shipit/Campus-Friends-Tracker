@@ -20,26 +20,59 @@ function timeStrToInt(tStr) {
   return h * 60 + m;
 }
 
+function getKolkataTimeInfo(date) {
+  const dayFormatter = new Intl.DateTimeFormat('en-US', { weekday: 'long', timeZone: 'Asia/Kolkata' });
+  const weekdayName = dayFormatter.format(date);
+
+  const dateKeyFormatter = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: '2-digit', day: '2-digit', timeZone: 'Asia/Kolkata' });
+  const dateKey = dateKeyFormatter.format(date);
+
+  const timeFormatter = new Intl.DateTimeFormat('en-US', {
+    hour: 'numeric',
+    minute: 'numeric',
+    hour12: false,
+    timeZone: 'Asia/Kolkata'
+  });
+  const timeStr = timeFormatter.format(date);
+  const [hours, minutes] = timeStr.split(':').map(Number);
+  const nowMinutes = hours * 60 + minutes;
+
+  return { weekdayName, dateKey, nowMinutes };
+}
+
 export default function EmptyRoomFinder() {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [currentTime, setCurrentTime] = useState(new Date());
   const [selectedBlock, setSelectedBlock] = useState('All');
   const [sortBy, setSortBy] = useState('most_time');
   const [activeSession, setActiveSession] = useState(null);
 
-  // Load data
-  useEffect(() => {
+  const loadData = () => {
+    setLoading(true);
+    setError(null);
     fetch('/rooms.json')
-      .then(res => res.json())
+      .then(res => {
+        if (!res.ok) {
+          throw new Error(`Failed to load: ${res.status} ${res.statusText}`);
+        }
+        return res.json();
+      })
       .then(d => {
         setData(d);
         setLoading(false);
       })
       .catch(err => {
         console.error("Failed to load rooms.json", err);
+        setError(err.message || "Failed to load room data.");
         setLoading(false);
       });
+  };
+
+  // Load data
+  useEffect(() => {
+    loadData();
   }, []);
 
   // Update clock every minute
@@ -60,7 +93,8 @@ export default function EmptyRoomFinder() {
 
   const handleUseRoom = (room, endTimeStr) => {
     const endMinutes = timeStrToInt(endTimeStr);
-    const sessionData = { room, endTimeStr, endMinutes, date: new Date().toDateString() };
+    const { dateKey } = getKolkataTimeInfo(new Date());
+    const sessionData = { room, endTimeStr, endMinutes, date: dateKey };
     localStorage.setItem('activeRoomSession', JSON.stringify(sessionData));
     setActiveSession(sessionData);
   };
@@ -72,13 +106,8 @@ export default function EmptyRoomFinder() {
 
   // Derive current status
   const currentStatus = useMemo(() => {
-    const dayIndex = currentTime.getDay();
-    const isWeekend = dayIndex === 0 || dayIndex === 6;
-    const currentDayName = DAY_NAMES[dayIndex];
-    
-    const nowH = currentTime.getHours();
-    const nowM = currentTime.getMinutes();
-    const nowMinutes = nowH * 60 + nowM;
+    const { weekdayName, dateKey, nowMinutes } = getKolkataTimeInfo(currentTime);
+    const isWeekend = weekdayName === 'Saturday' || weekdayName === 'Sunday';
     
     if (isWeekend) return { isOver: true, message: "Classes are over for the weekend" };
     
@@ -102,7 +131,7 @@ export default function EmptyRoomFinder() {
 
     return {
       isOver: false,
-      dayName: currentDayName,
+      dayName: weekdayName,
       activeSlotIndex,
       activeSlotStr: SLOT_TIMES[activeSlotIndex],
       nowMinutes
@@ -174,11 +203,11 @@ export default function EmptyRoomFinder() {
   // Session string
   const getSessionTimeLeft = () => {
     if (!activeSession) return "";
-    if (activeSession.date !== new Date().toDateString()) {
+    const { dateKey, nowMinutes } = getKolkataTimeInfo(currentTime);
+    if (activeSession.date !== dateKey) {
       handleLeaveRoom(); // expired session
       return "";
     }
-    const nowMinutes = currentTime.getHours() * 60 + currentTime.getMinutes();
     const diff = activeSession.endMinutes - nowMinutes;
     if (diff <= 0) {
       handleLeaveRoom();
@@ -196,6 +225,20 @@ export default function EmptyRoomFinder() {
   };
 
   if (loading) return <div className="text-center p-8 text-white">Loading room data...</div>;
+
+  if (error) {
+    return (
+      <div className="text-center p-8 text-white">
+        <p className="mb-4 text-red-400 font-semibold">{error}</p>
+        <button 
+          onClick={loadData}
+          className="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg text-sm font-semibold transition-colors"
+        >
+          Retry
+        </button>
+      </div>
+    );
+  }
 
   return (
     <div className="w-full max-w-4xl mx-auto pb-20">
@@ -231,8 +274,9 @@ export default function EmptyRoomFinder() {
               </p>
             </div>
             <div className="flex items-center gap-2">
-              <span className="text-slate-400 text-sm mr-2">Sort by:</span>
+              <label htmlFor="sort-by-select" className="text-slate-400 text-sm mr-2">Sort by:</label>
               <select 
+                id="sort-by-select"
                 value={sortBy} 
                 onChange={e => setSortBy(e.target.value)}
                 className="bg-[#1c212d] text-white border border-white/10 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-purple-500"
