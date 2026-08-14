@@ -5,6 +5,7 @@ import AddFriendModal from './components/AddFriendModal';
 import FriendDetail from './components/FriendDetail';
 import CommonFreeTime from './components/CommonFreeTime';
 import PrivateSession from './components/PrivateSession';
+import EmptyRoomFinder from './components/EmptyRoomFinder';
 import { ToastProvider } from './components/ToastProvider';
 import { fetchAndCacheTimetable, getCachedTimetable } from './utils/timetableCache';
 import { getTodayIndex } from './utils/timeUtils';
@@ -115,6 +116,13 @@ function MainApp() {
                   <img src={privateSessionIcon} alt="" aria-hidden="true" className="nav-icon" style={{ display: 'block', margin: '0 auto 6px', width: 28, height: 28, objectFit: 'contain' }} />
                   Private Session
                 </button>
+                <button
+                  className={`app-nav-btn ${view === 'rooms' ? 'app-nav-btn--active' : ''}`}
+                  onClick={() => setView('rooms')}
+                >
+                  <div style={{ fontSize: '24px', marginBottom: '4px' }}>🏢</div>
+                  Find Room
+                </button>
               </nav>
             </div>
           </div>
@@ -146,6 +154,7 @@ function MainApp() {
               onSelectFriend={setSelectedFriend}
             />
           )}
+          {view === 'rooms' && <EmptyRoomFinder />}
         </main>
 
         {/* Modals */}
