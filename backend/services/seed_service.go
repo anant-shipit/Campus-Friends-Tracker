@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
-	"regexp"
 	"strings"
 
 	"campus-friends-tracker/backend/data"
@@ -44,11 +43,10 @@ type subjectJSON struct {
 // cellJSON matches a single cell in the timetable grid.
 type cellJSON struct {
 	Course string `json:"course"`
+	Type   string `json:"type"`
+	Room   string `json:"Room"`
 	Color  string `json:"color"`
 }
-
-// roomPattern matches typical room codes like LP101, T204, F302, G310, CAD-1, W/SHOP, LC27, C309.
-var roomPattern = regexp.MustCompile(`^[A-Z][A-Za-z0-9/\-]+[0-9A-Z]$|^W/SHOP$|^CAD-\d+$`)
 
 // SeedDatabase loads subjects and timetable data from embedded JSON files
 // and populates the database. The operation is idempotent.
@@ -197,9 +195,7 @@ func seedTimetable(subjectCodes map[string]string) error {
 					cell := row[colIdx]
 
 					courseText := strings.TrimSpace(cell.Course)
-					color := cell.Color
-
-					parsed := parseCell(courseText, color, subjectCodes)
+					parsed := parseCell(cell, subjectCodes)
 
 					slotBatch.Queue(
 						`INSERT INTO schedule_slots
@@ -254,103 +250,60 @@ type parsedSlot struct {
 	room        string
 }
 
-// parseCell interprets a timetable cell's course text and color.
-func parseCell(course, color string, subjectCodes map[string]string) parsedSlot {
-	if course == "" {
+// parseCell interprets a timetable cell from the new JSON format.
+func parseCell(cell cellJSON, subjectCodes map[string]string) parsedSlot {
+	courseCode := strings.TrimSpace(cell.Course)
+	if courseCode == "" {
 		return parsedSlot{classType: "free"}
 	}
 
-	result := parsedSlot{classType: "other"}
+	result := parsedSlot{
+		classType: "other",
+		room:      strings.TrimSpace(cell.Room),
+	}
 
-	// Try to match a known subject code with type indicator (e.g., "UMA023 L LP101").
-	tokens := strings.Fields(course)
+	// Determine class type based on cell.Type
+	switch strings.TrimSpace(cell.Type) {
+	case "L":
+		result.classType = "lecture"
+	case "T":
+		result.classType = "tutorial"
+	case "P":
+		result.classType = "lab"
+	}
 
-	// Check for "PROFESSIONAL COMMUNICATION" pattern.
-	if strings.HasPrefix(course, "PROFESSIONAL COMMUNICATION") {
+	// Try to match the exact course code to get the subject name
+	if name, ok := subjectCodes[courseCode]; ok {
+		result.subjectCode = courseCode
+		result.subjectName = name
+		return result
+	}
+
+	// Check for "PROFESSIONAL COMMUNICATION" special case
+	if strings.HasPrefix(courseCode, "PROFESSIONAL COMMUNICATION") {
 		result.subjectCode = "UHU003"
 		result.subjectName = "PROFESSIONAL COMMUNICATION"
-
-		// Determine type from color: danger → lecture, primary → tutorial, else → tutorial.
-		switch color {
-		case "danger":
-			result.classType = "lecture"
-		case "primary":
-			result.classType = "tutorial"
-		default:
-			result.classType = "tutorial"
-		}
-
-		// Extract room from remaining tokens.
-		for _, tok := range tokens[2:] { // Skip "PROFESSIONAL" and "COMMUNICATION"
-			if isRoomCode(tok) {
-				result.room = tok
+		// Fallback to color if type is missing
+		if result.classType == "other" {
+			switch cell.Color {
+			case "danger":
+				result.classType = "lecture"
+			case "primary":
+				result.classType = "tutorial"
+			default:
+				result.classType = "tutorial"
 			}
 		}
 		return result
 	}
 
-	// Check for subject code pattern: CODE TYPE ROOM
-	if len(tokens) >= 2 {
-		potentialCode := tokens[0]
-		if name, ok := subjectCodes[potentialCode]; ok {
-			result.subjectCode = potentialCode
-			result.subjectName = name
-
-			// Check type indicator.
-			if len(tokens) >= 2 {
-				switch tokens[1] {
-				case "L":
-					result.classType = "lecture"
-				case "T":
-					result.classType = "tutorial"
-				case "P":
-					result.classType = "lab"
-				default:
-					result.classType = "other"
-				}
-			}
-
-			// Extract room (usually last token that looks like a room code).
-			for i := len(tokens) - 1; i >= 2; i-- {
-				if isRoomCode(tokens[i]) {
-					result.room = tokens[i]
-					break
-				}
-			}
-			return result
-		}
-	}
-
-	// Check for "LAB" prefix patterns (e.g., "LAB LC27", "LAB NK", "LAB-1 LC17").
-	if strings.HasPrefix(course, "LAB") {
+	// Some labs are just named "LAB" in the course field
+	if strings.HasPrefix(courseCode, "LAB") {
 		result.classType = "lab"
-		// Extract room from remaining tokens.
-		for i := len(tokens) - 1; i >= 0; i-- {
-			if isRoomCode(tokens[i]) && !strings.HasPrefix(tokens[i], "LAB") {
-				result.room = tokens[i]
-				break
-			}
-		}
 		return result
 	}
 
-	// Catch-all: could be entries like "NK 4:20 pm", "SAT NK", "DMG ..." etc.
-	result.classType = "other"
-	for i := len(tokens) - 1; i >= 0; i-- {
-		if isRoomCode(tokens[i]) {
-			result.room = tokens[i]
-			break
-		}
-	}
 	return result
-}
-
-// isRoomCode checks whether a token looks like a room/venue code.
-func isRoomCode(tok string) bool {
-	if len(tok) < 2 {
-		return false
-	}
-	return roomPattern.MatchString(tok)
 }
 
 func nilIfEmpty(s string) *string {

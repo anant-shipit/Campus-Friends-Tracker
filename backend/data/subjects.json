@@ -3090,8 +3090,8 @@
     "sno": "442",
     "name": "SOFTWARE ENGINEERING",
     "subjectCode": "MCA202",
-    "credit": "4",
-    "isCore": "True"
+    "credit": "",
+    "isCore": ""
   },
   "MCA203": {
     "sno": "443",
@@ -3104,15 +3104,15 @@
     "sno": "444",
     "name": "ARTIFICIAL INTELLIGENCE",
     "subjectCode": "MCA204",
-    "credit": "4",
-    "isCore": "True"
+    "credit": "",
+    "isCore": ""
   },
   "MCA205": {
     "sno": "445",
     "name": "DESIGN AND ANALYSIS OF ALGORITHMS",
     "subjectCode": "MCA205",
-    "credit": "4",
-    "isCore": "True"
+    "credit": "",
+    "isCore": ""
   },
   "MCA206": {
     "sno": "446",
@@ -3132,8 +3132,8 @@
     "sno": "448",
     "name": "SOURCE CODE MANAGEMENT",
     "subjectCode": "MCA209",
-    "credit": "4",
-    "isCore": "True"
+    "credit": "",
+    "isCore": ""
   },
   "MCA210": {
     "sno": "449",
@@ -3804,8 +3804,8 @@
     "sno": "544",
     "name": "FINITE ELEMENT METHODS",
     "subjectCode": "PCD107",
-    "credit": "4",
-    "isCore": "True"
+    "credit": "",
+    "isCore": ""
   },
   "PCD108": {
     "sno": "545",
@@ -3839,8 +3839,8 @@
     "sno": "549",
     "name": "MODERN CONTROL OF DYNAMIC SYSTEMS",
     "subjectCode": "PCD208",
-    "credit": "3.5",
-    "isCore": "True"
+    "credit": "",
+    "isCore": ""
   },
   "PCD209": {
     "sno": "550",
@@ -3861,7 +3861,7 @@
     "name": "COMPUTATIONAL FLUID DYNAMICS",
     "subjectCode": "PCD312",
     "credit": "",
-    "isCore": "True"
+    "isCore": ""
   },
   "PCD313": {
     "sno": "553",
@@ -3916,15 +3916,15 @@
     "sno": "560",
     "name": "FINITE ELEMENT METHODS IN STRUCTURAL ANALYSIS",
     "subjectCode": "PCE201",
-    "credit": "4",
-    "isCore": "True"
+    "credit": "",
+    "isCore": ""
   },
   "PCE202": {
     "sno": "561",
     "name": "PRE-STRESSED CONCRETE",
     "subjectCode": "PCE202",
-    "credit": "4",
-    "isCore": "True"
+    "credit": "",
+    "isCore": ""
   },
   "PCE203": {
     "sno": "562",
@@ -3944,8 +3944,8 @@
     "sno": "564",
     "name": "ADVANCED BRIDGE DESIGN",
     "subjectCode": "PCE211",
-    "credit": "4",
-    "isCore": "True"
+    "credit": "",
+    "isCore": ""
   },
   "PCE212": {
     "sno": "565",
@@ -3958,15 +3958,15 @@
     "sno": "566",
     "name": "EARTHQUAKE RESISTANT DESIGN OF STRUCTURES",
     "subjectCode": "PCE301",
-    "credit": "4",
-    "isCore": "True"
+    "credit": "",
+    "isCore": ""
   },
   "PCE323": {
     "sno": "567",
     "name": "INDUSTRIAL STRUCTURES ",
     "subjectCode": "PCE323",
-    "credit": "4",
-    "isCore": "True"
+    "credit": "",
+    "isCore": ""
   },
   "PCE324": {
     "sno": "568",
@@ -4126,8 +4126,8 @@
     "sno": "590",
     "name": "MACHINE LEARNING",
     "subjectCode": "PCS206",
-    "credit": "4",
-    "isCore": "True"
+    "credit": "",
+    "isCore": ""
   },
   "PCS207": {
     "sno": "591",
@@ -4168,8 +4168,8 @@
     "sno": "596",
     "name": "NATURAL LANGUAGE PROCESSING",
     "subjectCode": "PCS224",
-    "credit": "4",
-    "isCore": "True"
+    "credit": "",
+    "isCore": ""
   },
   "PCS233": {
     "sno": "597",
@@ -4896,8 +4896,8 @@
     "sno": "700",
     "name": "SECURE CODING",
     "subjectCode": "PIS105",
-    "credit": "4",
-    "isCore": "True"
+    "credit": "",
+    "isCore": ""
   },
   "PIS205": {
     "sno": "701",
@@ -5827,71 +5827,71 @@
     "sno": "833",
     "name": "INTRODUCTION TO BIOENGINEERING APPLICATIONS",
     "subjectCode": "UBM001",
-    "credit": "",
-    "isCore": ""
+    "credit": "3.5",
+    "isCore": "True"
   },
   "UBM002": {
     "sno": "834",
     "name": "ORIENTATION AND INTRODUCTION TO BIOENGINEERING COM",
     "subjectCode": "UBM002",
-    "credit": "4",
-    "isCore": "True"
+    "credit": "",
+    "isCore": ""
   },
   "UBM003": {
     "sno": "835",
     "name": "FUNDAMENTALS OF LIFE SCIENCE",
     "subjectCode": "UBM003",
-    "credit": "",
-    "isCore": ""
+    "credit": "4",
+    "isCore": "True"
   },
   "UBM005": {
     "sno": "836",
     "name": "BIOMEDICAL QUALITY CONTROL",
     "subjectCode": "UBM005",
-    "credit": "3.5",
-    "isCore": "True"
+    "credit": "",
+    "isCore": ""
   },
   "UBM006": {
     "sno": "837",
     "name": "INTRODUCTION TO BIOMECHANICS",
     "subjectCode": "UBM006",
-    "credit": "4.5",
-    "isCore": "True"
+    "credit": "",
+    "isCore": ""
   },
   "UBM007": {
     "sno": "838",
     "name": "ADDITIVE MANUFACTURING IN BIOMEDICAL ENGINEERING",
     "subjectCode": "UBM007",
-    "credit": "3",
-    "isCore": "True"
+    "credit": "",
+    "isCore": ""
   },
   "UBM008": {
     "sno": "839",
     "name": "BIOMATERIALS",
     "subjectCode": "UBM008",
-    "credit": "",
-    "isCore": ""
+    "credit": "3",
+    "isCore": "True"
   },
   "UBM025": {
     "sno": "840",
     "name": "FRESHMAN DESIGN INNOVATION-II",
     "subjectCode": "UBM025",
-    "credit": "3",
-    "isCore": "True"
+    "credit": "",
+    "isCore": ""
   },
   "UBM031": {
     "sno": "841",
     "name": "ELECTRICAL CIRCUITS",
     "subjectCode": "UBM031",
-    "credit": "",
-    "isCore": ""
+    "credit": "4.5",
+    "isCore": "True"
   },
   "UBM032": {
     "sno": "842",
     "name": "ENGINEERING STATICS",
     "subjectCode": "UBM032",
-    "credit": "3.5",
-    "isCore": "True"
+    "credit": "",
+    "isCore": ""
   },
   "UBM501": {
     "sno": "843",
@@ -5918,15 +5918,15 @@
     "sno": "846",
     "name": "FUNDAMENTALS OF SIGNALS AND SYSTEM",
     "subjectCode": "UBM504",
-    "credit": "",
-    "isCore": ""
+    "credit": "3.5",
+    "isCore": "True"
   },
   "UBM505": {
     "sno": "847",
     "name": "INTRODUCTION TO ANALOG CIRCUITS AND DEVICES",
     "subjectCode": "UBM505",
-    "credit": "",
-    "isCore": ""
+    "credit": "4.5",
+    "isCore": "True"
   },
   "UBM601": {
     "sno": "848",
@@ -5939,8 +5939,8 @@
     "sno": "849",
     "name": "INTRODUCTION TO DIGITAL  ELECTRONICS",
     "subjectCode": "UBM602",
-    "credit": "4.5",
-    "isCore": "True"
+    "credit": "",
+    "isCore": ""
   },
   "UBM603": {
     "sno": "850",
@@ -5953,15 +5953,15 @@
     "sno": "851",
     "name": "BIOSIGNAL PROCESSING",
     "subjectCode": "UBM604",
-    "credit": "3.5",
-    "isCore": "True"
+    "credit": "",
+    "isCore": ""
   },
   "UBM605": {
     "sno": "852",
     "name": "DATA STRUCTURE AND ALGORITHMS",
     "subjectCode": "UBM605",
-    "credit": "",
-    "isCore": ""
+    "credit": "4",
+    "isCore": "True"
   },
   "UBM635": {
     "sno": "853",
@@ -6254,8 +6254,8 @@
     "sno": "894",
     "name": "GENERAL CHEMISTRY-II",
     "subjectCode": "UCB029",
-    "credit": "4.5",
-    "isCore": "True"
+    "credit": "",
+    "isCore": ""
   },
   "UCE302": {
     "sno": "895",
@@ -6275,8 +6275,8 @@
     "sno": "897",
     "name": "BUILDING MATERIALS",
     "subjectCode": "UCE308",
-    "credit": "",
-    "isCore": ""
+    "credit": "3",
+    "isCore": "True"
   },
   "UCE403": {
     "sno": "898",
@@ -6359,8 +6359,8 @@
     "sno": "909",
     "name": "TRANSPORTATION ENGINEERING - II",
     "subjectCode": "UCE605",
-    "credit": "3.5",
-    "isCore": "True"
+    "credit": "",
+    "isCore": ""
   },
   "UCE606": {
     "sno": "910",
@@ -6408,8 +6408,8 @@
     "sno": "916",
     "name": "FOUNDATION ENGINEERING",
     "subjectCode": "UCE613",
-    "credit": "4",
-    "isCore": "True"
+    "credit": "",
+    "isCore": ""
   },
   "UCE701": {
     "sno": "917",
@@ -6506,8 +6506,8 @@
     "sno": "930",
     "name": " SUSTAINABLE & SMART MATERIALS",
     "subjectCode": "UCE837",
-    "credit": "3.5",
-    "isCore": "True"
+    "credit": "",
+    "isCore": ""
   },
   "UCE838": {
     "sno": "931",
@@ -6674,29 +6674,29 @@
     "sno": "954",
     "name": "FUEL CELL TECHNOLOGY",
     "subjectCode": "UCH853",
-    "credit": "3",
-    "isCore": "False"
+    "credit": "",
+    "isCore": ""
   },
   "UCH854": {
     "sno": "955",
     "name": "POLYMER SCIENCE AND TECHNOLOGY",
     "subjectCode": "UCH854",
-    "credit": "3",
-    "isCore": "False"
+    "credit": "",
+    "isCore": ""
   },
   "UCH862": {
     "sno": "956",
     "name": "ENERGY MANAGEMENT",
     "subjectCode": "UCH862",
-    "credit": "3",
-    "isCore": "False"
+    "credit": "",
+    "isCore": ""
   },
   "UCH863": {
     "sno": "957",
     "name": "POLYMER PROCESSING",
     "subjectCode": "UCH863",
-    "credit": "3",
-    "isCore": "False"
+    "credit": "",
+    "isCore": ""
   },
   "UCS049": {
     "sno": "958",
@@ -6716,8 +6716,8 @@
     "sno": "960",
     "name": "DATABASE MANAGEMENT SYSTEMS",
     "subjectCode": "UCS312",
-    "credit": "3",
-    "isCore": "True"
+    "credit": "",
+    "isCore": ""
   },
   "UCS314": {
     "sno": "961",
@@ -6835,8 +6835,8 @@
     "sno": "977",
     "name": "IMAGE PROCESSING",
     "subjectCode": "UCS615",
-    "credit": "",
-    "isCore": ""
+    "credit": "4",
+    "isCore": "True"
   },
   "UCS631": {
     "sno": "978",
@@ -6905,8 +6905,8 @@
     "sno": "987",
     "name": "MACHINE LEARNING AND IMAGE PROCESSING",
     "subjectCode": "UCS713",
-    "credit": "4",
-    "isCore": "True"
+    "credit": "",
+    "isCore": ""
   },
   "UCS727": {
     "sno": "988",
@@ -6996,8 +6996,8 @@
     "sno": "1000",
     "name": "IMAGE RECOGNITION AND PATTERN RECOGNITION",
     "subjectCode": "UCT641",
-    "credit": "3",
-    "isCore": "False"
+    "credit": "",
+    "isCore": ""
   },
   "UCY301": {
     "sno": "1001",
@@ -7164,8 +7164,8 @@
     "sno": "1024",
     "name": "MICROCONTROLLER AND EMBEDDED SYSTEMS",
     "subjectCode": "UEC702",
-    "credit": "4",
-    "isCore": "True"
+    "credit": "",
+    "isCore": ""
   },
   "UEC704": {
     "sno": "1025",
@@ -7465,8 +7465,8 @@
     "sno": "1067",
     "name": "HIGH VOLTAGE ENGINEERING",
     "subjectCode": "UEE510",
-    "credit": "",
-    "isCore": ""
+    "credit": "3",
+    "isCore": "True"
   },
   "UEE521": {
     "sno": "1068",
@@ -7500,8 +7500,8 @@
     "sno": "1072",
     "name": "FLEXIBLE AC TRANSMISSION SYSTEMS",
     "subjectCode": "UEE601",
-    "credit": "",
-    "isCore": ""
+    "credit": "3",
+    "isCore": "False"
   },
   "UEE603": {
     "sno": "1073",
@@ -7549,8 +7549,8 @@
     "sno": "1079",
     "name": "POWER SYSTEM PROTECTION",
     "subjectCode": "UEE610",
-    "credit": "4",
-    "isCore": "True"
+    "credit": "",
+    "isCore": ""
   },
   "UEE611": {
     "sno": "1080",
@@ -7682,8 +7682,8 @@
     "sno": "1098",
     "name": "INDUSTRIAL ELECTRONICS",
     "subjectCode": "UEE744",
-    "credit": "",
-    "isCore": ""
+    "credit": "3",
+    "isCore": "False"
   },
   "UEE801": {
     "sno": "1099",
@@ -7738,8 +7738,8 @@
     "sno": "1106",
     "name": "DIGITAL ELECTRONICS",
     "subjectCode": "UEI301",
-    "credit": "",
-    "isCore": ""
+    "credit": "4.5",
+    "isCore": "True"
   },
   "UEI303": {
     "sno": "1107",
@@ -7836,22 +7836,22 @@
     "sno": "1120",
     "name": "ROBOTICS",
     "subjectCode": "UEI612",
-    "credit": "3",
-    "isCore": "True"
+    "credit": "",
+    "isCore": ""
   },
   "UEI613": {
     "sno": "1121",
     "name": "BIOMETRICS",
     "subjectCode": "UEI613",
-    "credit": "3",
-    "isCore": "True"
+    "credit": "",
+    "isCore": ""
   },
   "UEI614": {
     "sno": "1122",
     "name": "BIOMEDICAL SENSORS AND MEASUREMENT",
     "subjectCode": "UEI614",
-    "credit": "",
-    "isCore": ""
+    "credit": "4.5",
+    "isCore": "True"
   },
   "UEI622": {
     "sno": "1123",
@@ -7871,15 +7871,15 @@
     "sno": "1125",
     "name": "DATA ANALYTICS",
     "subjectCode": "UEI627",
-    "credit": "3",
-    "isCore": "True"
+    "credit": "",
+    "isCore": ""
   },
   "UEI701": {
     "sno": "1126",
     "name": "DATA ACQUISITION AND SYSTEM DESIGN",
     "subjectCode": "UEI701",
-    "credit": "4",
-    "isCore": "True"
+    "credit": "",
+    "isCore": ""
   },
   "UEI703": {
     "sno": "1127",
@@ -7899,8 +7899,8 @@
     "sno": "1129",
     "name": "VIRTUAL INSTRUMENTATION ENGINEERING",
     "subjectCode": "UEI718",
-    "credit": "3.5",
-    "isCore": "True"
+    "credit": "",
+    "isCore": ""
   },
   "UEI720": {
     "sno": "1130",
@@ -7962,8 +7962,8 @@
     "sno": "1138",
     "name": "BIO-SENSOR AND MEMS",
     "subjectCode": "UEI831",
-    "credit": "",
-    "isCore": ""
+    "credit": "3.5",
+    "isCore": "True"
   },
   "UEI833": {
     "sno": "1139",
@@ -7983,8 +7983,8 @@
     "sno": "1141",
     "name": "VIRTUAL INSTRUMENTATION",
     "subjectCode": "UEI844",
-    "credit": "3.5",
-    "isCore": "True"
+    "credit": "",
+    "isCore": ""
   },
   "UEI845": {
     "sno": "1142",
@@ -8011,8 +8011,8 @@
     "sno": "1145",
     "name": "THERMO-FLUIDS",
     "subjectCode": "UES020",
-    "credit": "3",
-    "isCore": "True"
+    "credit": "",
+    "isCore": ""
   },
   "UES032": {
     "sno": "1146",
@@ -8025,8 +8025,8 @@
     "sno": "1147",
     "name": "MEASUREMENT SCIENCE AND TECHNIQUES",
     "subjectCode": "UES034",
-    "credit": "",
-    "isCore": ""
+    "credit": "4.5",
+    "isCore": "True"
   },
   "UHU009": {
     "sno": "1148",
@@ -8082,14 +8082,14 @@
     "name": "INTRODUCTORY MATHEMATICS-I",
     "subjectCode": "UMA005",
     "credit": "",
-    "isCore": ""
+    "isCore": "True"
   },
   "UMA006": {
     "sno": "1156",
     "name": "INTRODUCTORY MATHEMATICS II",
     "subjectCode": "UMA006",
     "credit": "",
-    "isCore": "True"
+    "isCore": ""
   },
   "UMA007": {
     "sno": "1157",
@@ -8102,8 +8102,8 @@
     "sno": "1158",
     "name": "CALCULUS-III",
     "subjectCode": "UMA018",
-    "credit": "4.5",
-    "isCore": "True"
+    "credit": "",
+    "isCore": ""
   },
   "UMA031": {
     "sno": "1159",
@@ -8504,390 +8504,390 @@
     "credit": "",
     "isCore": ""
   },
-  "MCA211": {
+  "UAI101": {
     "sno": "1216",
-    "name": "",
-    "subjectCode": "MCA211",
-    "credit": "",
-    "isCore": ""
+    "name": "Foundation of Machine Intelligence: Concepts, Techniques and Applications",
+    "subjectCode": "UAI101",
+    "credit": "2",
+    "isCore": "True"
   },
-  "PBT211": {
+  "UAI301": {
     "sno": "1217",
-    "name": "",
-    "subjectCode": "PBT211",
-    "credit": "",
-    "isCore": ""
+    "name": "Object Oriented Programming",
+    "subjectCode": "UAI301",
+    "credit": "4",
+    "isCore": "True"
   },
-  "PBY211": {
+  "UAI302": {
     "sno": "1218",
-    "name": "PHARMACEUTICAL BIOTECHNOLOGY",
-    "subjectCode": "PBY211",
-    "credit": "4",
+    "name": "Experiential Learning (DLI)",
+    "subjectCode": "UAI302",
+    "credit": "1",
     "isCore": "True"
   },
-  "PBY212": {
+  "UAI501": {
     "sno": "1219",
-    "name": "NANO-BIOTECHNOLOGY",
-    "subjectCode": "PBY212",
-    "credit": "4.5",
+    "name": "Image Processing",
+    "subjectCode": "UAI501",
+    "credit": "4",
     "isCore": "True"
   },
-  "PBY213": {
+  "UAI502": {
     "sno": "1220",
-    "name": "BIOREMEDIATION TECHNOLOGY",
-    "subjectCode": "PBY213",
-    "credit": "3",
+    "name": "Advanced Deep Learning",
+    "subjectCode": "UAI502",
+    "credit": "4",
     "isCore": "True"
   },
-  "PBY214": {
+  "UAI503": {
     "sno": "1221",
-    "name": "TRANSGENIC TECHNOLOGIES",
-    "subjectCode": "PBY214",
-    "credit": "4",
-    "isCore": "True"
-  },
-  "PBY221": {
-    "sno": "1222",
-    "name": "ADVANCED STEM CELL TECHNOLOGY",
-    "subjectCode": "PBY221",
+    "name": "Computer Architecture and Organization",
+    "subjectCode": "UAI503",
     "credit": "3",
     "isCore": "True"
   },
-  "PBY231": {
+  "UAI504": {
+    "sno": "1222",
+    "name": "Computer Networks",
+    "subjectCode": "UAI504",
+    "credit": "3",
+    "isCore": "True"
+  },
+  "UBM009": {
     "sno": "1223",
-    "name": "POST-HARVEST TECHNOLOGY",
-    "subjectCode": "PBY231",
-    "credit": "4",
+    "name": "BIOENGINEERING THERMODYNAMICS",
+    "subjectCode": "UBM009",
+    "credit": "3.5",
     "isCore": "True"
   },
-  "PBY233": {
+  "UBM017": {
     "sno": "1224",
-    "name": "OMICS TECHNOLOGY",
-    "subjectCode": "PBY233",
-    "credit": "4",
-    "isCore": "True"
+    "name": "",
+    "subjectCode": "UBM017",
+    "credit": "",
+    "isCore": ""
   },
-  "PCD110": {
+  "UBM024": {
     "sno": "1225",
-    "name": "Modelling and simulation of Dynamic Systems",
-    "subjectCode": "PCD110",
-    "credit": "3.5",
+    "name": "FRESHMAN DESIGN INNOVATION-I",
+    "subjectCode": "UBM024",
+    "credit": "3",
     "isCore": "True"
   },
-  "PCD216": {
+  "UBT008": {
     "sno": "1226",
-    "name": "Vehicle Diagnostics",
-    "subjectCode": "PCD216",
-    "credit": "3.5",
+    "name": "Cell Biology and Genetics",
+    "subjectCode": "UBT008",
+    "credit": "3",
     "isCore": "True"
   },
-  "PCE328": {
+  "UBT307": {
     "sno": "1227",
-    "name": "STRUCTURAL OPTIMIZATION",
-    "subjectCode": "PCE328",
-    "credit": "4",
+    "name": "Molecular Biology",
+    "subjectCode": "UBT307",
+    "credit": "3",
     "isCore": "True"
   },
-  "PCY217": {
+  "UBT308": {
     "sno": "1228",
-    "name": "",
-    "subjectCode": "PCY217",
-    "credit": "",
-    "isCore": ""
+    "name": "Food Science and Nutrition",
+    "subjectCode": "UBT308",
+    "credit": "3",
+    "isCore": "True"
   },
-  "PES227": {
+  "UBT309": {
     "sno": "1229",
-    "name": "",
-    "subjectCode": "PES227",
-    "credit": "",
-    "isCore": ""
+    "name": "Immunotechnology",
+    "subjectCode": "UBT309",
+    "credit": "3",
+    "isCore": "True"
   },
-  "PEV201": {
+  "UBT310": {
     "sno": "1230",
-    "name": "",
-    "subjectCode": "PEV201",
-    "credit": "",
-    "isCore": ""
+    "name": "Biochemistry-II",
+    "subjectCode": "UBT310",
+    "credit": "3",
+    "isCore": "True"
   },
-  "PEV202": {
+  "UBT311": {
     "sno": "1231",
-    "name": "",
-    "subjectCode": "PEV202",
-    "credit": "",
-    "isCore": ""
+    "name": "Molecular Biology, Food Science and Immunology Lab",
+    "subjectCode": "UBT311",
+    "credit": "2",
+    "isCore": "True"
   },
-  "PEV203": {
+  "UBT321": {
     "sno": "1232",
     "name": "",
-    "subjectCode": "PEV203",
+    "subjectCode": "UBT321",
     "credit": "",
     "isCore": ""
   },
-  "PEV204": {
+  "UBT512": {
     "sno": "1233",
-    "name": "",
-    "subjectCode": "PEV204",
-    "credit": "",
-    "isCore": ""
-  },
-  "PEV212": {
-    "sno": "1234",
-    "name": "",
-    "subjectCode": "PEV212",
-    "credit": "",
-    "isCore": ""
-  },
-  "PTE201": {
-    "sno": "1235",
-    "name": "REMOTE SENSING AND GIS IN TRANSPORTATION DEVELOPMENT",
-    "subjectCode": "PTE201",
-    "credit": "4",
-    "isCore": "True"
-  },
-  "PTE202": {
-    "sno": "1236",
-    "name": "TRANSPORTATION PLANNING, MODELING & SIMULATION",
-    "subjectCode": "PTE202",
-    "credit": "4",
-    "isCore": "True"
-  },
-  "PTE203": {
-    "sno": "1237",
-    "name": "PAVEMENT ANALYSIS & DESIGN",
-    "subjectCode": "PTE203",
-    "credit": "4.5",
-    "isCore": "True"
-  },
-  "PTE204": {
-    "sno": "1238",
-    "name": "ROAD SAFETY ENGINEERING",
-    "subjectCode": "PTE204",
+    "name": "Structural Biology",
+    "subjectCode": "UBT512",
     "credit": "3",
     "isCore": "True"
   },
-  "PTE205": {
-    "sno": "1239",
-    "name": "ADVANCED RAILWAY AND AIRPORT ENGINEERING",
-    "subjectCode": "PTE205",
+  "UBT513": {
+    "sno": "1234",
+    "name": "Cell and Tissue Engineering",
+    "subjectCode": "UBT513",
+    "credit": "3",
+    "isCore": "True"
+  },
+  "UBT514": {
+    "sno": "1235",
+    "name": "Natural Products",
+    "subjectCode": "UBT514",
+    "credit": "3",
+    "isCore": "True"
+  },
+  "UBT515": {
+    "sno": "1236",
+    "name": "Biostatistics",
+    "subjectCode": "UBT515",
+    "credit": "2",
+    "isCore": "True"
+  },
+  "UBT516": {
+    "sno": "1237",
+    "name": "Bioinformatics",
+    "subjectCode": "UBT516",
+    "credit": "3",
+    "isCore": "True"
+  },
+  "UBT517": {
+    "sno": "1238",
+    "name": "Bioprocess Engineering",
+    "subjectCode": "UBT517",
     "credit": "3.5",
     "isCore": "True"
   },
-  "PTE208": {
+  "UBT518": {
+    "sno": "1239",
+    "name": "Biostatistics and OMICS Lab",
+    "subjectCode": "UBT518",
+    "credit": "1.5",
+    "isCore": "True"
+  },
+  "UBT521": {
     "sno": "1240",
-    "name": "SITE EXPLORATION & FIELD TESTING",
-    "subjectCode": "PTE208",
-    "credit": "3",
-    "isCore": "True"
-  },
-  "UAI201": {
-    "sno": "1241",
-    "name": "Programming Essentials for AI and ML",
-    "subjectCode": "UAI201",
-    "credit": "3",
-    "isCore": "True"
-  },
-  "UBM607": {
-    "sno": "1242",
-    "name": "MACHINE LEARNING",
-    "subjectCode": "UBM607",
-    "credit": "4",
-    "isCore": "True"
-  },
-  "UBM608": {
-    "sno": "1243",
-    "name": "PHYSIOLOGICAL MODELLING AND CONTROL",
-    "subjectCode": "UBM608",
-    "credit": "4.5",
-    "isCore": "True"
-  },
-  "UBM609": {
-    "sno": "1244",
-    "name": "BASIC MEDICAL INSTRUMENTS",
-    "subjectCode": "UBM609",
-    "credit": "4",
-    "isCore": "True"
-  },
-  "UBM694": {
-    "sno": "1245",
-    "name": "CAPSTONE PROJECT \u2013I (START)",
-    "subjectCode": "UBM694",
-    "credit": "0",
-    "isCore": "True"
-  },
-  "UBT009": {
-    "sno": "1246",
-    "name": "Biochemistry-I",
-    "subjectCode": "UBT009",
-    "credit": "3",
-    "isCore": "True"
-  },
-  "UBT202": {
-    "sno": "1247",
-    "name": "Microbiology",
-    "subjectCode": "UBT202",
-    "credit": "3",
-    "isCore": "True"
-  },
-  "UBT203": {
-    "sno": "1248",
-    "name": "Biochemistry and Microbiology Lab",
-    "subjectCode": "UBT203",
-    "credit": "2",
-    "isCore": "True"
-  },
-  "UBT406": {
-    "sno": "1249",
-    "name": "Bioanalytical Techniques",
-    "subjectCode": "UBT406",
-    "credit": "3",
-    "isCore": "True"
-  },
-  "UBT408": {
-    "sno": "1250",
-    "name": "Genetic & Metabolic Engineering",
-    "subjectCode": "UBT408",
-    "credit": "3",
-    "isCore": "True"
-  },
-  "UBT409": {
-    "sno": "1251",
-    "name": "Animal Biotechnology",
-    "subjectCode": "UBT409",
-    "credit": "3",
-    "isCore": "True"
-  },
-  "UBT410": {
-    "sno": "1252",
-    "name": "Plant Biotechnology",
-    "subjectCode": "UBT410",
-    "credit": "3",
-    "isCore": "True"
-  },
-  "UBT411": {
-    "sno": "1253",
-    "name": "Animal and Plant Biotechnology Lab",
-    "subjectCode": "UBT411",
-    "credit": "2",
-    "isCore": "True"
+    "name": "",
+    "subjectCode": "UBT521",
+    "credit": "",
+    "isCore": ""
   },
   "UBT610": {
-    "sno": "1254",
+    "sno": "1241",
     "name": "Industrial Biotechnology",
     "subjectCode": "UBT610",
     "credit": "3",
     "isCore": "True"
   },
-  "UBT613": {
-    "sno": "1255",
-    "name": "",
-    "subjectCode": "UBT613",
-    "credit": "",
-    "isCore": ""
-  },
-  "UBT614": {
-    "sno": "1256",
-    "name": "Biosafety, Bioethics & IPR",
-    "subjectCode": "UBT614",
-    "credit": "2",
+  "UBT837": {
+    "sno": "1242",
+    "name": "Cancer Biology",
+    "subjectCode": "UBT837",
+    "credit": "3",
     "isCore": "True"
   },
-  "UBT617": {
-    "sno": "1257",
+  "UBT839": {
+    "sno": "1243",
+    "name": "Drug Design and Development",
+    "subjectCode": "UBT839",
+    "credit": "3",
+    "isCore": "True"
+  },
+  "UBT844": {
+    "sno": "1244",
+    "name": "Environmental Biotechnology",
+    "subjectCode": "UBT844",
+    "credit": "3",
+    "isCore": "True"
+  },
+  "UBT846": {
+    "sno": "1245",
+    "name": "Computational Biology",
+    "subjectCode": "UBT846",
+    "credit": "3",
+    "isCore": "True"
+  },
+  "UCB008": {
+    "sno": "1246",
     "name": "",
-    "subjectCode": "UBT617",
+    "subjectCode": "UCB008",
     "credit": "",
     "isCore": ""
   },
-  "UCC401": {
-    "sno": "1258",
-    "name": "STRUCTRUAL ANALYSIS",
-    "subjectCode": "UCC401",
+  "UCC302": {
+    "sno": "1247",
+    "name": "CIVIL ENGINEERING MATERIALS",
+    "subjectCode": "UCC302",
     "credit": "4",
     "isCore": "True"
   },
-  "UCC402": {
-    "sno": "1259",
-    "name": "GEOINFORMATICS",
-    "subjectCode": "UCC402",
+  "UCC305": {
+    "sno": "1248",
+    "name": "",
+    "subjectCode": "UCC305",
+    "credit": "",
+    "isCore": ""
+  },
+  "UCC306": {
+    "sno": "1249",
+    "name": "",
+    "subjectCode": "UCC306",
+    "credit": "",
+    "isCore": ""
+  },
+  "UCC501": {
+    "sno": "1250",
+    "name": "GEOTECHNICAL ENGINEERING-I",
+    "subjectCode": "UCC501",
     "credit": "4.5",
     "isCore": "True"
   },
-  "UCC403": {
-    "sno": "1260",
-    "name": "DESIGN OF CONCRETE STRUCTURES",
-    "subjectCode": "UCC403",
+  "UCC502": {
+    "sno": "1251",
+    "name": "TRANSPORTATION ENGINEERING",
+    "subjectCode": "UCC502",
     "credit": "4",
     "isCore": "True"
   },
-  "UCC404": {
-    "sno": "1261",
-    "name": "FUNDAMENTALS OF DATA SCIENCE",
-    "subjectCode": "UCC404",
+  "UCC503": {
+    "sno": "1252",
+    "name": "DESIGN OF STEEL STRUCTURES",
+    "subjectCode": "UCC503",
+    "credit": "3.5",
+    "isCore": "True"
+  },
+  "UCC504": {
+    "sno": "1253",
+    "name": "SURFACE HYDROLOGY",
+    "subjectCode": "UCC504",
+    "credit": "3.5",
+    "isCore": "True"
+  },
+  "UCC505": {
+    "sno": "1254",
+    "name": "DATABASE MANAGEMENT SYSTEMS",
+    "subjectCode": "UCC505",
     "credit": "4",
     "isCore": "True"
   },
-  "UCE614": {
-    "sno": "1262",
-    "name": "HYDRAULIC ENGINEERING",
-    "subjectCode": "UCE614",
+  "UCC521": {
+    "sno": "1255",
+    "name": "",
+    "subjectCode": "UCC521",
+    "credit": "",
+    "isCore": ""
+  },
+  "UCE312": {
+    "sno": "1256",
+    "name": "SOLID MECHANICS",
+    "subjectCode": "UCE312",
     "credit": "4",
     "isCore": "True"
+  },
+  "UCE513": {
+    "sno": "1257",
+    "name": "CONSTRUCTION MANAGEMENT",
+    "subjectCode": "UCE513",
+    "credit": "4",
+    "isCore": "True"
+  },
+  "UCE521": {
+    "sno": "1258",
+    "name": "",
+    "subjectCode": "UCE521",
+    "credit": "",
+    "isCore": ""
   },
   "UCE693": {
-    "sno": "1263",
+    "sno": "1259",
     "name": "GROUP DESIGN PROJECT (2 SELF-EFFORT HOURS)",
     "subjectCode": "UCE693",
     "credit": "3",
     "isCore": "True"
   },
-  "UCE863": {
-    "sno": "1264",
-    "name": "Management",
-    "subjectCode": "UCE863",
+  "UCH306": {
+    "sno": "1260",
+    "name": "",
+    "subjectCode": "UCH306",
     "credit": "",
-    "isCore": "True"
+    "isCore": ""
   },
-  "UCE892": {
-    "sno": "1265",
-    "name": "CAPSTONE PROJECT (INCLUDES8 SELF-EFFORT HOURS)",
-    "subjectCode": "UCE892",
-    "credit": "8",
-    "isCore": "True"
+  "UCH307": {
+    "sno": "1261",
+    "name": "",
+    "subjectCode": "UCH307",
+    "credit": "",
+    "isCore": ""
   },
   "UCH409": {
-    "sno": "1266",
+    "sno": "1262",
     "name": "PROCESS ENGINEERING SIMULATION SOFTWARES",
     "subjectCode": "UCH409",
     "credit": "",
     "isCore": "True"
   },
-  "UCH410": {
-    "sno": "1267",
-    "name": "NUMERICAL METHODS IN CHEMICAL ENGINEERING",
-    "subjectCode": "UCH410",
+  "UCH509": {
+    "sno": "1263",
+    "name": "",
+    "subjectCode": "UCH509",
     "credit": "",
+    "isCore": ""
+  },
+  "UCI502": {
+    "sno": "1264",
+    "name": "",
+    "subjectCode": "UCI502",
+    "credit": "",
+    "isCore": ""
+  },
+  "UCS320": {
+    "sno": "1265",
+    "name": "Introduction to Sustainable Green Computing",
+    "subjectCode": "UCS320",
+    "credit": "1",
     "isCore": "True"
   },
-  "UCH606": {
+  "UCS321": {
+    "sno": "1266",
+    "name": "AI FOR ENGINEERS##",
+    "subjectCode": "UCS321",
+    "credit": "4",
+    "isCore": "True"
+  },
+  "UCS420": {
+    "sno": "1267",
+    "name": "Cognitive Computing",
+    "subjectCode": "UCS420",
+    "credit": "3",
+    "isCore": "True"
+  },
+  "UCS421": {
     "sno": "1268",
-    "name": "",
-    "subjectCode": "UCH606",
-    "credit": "",
-    "isCore": ""
+    "name": "ETHICS AND RISK MITIGATION IN AI FOR ENGINEERS##",
+    "subjectCode": "UCS421",
+    "credit": "3",
+    "isCore": "True"
   },
-  "UCS504": {
+  "UCS551": {
     "sno": "1269",
-    "name": "",
-    "subjectCode": "UCS504",
-    "credit": "",
-    "isCore": ""
+    "name": "CONVERSATION AL AI: ACCELERATED DATA SCIENCE DATA SCIENCE",
+    "subjectCode": "UCS551",
+    "credit": "3",
+    "isCore": "True"
   },
-  "UCS612": {
+  "UCS553": {
     "sno": "1270",
-    "name": "",
-    "subjectCode": "UCS612",
-    "credit": "",
-    "isCore": ""
+    "name": "ENTERPRISE WEB APPLICATION APPLICATION",
+    "subjectCode": "UCS553",
+    "credit": "4",
+    "isCore": "True"
   },
   "UCS668": {
     "sno": "1271",
@@ -8903,424 +8903,669 @@
     "credit": "3",
     "isCore": "False"
   },
-  "UCS673": {
+  "UCS748": {
     "sno": "1273",
-    "name": "ETHICAL HACKING-1",
-    "subjectCode": "UCS673",
+    "name": "GENERATIVE AI",
+    "subjectCode": "UCS748",
     "credit": "3",
     "isCore": "False"
   },
-  "UCS674": {
+  "UCS750": {
     "sno": "1274",
-    "name": "ETHICAL HACKING-II",
-    "subjectCode": "UCS674",
+    "name": "COMPUTER HACKING AND FORENSIC INVESTIGATION",
+    "subjectCode": "UCS750",
     "credit": "3",
     "isCore": "False"
   },
-  "UCS858": {
+  "UCS760": {
     "sno": "1275",
-    "name": "",
-    "subjectCode": "UCS858",
-    "credit": "",
-    "isCore": ""
-  },
-  "UCT801": {
-    "sno": "1276",
-    "name": "ETHICAL HACKING",
-    "subjectCode": "UCT801",
-    "credit": "4",
-    "isCore": "True"
-  },
-  "UCT802": {
-    "sno": "1277",
-    "name": "SOCIAL NETWORK ANALYSIS",
-    "subjectCode": "UCT802",
+    "name": "EDGE AI AND ROBOTICS: REINFORCEMENT LEARNING & CONVERSATIONAL AI",
+    "subjectCode": "UCS760",
     "credit": "3",
-    "isCore": "True"
+    "isCore": "False"
   },
-  "UEC013": {
-    "sno": "1278",
+  "UCS762": {
+    "sno": "1276",
     "name": "",
-    "subjectCode": "UEC013",
+    "subjectCode": "UCS762",
     "credit": "",
     "isCore": ""
   },
-  "UEC202": {
+  "UCS772": {
+    "sno": "1277",
+    "name": "DATA SCIENCE: COMPUTER VISION & NLP",
+    "subjectCode": "UCS772",
+    "credit": "3",
+    "isCore": "False"
+  },
+  "UCT721": {
+    "sno": "1278",
+    "name": "COGNITIVE SCIENCE & ANALYTICS",
+    "subjectCode": "UCT721",
+    "credit": "3.5",
+    "isCore": "False"
+  },
+  "UEC302": {
     "sno": "1279",
     "name": "",
-    "subjectCode": "UEC202",
+    "subjectCode": "UEC302",
     "credit": "",
     "isCore": ""
   },
-  "UEC519": {
+  "UEC304": {
     "sno": "1280",
+    "name": "",
+    "subjectCode": "UEC304",
+    "credit": "",
+    "isCore": ""
+  },
+  "UEC311": {
+    "sno": "1281",
+    "name": "CIRCUIT ANALYSIS AND SYNTHESIS",
+    "subjectCode": "UEC311",
+    "credit": "3",
+    "isCore": "True"
+  },
+  "UEC519": {
+    "sno": "1282",
     "name": "ANALOG and DIGITAL COMMUNICATION SYSTEMS",
     "subjectCode": "UEC519",
     "credit": "6",
     "isCore": "True"
   },
+  "UEC520": {
+    "sno": "1283",
+    "name": "MACHINE LEARNING",
+    "subjectCode": "UEC520",
+    "credit": "4",
+    "isCore": "True"
+  },
+  "UEC521": {
+    "sno": "1284",
+    "name": "DESIGN USING SYSTEM VERILOG",
+    "subjectCode": "UEC521",
+    "credit": "4",
+    "isCore": "True"
+  },
+  "UEC523": {
+    "sno": "1285",
+    "name": "",
+    "subjectCode": "UEC523",
+    "credit": "",
+    "isCore": ""
+  },
+  "UEC630": {
+    "sno": "1286",
+    "name": "DEEP LEARNING AND APPLICATIONS",
+    "subjectCode": "UEC630",
+    "credit": "4",
+    "isCore": "True"
+  },
   "UEC640": {
-    "sno": "1281",
+    "sno": "1287",
     "name": "IOT BASED SYSTEMS",
     "subjectCode": "UEC640",
     "credit": "4",
     "isCore": "True"
   },
-  "UEC644": {
-    "sno": "1282",
-    "name": "ANALOG IC DESIGN",
-    "subjectCode": "UEC644",
+  "UEC719": {
+    "sno": "1288",
+    "name": "5G WIRELESS COMMUNICATION",
+    "subjectCode": "UEC719",
+    "credit": "5",
+    "isCore": "True"
+  },
+  "UEC720": {
+    "sno": "1289",
+    "name": "ANTENNA AND WAVE PROPAGATION",
+    "subjectCode": "UEC720",
     "credit": "4",
     "isCore": "True"
   },
-  "UEC701": {
-    "sno": "1283",
-    "name": "",
-    "subjectCode": "UEC701",
-    "credit": "",
-    "isCore": ""
-  },
-  "UEC759": {
-    "sno": "1284",
-    "name": "",
-    "subjectCode": "UEC759",
-    "credit": "",
-    "isCore": ""
+  "UEE307": {
+    "sno": "1290",
+    "name": "TRANSMISSION AND DISTRIBUTION OF ELECTRIC POWER",
+    "subjectCode": "UEE307",
+    "credit": "2.5",
+    "isCore": "True"
   },
   "UEE410": {
-    "sno": "1285",
+    "sno": "1291",
     "name": "DATA STRUCTURES AND ALGORITHMS",
     "subjectCode": "UEE410",
     "credit": "4",
     "isCore": "True"
   },
+  "UEE514": {
+    "sno": "1292",
+    "name": "INTRODUCTION TO DATABASE MANAGEMENT SYSTEMS",
+    "subjectCode": "UEE514",
+    "credit": "3",
+    "isCore": "False"
+  },
+  "UEE703": {
+    "sno": "1293",
+    "name": "",
+    "subjectCode": "UEE703",
+    "credit": "",
+    "isCore": ""
+  },
+  "UEE708": {
+    "sno": "1294",
+    "name": "POWER ELECTRONICS AND DRIVES",
+    "subjectCode": "UEE708",
+    "credit": "4",
+    "isCore": "True"
+  },
+  "UEI306": {
+    "sno": "1295",
+    "name": "NETWORK ANALYSIS",
+    "subjectCode": "UEI306",
+    "credit": "2.5",
+    "isCore": "True"
+  },
+  "UEI510": {
+    "sno": "1296",
+    "name": "BIO-MEDICAL INSTRUMENTATION",
+    "subjectCode": "UEI510",
+    "credit": "3",
+    "isCore": "True"
+  },
   "UEI604": {
-    "sno": "1286",
+    "sno": "1297",
     "name": "PROCESS DYNAMICS AND CONTROL",
     "subjectCode": "UEI604",
     "credit": "4.5",
     "isCore": "True"
   },
   "UEN008": {
-    "sno": "1287",
+    "sno": "1298",
     "name": "Energy and Environment",
     "subjectCode": "UEN008",
     "credit": "2",
     "isCore": "True"
   },
   "UES101": {
-    "sno": "1288",
+    "sno": "1299",
     "name": "Engineering Drawing",
     "subjectCode": "UES101",
     "credit": "4",
     "isCore": "True"
   },
   "UES102": {
-    "sno": "1289",
+    "sno": "1300",
     "name": "Manufacturing Processes",
     "subjectCode": "UES102",
     "credit": "3",
     "isCore": "True"
   },
   "UES103": {
-    "sno": "1290",
+    "sno": "1301",
     "name": "Programming for Problem Solving (C language)",
     "subjectCode": "UES103",
     "credit": "4",
     "isCore": "True"
   },
-  "UHU014": {
-    "sno": "1291",
-    "name": "",
-    "subjectCode": "UHU014",
-    "credit": "",
-    "isCore": ""
+  "UES301": {
+    "sno": "1302",
+    "name": "ANALOG CIRCUITS",
+    "subjectCode": "UES301",
+    "credit": "3",
+    "isCore": "True"
   },
-  "UHU050": {
-    "sno": "1292",
-    "name": "EVOLUTIONARY PSYCHOLOGY ( ) 1 SELF EFFORT HOUR",
-    "subjectCode": "UHU050",
-    "credit": "1",
+  "UES302": {
+    "sno": "1303",
+    "name": "INTRODUCTION TO MEASUREMENT SYSTEMS",
+    "subjectCode": "UES302",
+    "credit": "3",
+    "isCore": "True"
+  },
+  "ULC302": {
+    "sno": "1304",
+    "name": "INTRODUCTION TO NETWORK THEORY",
+    "subjectCode": "ULC302",
+    "credit": "3.5",
     "isCore": "True"
   },
   "ULC303": {
-    "sno": "1293",
+    "sno": "1305",
     "name": "COMPUTER ARCHITECTURE AND ORGANIZATION",
     "subjectCode": "ULC303",
     "credit": "3",
     "isCore": "True"
   },
-  "ULC403": {
-    "sno": "1294",
-    "name": "DESIGN AND ANALYSIS OF ALGORITHMS",
-    "subjectCode": "ULC403",
+  "ULC501": {
+    "sno": "1306",
+    "name": "DATA BASE MANAGEMENT SYSTEMS",
+    "subjectCode": "ULC501",
     "credit": "4",
     "isCore": "True"
   },
-  "ULC404": {
-    "sno": "1295",
-    "name": "OPERATING SYSTEMS",
-    "subjectCode": "ULC404",
+  "ULC502": {
+    "sno": "1307",
+    "name": "COMPUTER NETWORKS",
+    "subjectCode": "ULC502",
     "credit": "4",
     "isCore": "True"
   },
-  "ULC405": {
-    "sno": "1296",
-    "name": "PRINCIPLES OF POWER SYSTEM ENGINEERING",
-    "subjectCode": "ULC405",
+  "ULC512": {
+    "sno": "1308",
+    "name": "",
+    "subjectCode": "ULC512",
+    "credit": "",
+    "isCore": ""
+  },
+  "ULC513": {
+    "sno": "1309",
+    "name": "",
+    "subjectCode": "ULC513",
+    "credit": "",
+    "isCore": ""
+  },
+  "ULC703": {
+    "sno": "1310",
+    "name": "THEORY OF COMPUTATION",
+    "subjectCode": "ULC703",
     "credit": "3.5",
     "isCore": "True"
   },
-  "ULC413": {
-    "sno": "1297",
-    "name": "",
-    "subjectCode": "ULC413",
-    "credit": "",
-    "isCore": ""
-  },
-  "ULC605": {
-    "sno": "1298",
-    "name": "",
-    "subjectCode": "ULC605",
-    "credit": "",
-    "isCore": ""
-  },
-  "ULC665": {
-    "sno": "1299",
-    "name": "Deep Learning",
-    "subjectCode": "ULC665",
-    "credit": "3",
+  "UMA021": {
+    "sno": "1311",
+    "name": "Numerical Linear Algebra",
+    "subjectCode": "UMA021",
+    "credit": "4",
     "isCore": "True"
   },
   "UMA022": {
-    "sno": "1300",
+    "sno": "1312",
     "name": "CALCULUS FOR ENGINEERS",
     "subjectCode": "UMA022",
     "credit": "3.5",
     "isCore": "True"
   },
   "UMA023": {
-    "sno": "1301",
+    "sno": "1313",
     "name": "DIFFERENTIAL EQUATIONS AND LINEAR ALGEBRA",
     "subjectCode": "UMA023",
     "credit": "3.5",
     "isCore": "True"
   },
-  "UMA025": {
-    "sno": "1302",
-    "name": "",
-    "subjectCode": "UMA025",
-    "credit": "",
-    "isCore": ""
+  "UMA302": {
+    "sno": "1314",
+    "name": "MATHEMATICS FOR SIGNALS",
+    "subjectCode": "UMA302",
+    "credit": "3.5",
+    "isCore": "True"
+  },
+  "UMA303": {
+    "sno": "1315",
+    "name": "OPTIMIZATION TECHNIQUES IN CIVIL ENGINEERING",
+    "subjectCode": "UMA303",
+    "credit": "4",
+    "isCore": "True"
   },
   "UMA401": {
-    "sno": "1303",
+    "sno": "1316",
     "name": "Probability and Statistics",
     "subjectCode": "UMA401",
     "credit": "4",
     "isCore": "True"
   },
-  "UMC504": {
-    "sno": "1304",
-    "name": "",
-    "subjectCode": "UMC504",
-    "credit": "",
-    "isCore": ""
-  },
-  "UME303": {
-    "sno": "1305",
-    "name": "",
-    "subjectCode": "UME303",
-    "credit": "",
-    "isCore": ""
-  },
-  "UME405": {
-    "sno": "1306",
-    "name": "Computer Aided Design & Analysis",
-    "subjectCode": "UME405",
-    "credit": "5",
-    "isCore": "True"
-  },
-  "UME414": {
-    "sno": "1307",
-    "name": "Solids and Structures",
-    "subjectCode": "UME414",
-    "credit": "4",
-    "isCore": "True"
-  },
-  "UME416": {
-    "sno": "1308",
-    "name": "Introduction to Robotics",
-    "subjectCode": "UME416",
-    "credit": "",
-    "isCore": "True"
-  },
-  "UME420": {
-    "sno": "1309",
-    "name": "Operations Management",
-    "subjectCode": "UME420",
-    "credit": "",
-    "isCore": "True"
-  },
-  "UME518": {
-    "sno": "1310",
-    "name": "INTRODUCTION TO ROBOTICS",
-    "subjectCode": "UME518",
+  "UMA601": {
+    "sno": "1317",
+    "name": "MATHEMATICS FOR SIGNAL PROCESSING",
+    "subjectCode": "UMA601",
     "credit": "3.5",
     "isCore": "True"
   },
-  "UME842": {
-    "sno": "1311",
-    "name": "MECHANICS OF COMPOSITE MATERIALS",
-    "subjectCode": "UME842",
+  "UMC513": {
+    "sno": "1318",
+    "name": "LINEAR ALGEBRA FOR ARTIFICIAL INTELLIGENCE AND MACHINE LEARNING",
+    "subjectCode": "UMC513",
+    "credit": "3",
+    "isCore": "False"
+  },
+  "UME309": {
+    "sno": "1319",
+    "name": "Engineering Fluid Mechanics",
+    "subjectCode": "UME309",
+    "credit": "3",
+    "isCore": "True"
+  },
+  "UME403": {
+    "sno": "1320",
+    "name": "",
+    "subjectCode": "UME403",
+    "credit": "",
+    "isCore": ""
+  },
+  "UME411": {
+    "sno": "1321",
+    "name": "",
+    "subjectCode": "UME411",
+    "credit": "",
+    "isCore": ""
+  },
+  "UME633": {
+    "sno": "1322",
+    "name": "",
+    "subjectCode": "UME633",
+    "credit": "",
+    "isCore": ""
+  },
+  "UME708": {
+    "sno": "1323",
+    "name": "",
+    "subjectCode": "UME708",
+    "credit": "",
+    "isCore": ""
+  },
+  "UME715": {
+    "sno": "1324",
+    "name": "BATTERY MANAGEMENT SYSTEMS",
+    "subjectCode": "UME715",
+    "credit": "3",
+    "isCore": "False"
+  },
+  "UME725": {
+    "sno": "1325",
+    "name": "ROBOT DYNAMICS AND CONTROL",
+    "subjectCode": "UME725",
     "credit": "3.5",
+    "isCore": "True"
+  },
+  "UME730": {
+    "sno": "1326",
+    "name": "Computer Aided Manufacturing",
+    "subjectCode": "UME730",
+    "credit": "",
+    "isCore": "True"
+  },
+  "UME741": {
+    "sno": "1327",
+    "name": "Metal Forming",
+    "subjectCode": "UME741",
+    "credit": "",
+    "isCore": "False"
+  },
+  "UME742": {
+    "sno": "1328",
+    "name": "",
+    "subjectCode": "UME742",
+    "credit": "",
+    "isCore": ""
+  },
+  "UME743": {
+    "sno": "1329",
+    "name": "Dynamics",
+    "subjectCode": "UME743",
+    "credit": "",
+    "isCore": "False"
+  },
+  "UME744": {
+    "sno": "1330",
+    "name": "Welding for Industry & Engineers",
+    "subjectCode": "UME744",
+    "credit": "",
+    "isCore": "False"
+  },
+  "UME751": {
+    "sno": "1331",
+    "name": "LEAN MANUFACTURING",
+    "subjectCode": "UME751",
+    "credit": "3",
+    "isCore": "False"
+  },
+  "UME752": {
+    "sno": "1332",
+    "name": "NOISE, VIBRATION AND HARSHNESS",
+    "subjectCode": "UME752",
+    "credit": "3",
+    "isCore": "False"
+  },
+  "UME754": {
+    "sno": "1333",
+    "name": "Machining Science",
+    "subjectCode": "UME754",
+    "credit": "3.5",
+    "isCore": "True"
+  },
+  "UMT306": {
+    "sno": "1334",
+    "name": "SIGNAL CONDITIONING AND DATA ACQUISITION",
+    "subjectCode": "UMT306",
+    "credit": "3",
     "isCore": "True"
   },
   "UMT404": {
-    "sno": "1312",
+    "sno": "1335",
     "name": "DATA STRUCTURES",
     "subjectCode": "UMT404",
     "credit": "3",
     "isCore": "True"
   },
-  "UMT405": {
-    "sno": "1313",
-    "name": "SENSORS AND ACTUATORS",
-    "subjectCode": "UMT405",
-    "credit": "3",
+  "UMT503": {
+    "sno": "1336",
+    "name": "AUTOMATIC CONTROL SYSTEMS",
+    "subjectCode": "UMT503",
+    "credit": "4",
     "isCore": "True"
   },
-  "UMT893": {
-    "sno": "1314",
-    "name": "CAPSTONE PROJECT (STARTS)",
-    "subjectCode": "UMT893",
-    "credit": "2",
+  "UMT504": {
+    "sno": "1337",
+    "name": "ROBOTICS ENGINEERING",
+    "subjectCode": "UMT504",
+    "credit": "3.5",
     "isCore": "True"
+  },
+  "UMT521": {
+    "sno": "1338",
+    "name": "",
+    "subjectCode": "UMT521",
+    "credit": "",
+    "isCore": ""
+  },
+  "UNC301": {
+    "sno": "1339",
+    "name": "",
+    "subjectCode": "UNC301",
+    "credit": "",
+    "isCore": ""
+  },
+  "UNC302": {
+    "sno": "1340",
+    "name": "OBJECT ORIENTED PROGRAMMING",
+    "subjectCode": "UNC302",
+    "credit": "",
+    "isCore": "True"
+  },
+  "UNC305": {
+    "sno": "1341",
+    "name": "",
+    "subjectCode": "UNC305",
+    "credit": "",
+    "isCore": ""
   },
   "UNC401": {
-    "sno": "1315",
+    "sno": "1342",
     "name": "DATA STRUCTURES",
     "subjectCode": "UNC401",
     "credit": "",
     "isCore": "True"
   },
-  "UNC402": {
-    "sno": "1316",
-    "name": "DATA STRUCTURES",
-    "subjectCode": "UNC402",
+  "UNC502": {
+    "sno": "1343",
+    "name": "",
+    "subjectCode": "UNC502",
+    "credit": "",
+    "isCore": ""
+  },
+  "UNC503": {
+    "sno": "1344",
+    "name": "ARTIFICIAL INTELLIGENCE AND MACHINE LEARNING",
+    "subjectCode": "UNC503",
     "credit": "5",
     "isCore": "True"
   },
-  "UNC404": {
-    "sno": "1317",
-    "name": "",
-    "subjectCode": "UNC404",
+  "UNC514": {
+    "sno": "1345",
+    "name": "DATA SCIENCE FUNDAMENTALS",
+    "subjectCode": "UNC514",
     "credit": "",
-    "isCore": ""
-  },
-  "UNC601": {
-    "sno": "1318",
-    "name": "",
-    "subjectCode": "UNC601",
-    "credit": "",
-    "isCore": ""
-  },
-  "UNC602": {
-    "sno": "1319",
-    "name": "DATABASE MANAGEMENT SYSTEMS",
-    "subjectCode": "UNC602",
-    "credit": "4",
     "isCore": "True"
   },
-  "UNC613": {
-    "sno": "1320",
-    "name": "",
-    "subjectCode": "UNC613",
-    "credit": "",
-    "isCore": ""
-  },
-  "UPH003": {
-    "sno": "1321",
-    "name": "",
-    "subjectCode": "UPH003",
-    "credit": "",
-    "isCore": ""
-  },
   "UPH013": {
-    "sno": "1322",
+    "sno": "1346",
     "name": "APPLIED PHYSICS",
     "subjectCode": "UPH013",
     "credit": "4.5",
     "isCore": "True"
   },
-  "UPH103": {
-    "sno": "1323",
-    "name": "",
-    "subjectCode": "UPH103",
-    "credit": "",
-    "isCore": ""
-  },
-  "URA401": {
-    "sno": "1324",
-    "name": "DATA SCIENCE",
-    "subjectCode": "URA401",
-    "credit": "3.5",
+  "UPH014": {
+    "sno": "1347",
+    "name": "PHYSICS FOR COMPIUTING SCIENCE",
+    "subjectCode": "UPH014",
+    "credit": "4.5",
     "isCore": "True"
   },
-  "URA402": {
-    "sno": "1325",
-    "name": "ROBOTICS SENSORS AND ACTUATORS",
-    "subjectCode": "URA402",
+  "URA301": {
+    "sno": "1348",
+    "name": "SMART MATERIALS FOR ROBOTICS",
+    "subjectCode": "URA301",
     "credit": "3",
     "isCore": "True"
   },
-  "URA404": {
-    "sno": "1326",
+  "URA302": {
+    "sno": "1349",
+    "name": "PYTHON PROGRAMMING",
+    "subjectCode": "URA302",
+    "credit": "3",
+    "isCore": "True"
+  },
+  "URA413": {
+    "sno": "1350",
+    "name": "FINITE ELEMENT METHODS",
+    "subjectCode": "URA413",
+    "credit": "3",
+    "isCore": "False"
+  },
+  "URA521": {
+    "sno": "1351",
     "name": "",
-    "subjectCode": "URA404",
+    "subjectCode": "URA521",
     "credit": "",
     "isCore": ""
   },
-  "URA411": {
-    "sno": "1327",
-    "name": "INDUSTRIAL SMART SENSORS",
-    "subjectCode": "URA411",
+  "URA701": {
+    "sno": "1352",
+    "name": "AUTONOMOUS SYSTEMS AND MACHINE VISION",
+    "subjectCode": "URA701",
+    "credit": "3",
+    "isCore": "True"
+  },
+  "URA731": {
+    "sno": "1353",
+    "name": "ARTIFICIAL INTELLIGENCE IN PRODUCTION",
+    "subjectCode": "URA731",
     "credit": "3",
     "isCore": "False"
   },
-  "URA414": {
-    "sno": "1328",
-    "name": "ADDITIVE MANUFACTURING",
-    "subjectCode": "URA414",
+  "URA741": {
+    "sno": "1354",
+    "name": "INDUSTRY 4.0 IMPLEMENTATION IN PRODUCTION SYSTEM",
+    "subjectCode": "URA741",
     "credit": "3",
     "isCore": "False"
   },
-  "URA417": {
-    "sno": "1329",
-    "name": "VEHICLE SAFETY ENGINEERING",
-    "subjectCode": "URA417",
+  "URA745": {
+    "sno": "1355",
+    "name": "VIRTUAL REALITY",
+    "subjectCode": "URA745",
     "credit": "3",
     "isCore": "False"
   },
-  "URA732": {
-    "sno": "1330",
-    "name": "VEHICLE DYNAMICS",
-    "subjectCode": "URA732",
+  "URA751": {
+    "sno": "1356",
+    "name": "CYBER PHYSICAL SYSTEM",
+    "subjectCode": "URA751",
     "credit": "3",
     "isCore": "False"
   },
-  "UTA204": {
-    "sno": "1331",
+  "URA753": {
+    "sno": "1357",
+    "name": "ELECTRIC AND HYBRID VEHICLES",
+    "subjectCode": "URA753",
+    "credit": "3",
+    "isCore": "False"
+  },
+  "USC503": {
+    "sno": "1358",
     "name": "",
-    "subjectCode": "UTA204",
+    "subjectCode": "USC503",
     "credit": "",
     "isCore": ""
+  },
+  "UTA030": {
+    "sno": "1359",
+    "name": "ENGINEERING DESIGN PROJECT (BUGGY)",
+    "subjectCode": "UTA030",
+    "credit": "3",
+    "isCore": "True"
   },
   "UTD003": {
-    "sno": "1332",
+    "sno": "1360",
     "name": "APTITUDE SKILLS BUILDING",
     "subjectCode": "UTD003",
     "credit": "2",
     "isCore": "True"
+  },
+  "UTD004": {
+    "sno": "1361",
+    "name": "Campus 2 Corporate",
+    "subjectCode": "UTD004",
+    "credit": "2",
+    "isCore": "False"
+  },
+  "UVD301": {
+    "sno": "1362",
+    "name": "ELECTRONIC DEVICES FOR INTEGRATED CIRCUITS",
+    "subjectCode": "UVD301",
+    "credit": "6",
+    "isCore": "True"
+  },
+  "UVD302": {
+    "sno": "1363",
+    "name": "SEMICONDUCTOR MATERIALS SYNTHESIS AND CHARACTERIZATIONS",
+    "subjectCode": "UVD302",
+    "credit": "3",
+    "isCore": "True"
+  },
+  "UVD501": {
+    "sno": "1364",
+    "name": "CMOS DIGITAL INTEGRATED CIRCUITS",
+    "subjectCode": "UVD501",
+    "credit": "6",
+    "isCore": "True"
+  },
+  "UVD515": {
+    "sno": "1365",
+    "name": "HARDWARE MODELING USING VERILOG",
+    "subjectCode": "UVD515",
+    "credit": "3",
+    "isCore": "True"
+  },
+  "UVD701": {
+    "sno": "1366",
+    "name": "CAD FOR VLSI",
+    "subjectCode": "UVD701",
+    "credit": "4",
+    "isCore": "True"
+  },
+  "UVD714": {
+    "sno": "1367",
+    "name": "",
+    "subjectCode": "UVD714",
+    "credit": "",
+    "isCore": ""
   }
 }
