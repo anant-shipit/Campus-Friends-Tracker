@@ -42,8 +42,9 @@ export default function AddFriendModal({ onClose, onSuccess, defaultIsRoommate =
   const [name, setName] = useState('');
   const [batchCode, setBatchCode] = useState('');
   const [isRoommate, setIsRoommate] = useState(defaultIsRoommate);
-  const [groups, setGroups] = useState([]);
+  const [batches, setBatches] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
   
   // Custom Dropdown State
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -54,13 +55,13 @@ export default function AddFriendModal({ onClose, onSuccess, defaultIsRoommate =
   useEffect(() => {
     let isMounted = true;
     const cached = getCachedBatches();
-    if (cached.length > 0) {
-      setGroups(cached);
+    if (cached && cached.length > 0) {
+      setBatches(cached);
     } else {
       fetchAndCacheTimetable()
         .then(() => {
           if (isMounted) {
-            setGroups(getCachedBatches());
+            setBatches(getCachedBatches());
           }
         })
         .catch((err) => {
@@ -80,6 +81,10 @@ export default function AddFriendModal({ onClose, onSuccess, defaultIsRoommate =
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
+
+  const filteredBatches = batches.filter(b => 
+    b.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -160,7 +165,12 @@ export default function AddFriendModal({ onClose, onSuccess, defaultIsRoommate =
               <button
                 type="button"
                 className={`pm-dropdown-button ${!batchCode ? 'placeholder' : ''}`}
-                onClick={() => !loading && setDropdownOpen(!dropdownOpen)}
+                onClick={() => {
+                  if (!loading) {
+                    setDropdownOpen(!dropdownOpen);
+                    if (!dropdownOpen) setSearchQuery('');
+                  }
+                }}
                 onKeyDown={handleDropdownKeyDown}
                 aria-haspopup="listbox"
                 aria-expanded={dropdownOpen}
@@ -171,26 +181,35 @@ export default function AddFriendModal({ onClose, onSuccess, defaultIsRoommate =
               </button>
               
               <div className={`pm-dropdown-menu ${dropdownOpen ? 'open' : ''}`} role="listbox">
-                {groups.length === 0 ? (
+                <div className="pm-dropdown-search">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                  <input
+                    type="text"
+                    placeholder="Search batch (e.g. 1R13)"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    onClick={(e) => e.stopPropagation()}
+                    onKeyDown={(e) => e.stopPropagation()}
+                  />
+                </div>
+                {batches.length === 0 ? (
                   <div className="pm-dropdown-option" style={{ opacity: 0.5 }}>Loading batches...</div>
+                ) : filteredBatches.length === 0 ? (
+                  <div className="pm-dropdown-option" style={{ opacity: 0.5 }}>No batches found.</div>
                 ) : (
-                  groups.map((g) => (
-                    <div key={g.yearGroup}>
-                      <div className="pm-dropdown-group-label">{g.yearGroup}</div>
-                      {g.batches.map((b) => (
-                        <div
-                          key={b}
-                          role="option"
-                          aria-selected={batchCode === b}
-                          className={`pm-dropdown-option ${batchCode === b ? 'selected' : ''}`}
-                          onClick={() => {
-                            setBatchCode(b);
-                            setDropdownOpen(false);
-                          }}
-                        >
-                          {b}
-                        </div>
-                      ))}
+                  filteredBatches.map((b) => (
+                    <div
+                      key={b}
+                      role="option"
+                      aria-selected={batchCode === b}
+                      className={`pm-dropdown-option ${batchCode === b ? 'selected' : ''}`}
+                      onClick={() => {
+                        setBatchCode(b);
+                        setDropdownOpen(false);
+                        setSearchQuery('');
+                      }}
+                    >
+                      {b}
                     </div>
                   ))
                 )}

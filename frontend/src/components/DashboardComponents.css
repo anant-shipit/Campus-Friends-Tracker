@@ -67,24 +67,19 @@
 /* --- Segmented Control --- */
 .segmented-control {
   position: relative;
-  display: flex;
+  display: inline-flex;
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid var(--pm-border, rgba(255, 255, 255, 0.06));
   border-radius: 12px;
   padding: 4px;
   gap: 4px;
-  overflow-x: auto;
-  scrollbar-width: none; /* Firefox */
-}
-.segmented-control::-webkit-scrollbar {
-  display: none; /* Chrome/Safari */
 }
 
 .sc-indicator {
   position: absolute;
   top: 4px;
   bottom: 4px;
-  left: 4px;
+  left: 0;
   background: var(--pm-surface, #11131A);
   border: 1px solid var(--pm-border, rgba(255, 255, 255, 0.06));
   border-radius: 8px;

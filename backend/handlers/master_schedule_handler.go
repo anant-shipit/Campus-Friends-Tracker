@@ -8,12 +8,6 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// batchGroup groups batches by year for the response.
-type batchGroup struct {
-	YearGroup string   `json:"yearGroup"`
-	Batches   []string `json:"batches"`
-}
-
 // scheduleSlotJSON is a flat JSON representation for the frontend cache.
 type scheduleSlotJSON struct {
 	SlotIndex   int    `json:"slotIndex"`
@@ -84,27 +78,22 @@ func GetAllSchedules(c *gin.Context) {
 		return
 	}
 
-	// Also include batch groups for the AddFriendModal dropdown.
-	batchRows, err := db.Query(ctx,
-		"SELECT code, year_group FROM batches ORDER BY year_group, code")
+	// Also include a flat sorted list of batch codes for the AddFriendModal dropdown.
+	batchRows, err := db.Query(ctx, "SELECT DISTINCT code FROM batches ORDER BY code")
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "failed to query batches", "detail": err.Error()})
 		return
 	}
 	defer batchRows.Close()
 
-	groupMap := make(map[string][]string)
-	var order []string
+	var batches []string
 	for batchRows.Next() {
-		var code, yearGroup string
-		if err := batchRows.Scan(&code, &yearGroup); err != nil {
+		var code string
+		if err := batchRows.Scan(&code); err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": "failed to scan batch details", "detail": err.Error()})
 			return
 		}
-		if _, exists := groupMap[yearGroup]; !exists {
-			order = append(order, yearGroup)
-		}
-		groupMap[yearGroup] = append(groupMap[yearGroup], code)
+		batches = append(batches, code)
 	}
 
 	if err := batchRows.Err(); err != nil {
@@ -112,16 +101,8 @@ func GetAllSchedules(c *gin.Context) {
 		return
 	}
 
-	groups := make([]batchGroup, 0, len(order))
-	for _, yg := range order {
-		groups = append(groups, batchGroup{
-			YearGroup: yg,
-			Batches:   groupMap[yg],
-		})
-	}
-
 	c.JSON(http.StatusOK, gin.H{
 		"timetable": timetable,
-		"batches":   groups,
+		"batches":   batches,
 	})
 }

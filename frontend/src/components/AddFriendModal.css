@@ -421,3 +421,33 @@
 @keyframes spin {
   to { transform: rotate(360deg); }
 }
+
+.pm-dropdown-search {
+  padding: 12px 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  position: sticky;
+  top: 0;
+  background-color: var(--pm-card);
+  z-index: 10;
+}
+
+.pm-dropdown-search svg {
+  color: rgba(255, 255, 255, 0.4);
+  flex-shrink: 0;
+}
+
+.pm-dropdown-search input {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 0.95rem;
+  width: 100%;
+  outline: none;
+}
+
+.pm-dropdown-search input::placeholder {
+  color: rgba(255, 255, 255, 0.3);
+}

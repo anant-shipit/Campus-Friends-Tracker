@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
+	"regexp"
 	"strings"
 
 	"campus-friends-tracker/backend/data"
@@ -154,10 +155,16 @@ func seedTimetable(subjectCodes map[string]string) error {
 	totalBatches := 0
 	totalSlots := 0
 
+	validBatchRegex := regexp.MustCompile(`^\d[A-Z0-9]+$`)
+
 	for yearGroup, batches := range timetable {
 		yearBatches := 0
 		yearSlots := 0
 		for batchCode, grid := range batches {
+			if !validBatchRegex.MatchString(batchCode) {
+				continue
+			}
+			
 			// Insert batch.
 			var batchID int
 			err := db.QueryRow(ctx,
@@ -186,6 +193,9 @@ func seedTimetable(subjectCodes map[string]string) error {
 			slotBatch := &pgx.Batch{}
 			slotsQueued := 0
 
+			// Keep track of the last subject for each day
+			var lastSlot [5]parsedSlot
+
 			for rowIdx := 1; rowIdx < len(grid) && rowIdx <= 14; rowIdx++ {
 				row := grid[rowIdx]
 				slotIndex := rowIdx - 1
@@ -196,6 +206,18 @@ func seedTimetable(subjectCodes map[string]string) error {
 
 					courseText := strings.TrimSpace(cell.Course)
 					parsed := parseCell(cell, subjectCodes)
+
+					if parsed.classType != "free" && parsed.subjectName == "" {
+						if lastSlot[dayOfWeek].subjectName != "" {
+							parsed.subjectName = lastSlot[dayOfWeek].subjectName
+							parsed.subjectCode = lastSlot[dayOfWeek].subjectCode
+							parsed.classType = lastSlot[dayOfWeek].classType
+							if parsed.room == "" || strings.HasPrefix(courseText, "LAB") {
+								parsed.room = lastSlot[dayOfWeek].room
+							}
+						}
+					}
+					lastSlot[dayOfWeek] = parsed
 
 					slotBatch.Queue(
 						`INSERT INTO schedule_slots

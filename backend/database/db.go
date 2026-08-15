@@ -16,9 +16,14 @@ var pool *pgxpool.Pool
 // InitDB creates a connection pool to PostgreSQL using the provided config.
 // Pool settings are tuned for Aiven's free-tier connection limits.
 func InitDB(cfg *config.Config) error {
+	sslMode := "require"
+	if cfg.DBHost == "localhost" || cfg.DBHost == "127.0.0.1" {
+		sslMode = "disable"
+	}
+
 	connStr := fmt.Sprintf(
-		"postgres://%s:%s@%s:%s/%s?sslmode=require",
-		cfg.DBUser, cfg.DBPass, cfg.DBHost, cfg.DBPort, cfg.DBName,
+		"postgres://%s:%s@%s:%s/%s?sslmode=%s",
+		cfg.DBUser, cfg.DBPass, cfg.DBHost, cfg.DBPort, cfg.DBName, sslMode,
 	)
 
 	poolCfg, err := pgxpool.ParseConfig(connStr)

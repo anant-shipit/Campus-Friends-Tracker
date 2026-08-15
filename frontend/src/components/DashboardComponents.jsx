@@ -26,6 +26,21 @@ export const DashboardHero = memo(({ title, subtitle, action, icon: Icon }) => (
 
 // Segmented Control
 export const SegmentedControl = memo(({ options, selectedIndex, onChange }) => {
+  const containerRef = React.useRef(null);
+  const [indicatorStyle, setIndicatorStyle] = React.useState({ left: 4, width: 0 });
+
+  React.useEffect(() => {
+    if (containerRef.current) {
+      const activeTab = containerRef.current.querySelectorAll('[role="tab"]')[selectedIndex];
+      if (activeTab) {
+        setIndicatorStyle({
+          left: activeTab.offsetLeft,
+          width: activeTab.offsetWidth,
+        });
+      }
+    }
+  }, [selectedIndex, options]);
+
   const handleKeyDown = (e, index) => {
     let newIndex = index;
     if (e.key === 'ArrowRight') newIndex = (index + 1) % options.length;
@@ -36,19 +51,18 @@ export const SegmentedControl = memo(({ options, selectedIndex, onChange }) => {
     if (newIndex !== index) {
       e.preventDefault();
       onChange(newIndex);
-      // Focus the newly selected tab
-      const tabs = e.currentTarget.parentElement.querySelectorAll('[role="tab"]');
+      const tabs = containerRef.current.querySelectorAll('[role="tab"]');
       if (tabs[newIndex]) tabs[newIndex].focus();
     }
   };
 
   return (
-    <div className="segmented-control" role="tablist">
+    <div className="segmented-control" role="tablist" ref={containerRef}>
       <div 
         className="sc-indicator" 
         style={{ 
-          width: `calc((100% - 8px - ${(options.length - 1) * 4}px) / ${options.length})`, 
-          transform: `translateX(calc(${selectedIndex} * 100% + ${selectedIndex * 4}px))` 
+          width: indicatorStyle.width, 
+          transform: `translateX(${indicatorStyle.left}px)` 
         }} 
       />
       {options.map((option, idx) => {
