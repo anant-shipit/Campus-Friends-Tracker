@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"log"
 	"net/http"
 
 	"campus-friends-tracker/backend/database"
@@ -74,30 +75,34 @@ func GetAllSchedules(c *gin.Context) {
 	}
 
 	if err := rows.Err(); err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "failed to iterate schedules", "detail": err.Error()})
+		log.Printf("Error iterating schedule rows: %v", err)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "failed to iterate schedules"})
 		return
 	}
 
 	// Also include a flat sorted list of batch codes for the AddFriendModal dropdown.
 	batchRows, err := db.Query(ctx, "SELECT DISTINCT code FROM batches ORDER BY code")
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "failed to query batches", "detail": err.Error()})
+		log.Printf("Error querying batches: %v", err)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "failed to query batches"})
 		return
 	}
 	defer batchRows.Close()
 
-	var batches []string
+	batches := []string{}
 	for batchRows.Next() {
 		var code string
 		if err := batchRows.Scan(&code); err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{"error": "failed to scan batch details", "detail": err.Error()})
+			log.Printf("Error scanning batch row: %v", err)
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "failed to scan batch details"})
 			return
 		}
 		batches = append(batches, code)
 	}
 
 	if err := batchRows.Err(); err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "failed to iterate batches", "detail": err.Error()})
+		log.Printf("Error iterating batch rows: %v", err)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "failed to iterate batches"})
 		return
 	}
 

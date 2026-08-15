@@ -87,7 +87,9 @@ export default function EmptyRoomFinder() {
     if (session) {
       try {
         setActiveSession(JSON.parse(session));
-      } catch(e) {}
+      } catch (error) {
+        console.warn('Failed to parse active room session:', error);
+      }
     }
   }, []);
 
@@ -106,7 +108,7 @@ export default function EmptyRoomFinder() {
 
   // Derive current status
   const currentStatus = useMemo(() => {
-    const { weekdayName, dateKey, nowMinutes } = getKolkataTimeInfo(currentTime);
+    const { weekdayName, nowMinutes } = getKolkataTimeInfo(currentTime);
     const isWeekend = weekdayName === 'Saturday' || weekdayName === 'Sunday';
     
     if (isWeekend) return { isOver: true, message: "Classes are over for the weekend" };

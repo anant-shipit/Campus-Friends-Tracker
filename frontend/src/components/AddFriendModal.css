@@ -445,7 +445,13 @@
   color: white;
   font-size: 0.95rem;
   width: 100%;
-  outline: none;
+  outline: none; /* Fallback for browsers that do not support focus-visible */
+}
+
+.pm-dropdown-search input:focus-visible {
+  outline: 2px solid var(--brand-primary);
+  outline-offset: 2px;
+  border-radius: 4px;
 }
 
 .pm-dropdown-search input::placeholder {

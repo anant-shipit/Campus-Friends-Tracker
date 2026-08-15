@@ -4,6 +4,8 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"net"
+	"strings"
 	"time"
 
 	"campus-friends-tracker/backend/config"
@@ -16,8 +18,12 @@ var pool *pgxpool.Pool
 // InitDB creates a connection pool to PostgreSQL using the provided config.
 // Pool settings are tuned for Aiven's free-tier connection limits.
 func InitDB(cfg *config.Config) error {
-	sslMode := "require"
-	if cfg.DBHost == "localhost" || cfg.DBHost == "127.0.0.1" {
+	host := strings.ToLower(strings.TrimSpace(cfg.DBHost))
+	sslMode := "verify-full"
+	
+	if host == "localhost" {
+		sslMode = "disable"
+	} else if ip := net.ParseIP(host); ip != nil && ip.IsLoopback() {
 		sslMode = "disable"
 	}
 

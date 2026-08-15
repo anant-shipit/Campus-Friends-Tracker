@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, createContext, useContext } from 'react';
+import { useState, useEffect, useCallback, createContext } from 'react';
 import './App.css';
 import Dashboard from './components/Dashboard';
 import AddFriendModal from './components/AddFriendModal';
@@ -18,7 +18,6 @@ import commonFreeTimeIcon from './assets/common_free_time_icon.png';
 import privateSessionIcon from './assets/private_session_icon.png';
 
 const ViewContext = createContext();
-export const useView = () => useContext(ViewContext);
 
 const DAY_NAMES = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
 

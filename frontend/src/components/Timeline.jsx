@@ -45,7 +45,7 @@ function isCurrentSlot(slot) {
   return currentMinutes >= startMinutes && currentMinutes < endMinutes;
 }
 
-export default function Timeline({ slots, dayName, currentDay }) {
+export default function Timeline({ slots, dayName }) {
   // Group consecutive free slots
   const groups = useMemo(() => {
     if (!slots || slots.length === 0) return [];

@@ -43,6 +43,8 @@ export default function AddFriendModal({ onClose, onSuccess, defaultIsRoommate =
   const [batchCode, setBatchCode] = useState('');
   const [isRoommate, setIsRoommate] = useState(defaultIsRoommate);
   const [batches, setBatches] = useState([]);
+  const [batchesLoading, setBatchesLoading] = useState(false);
+  const [batchesError, setBatchesError] = useState('');
   const [loading, setLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   
@@ -58,14 +60,20 @@ export default function AddFriendModal({ onClose, onSuccess, defaultIsRoommate =
     if (cached && cached.length > 0) {
       setBatches(cached);
     } else {
+      setBatchesLoading(true);
       fetchAndCacheTimetable()
         .then(() => {
           if (isMounted) {
             setBatches(getCachedBatches());
+            setBatchesLoading(false);
           }
         })
         .catch((err) => {
           console.error("Failed to fetch batches:", err);
+          if (isMounted) {
+            setBatchesError("Failed to load batches.");
+            setBatchesLoading(false);
+          }
         });
     }
     return () => { isMounted = false; };
@@ -180,7 +188,7 @@ export default function AddFriendModal({ onClose, onSuccess, defaultIsRoommate =
                 <svg className="pm-dropdown-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
               </button>
               
-              <div className={`pm-dropdown-menu ${dropdownOpen ? 'open' : ''}`} role="listbox">
+              <div className={`pm-dropdown-menu ${dropdownOpen ? 'open' : ''}`} role="listbox" inert={!dropdownOpen ? "true" : undefined}>
                 <div className="pm-dropdown-search">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
                   <input
@@ -189,16 +197,25 @@ export default function AddFriendModal({ onClose, onSuccess, defaultIsRoommate =
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     onClick={(e) => e.stopPropagation()}
-                    onKeyDown={(e) => e.stopPropagation()}
+                    onKeyDown={(e) => {
+                      e.stopPropagation();
+                      if (e.key === 'Enter') {
+                        e.preventDefault();
+                      }
+                    }}
                   />
                 </div>
-                {batches.length === 0 ? (
+                {batchesLoading ? (
                   <div className="pm-dropdown-option" style={{ opacity: 0.5 }}>Loading batches...</div>
+                ) : batchesError ? (
+                  <div className="pm-dropdown-option" style={{ color: 'var(--status-danger)' }}>{batchesError}</div>
+                ) : batches.length === 0 ? (
+                  <div className="pm-dropdown-option" style={{ opacity: 0.5 }}>No batches available.</div>
                 ) : filteredBatches.length === 0 ? (
                   <div className="pm-dropdown-option" style={{ opacity: 0.5 }}>No batches found.</div>
                 ) : (
                   filteredBatches.map((b) => (
-                    <div
+                    <button
                       key={b}
                       role="option"
                       aria-selected={batchCode === b}
@@ -208,9 +225,17 @@ export default function AddFriendModal({ onClose, onSuccess, defaultIsRoommate =
                         setDropdownOpen(false);
                         setSearchQuery('');
                       }}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                          e.preventDefault();
+                          setBatchCode(b);
+                          setDropdownOpen(false);
+                          setSearchQuery('');
+                        }
+                      }}
                     >
                       {b}
-                    </div>
+                    </button>
                   ))
                 )}
               </div>

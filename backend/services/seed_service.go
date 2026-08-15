@@ -211,7 +211,9 @@ func seedTimetable(subjectCodes map[string]string) error {
 						if lastSlot[dayOfWeek].subjectName != "" {
 							parsed.subjectName = lastSlot[dayOfWeek].subjectName
 							parsed.subjectCode = lastSlot[dayOfWeek].subjectCode
-							parsed.classType = lastSlot[dayOfWeek].classType
+							if parsed.classType == "other" {
+								parsed.classType = lastSlot[dayOfWeek].classType
+							}
 							if parsed.room == "" || strings.HasPrefix(courseText, "LAB") {
 								parsed.room = lastSlot[dayOfWeek].room
 							}
