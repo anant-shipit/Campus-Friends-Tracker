@@ -19,7 +19,7 @@ var pool *pgxpool.Pool
 // Pool settings are tuned for Aiven's free-tier connection limits.
 func InitDB(cfg *config.Config) error {
 	host := strings.ToLower(strings.TrimSpace(cfg.DBHost))
-	sslMode := "verify-full"
+	sslMode := "require"
 	
 	if host == "localhost" {
 		sslMode = "disable"
