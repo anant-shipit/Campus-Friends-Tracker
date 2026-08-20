@@ -20,10 +20,38 @@ type scheduleSlotJSON struct {
 	Room        string `json:"room,omitempty"`
 }
 
-// GetAllSchedules returns the entire timetable for every batch, grouped by
-// batch code → day index → slots.  The frontend caches this once for offline use.
-// GET /api/schedules/all
+// SeedChecker reports whether a database seed is currently in progress.
+// Returns (running, failed, errorMessage).
+type SeedChecker func() (bool, bool, string)
+
+// MakeGetAllSchedules returns a handler that gates on the seed state.
+// If a seed is running, it returns 503 so the frontend keeps its cache
+// instead of overwriting it with empty data.
+func MakeGetAllSchedules(checkSeed SeedChecker) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		// Gate: refuse to serve during seed to prevent empty-data caching.
+		if checkSeed != nil {
+			running, _, _ := checkSeed()
+			if running {
+				c.JSON(http.StatusServiceUnavailable, gin.H{
+					"error": "database seed in progress, please retry shortly",
+				})
+				return
+			}
+		}
+
+		getAllSchedules(c)
+	}
+}
+
+// GetAllSchedules is the ungated version (used when --seed is not passed).
 func GetAllSchedules(c *gin.Context) {
+	getAllSchedules(c)
+}
+
+// getAllSchedules returns the entire timetable for every batch, grouped by
+// batch code → day index → slots.  The frontend caches this once for offline use.
+func getAllSchedules(c *gin.Context) {
 	db := database.GetDB()
 	ctx := c.Request.Context()
 
@@ -111,3 +139,4 @@ func GetAllSchedules(c *gin.Context) {
 		"batches":   batches,
 	})
 }
+

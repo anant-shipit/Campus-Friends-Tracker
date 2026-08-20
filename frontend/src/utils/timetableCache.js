@@ -10,16 +10,48 @@ const API_BASE = import.meta.env.VITE_API_BASE_URL || '/api';
 /**
  * Fetch the master timetable from the server and cache it.
  * Returns the timetable object: { batchCode: { dayIndex: [slots] } }
+ *
+ * Sanity check: if the server returns significantly fewer batches than
+ * what is already cached (e.g. during a seed), the update is rejected
+ * and the existing cache is preserved.
  */
 export async function fetchAndCacheTimetable() {
   try {
     const res = await fetch(`${API_BASE}/schedules/all`);
+
+    // 503 = server is seeding; keep existing cache.
+    if (res.status === 503) {
+      console.warn('Server is seeding (503), using cache.');
+      return getCachedTimetable();
+    }
+
     if (!res.ok) throw new Error('Failed to fetch timetable');
     const data = await res.json();
 
     if (!data || !data.timetable) {
       console.warn('Server returned invalid timetable data, using cache.');
       return getCachedTimetable();
+    }
+
+    // ── Sanity check: reject suspiciously small responses ──
+    const newBatchCount = Object.keys(data.timetable).length;
+    const cachedTimetable = getCachedTimetable();
+    const cachedBatchCount = Object.keys(cachedTimetable).length;
+
+    if (newBatchCount === 0 && cachedBatchCount > 0) {
+      console.warn(
+        `Server returned 0 batches but cache has ${cachedBatchCount}. ` +
+        'Rejecting update to protect local data.'
+      );
+      return cachedTimetable;
+    }
+
+    if (cachedBatchCount > 10 && newBatchCount < cachedBatchCount * 0.5) {
+      console.warn(
+        `Server returned ${newBatchCount} batches vs ${cachedBatchCount} cached. ` +
+        'Looks like a partial response — rejecting update.'
+      );
+      return cachedTimetable;
     }
 
     localStorage.setItem(TIMETABLE_KEY, JSON.stringify(data.timetable));

@@ -127,6 +127,8 @@ func seedSubjects() (map[string]string, error) {
 }
 
 // seedTimetable reads data.json and inserts batches + schedule slots.
+// The entire operation runs inside a single transaction so that external
+// readers never see partially deleted or empty data.
 func seedTimetable(subjectCodes map[string]string) error {
 	raw, err := data.EmbeddedData.ReadFile("data.json")
 	if err != nil {
@@ -142,13 +144,18 @@ func seedTimetable(subjectCodes map[string]string) error {
 	db := database.GetDB()
 	ctx := context.Background()
 
-	// Truncate schedule_slots and batches for idempotency, then re-insert.
-	_, err = db.Exec(ctx, "DELETE FROM schedule_slots")
+	// ── Single atomic transaction for the entire seed ──
+	tx, err := db.Begin(ctx)
 	if err != nil {
+		return fmt.Errorf("begin seed transaction: %w", err)
+	}
+	defer tx.Rollback(ctx) // no-op after successful commit
+
+	// Truncate inside the transaction — readers see old data until commit.
+	if _, err = tx.Exec(ctx, "DELETE FROM schedule_slots"); err != nil {
 		return fmt.Errorf("truncate schedule_slots: %w", err)
 	}
-	_, err = db.Exec(ctx, "DELETE FROM batches")
-	if err != nil {
+	if _, err = tx.Exec(ctx, "DELETE FROM batches"); err != nil {
 		return fmt.Errorf("truncate batches: %w", err)
 	}
 
@@ -165,9 +172,9 @@ func seedTimetable(subjectCodes map[string]string) error {
 				continue
 			}
 			
-			// Insert batch.
+			// Insert batch inside the same transaction.
 			var batchID int
-			err := db.QueryRow(ctx,
+			err := tx.QueryRow(ctx,
 				`INSERT INTO batches (code, year_group) VALUES ($1, $2)
 				 ON CONFLICT (code) DO UPDATE SET year_group = EXCLUDED.year_group
 				 RETURNING id`,
@@ -185,11 +192,7 @@ func seedTimetable(subjectCodes map[string]string) error {
 				continue
 			}
 
-			// Batch insert schedule slots in a transaction.
-			tx, err := db.Begin(ctx)
-			if err != nil {
-				return err
-			}
+			// Batch insert schedule slots inside the same transaction.
 			slotBatch := &pgx.Batch{}
 			slotsQueued := 0
 
@@ -246,21 +249,19 @@ func seedTimetable(subjectCodes map[string]string) error {
 			for i := 0; i < slotsQueued; i++ {
 				if _, err := br.Exec(); err != nil {
 					br.Close()
-					if rbErr := tx.Rollback(ctx); rbErr != nil {
-						log.Printf("rollback failed for batch=%s: %v", batchCode, rbErr)
-					}
 					return fmt.Errorf("insert slots batch=%s: %w", batchCode, err)
 				}
 			}
 			br.Close()
 			totalSlots += slotsQueued
 			yearSlots += slotsQueued
-
-			if err := tx.Commit(ctx); err != nil {
-				return err
-			}
 		}
 		log.Printf("    📅 %s: %d batches, %d slots inserted", yearGroup, yearBatches, yearSlots)
+	}
+
+	// Commit everything atomically — readers flip from old data to new data.
+	if err := tx.Commit(ctx); err != nil {
+		return fmt.Errorf("commit seed transaction: %w", err)
 	}
 
 	log.Printf("  📅 Inserted %d batches, %d schedule slots", totalBatches, totalSlots)

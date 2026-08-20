@@ -137,7 +137,15 @@ func main() {
 	api.Use(middleware.TrafficCounter)
 	{
 		// === Public routes ===
-		api.GET("/schedules/all", handlers.GetAllSchedules)
+		// When --seed was requested, gate the schedule endpoint so it
+		// returns 503 while the seed goroutine is running.
+		if seedRequested {
+			api.GET("/schedules/all", handlers.MakeGetAllSchedules(
+				func() (bool, bool, string) { return seed.status() },
+			))
+		} else {
+			api.GET("/schedules/all", handlers.GetAllSchedules)
+		}
 		api.GET("/stats", handlers.GetStats)
 	}
 
