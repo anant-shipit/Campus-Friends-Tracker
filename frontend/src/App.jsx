@@ -173,6 +173,21 @@ function MainApp() {
             initialDay={isWeekend ? 0 : getTodayIndex()}
           />
         )}
+
+        {/* Footer */}
+        <footer className="app-footer">
+          <p className="app-footer__text">
+            Made with <span className="app-footer__heart" role="img" aria-label="love">❤️</span> by{' '}
+            <a
+              href="https://github.com/anant-shipit"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="app-footer__link"
+            >
+              Anant
+            </a>
+          </p>
+        </footer>
       </div>
     </ViewContext.Provider>
   );
