@@ -11,9 +11,10 @@ const API_BASE = import.meta.env.VITE_API_BASE_URL || '/api';
  * Fetch the master timetable from the server and cache it.
  * Returns the timetable object: { batchCode: { dayIndex: [slots] } }
  *
- * Sanity check: if the server returns significantly fewer batches than
- * what is already cached (e.g. during a seed), the update is rejected
- * and the existing cache is preserved.
+ * Falls back to the existing cache on network errors or when the server
+ * returns 503 (seed in progress). Any valid HTTP 200 response replaces
+ * the cache unconditionally — the backend 503 gate prevents empty data
+ * from reaching here during a re-seed.
  */
 export async function fetchAndCacheTimetable() {
   try {
@@ -33,27 +34,6 @@ export async function fetchAndCacheTimetable() {
       return getCachedTimetable();
     }
 
-    // ── Sanity check: reject suspiciously small responses ──
-    const newBatchCount = Object.keys(data.timetable).length;
-    const cachedTimetable = getCachedTimetable();
-    const cachedBatchCount = Object.keys(cachedTimetable).length;
-
-    if (newBatchCount === 0 && cachedBatchCount > 0) {
-      console.warn(
-        `Server returned 0 batches but cache has ${cachedBatchCount}. ` +
-        'Rejecting update to protect local data.'
-      );
-      return cachedTimetable;
-    }
-
-    if (cachedBatchCount > 10 && newBatchCount < cachedBatchCount * 0.5) {
-      console.warn(
-        `Server returned ${newBatchCount} batches vs ${cachedBatchCount} cached. ` +
-        'Looks like a partial response — rejecting update.'
-      );
-      return cachedTimetable;
-    }
-
     localStorage.setItem(TIMETABLE_KEY, JSON.stringify(data.timetable));
     localStorage.setItem(TIMETABLE_TS_KEY, new Date().toISOString());
 
@@ -67,6 +47,7 @@ export async function fetchAndCacheTimetable() {
     return getCachedTimetable();
   }
 }
+
 
 /**
  * Get the cached timetable from localStorage.
