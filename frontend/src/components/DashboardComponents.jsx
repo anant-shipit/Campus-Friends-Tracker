@@ -86,13 +86,18 @@ export const SegmentedControl = memo(({ options, selectedIndex, onChange }) => {
 });
 
 // Stat Card
-export const StatCard = memo(({ title, value, description, action = null }) => (
-  <Card className="stat-card" hoverable={!!action} onClick={action}>
-    <h4 className="stat-title">{title}</h4>
-    <div className="stat-value">{value}</div>
-    {description && <div className="stat-desc">{description}</div>}
-  </Card>
-));
+export const StatCard = memo(({ title, value, description, action = null }) => {
+  // Arcade scoreboard: pad plain counts to two digits (0 → 00, 7 → 07).
+  const display =
+    typeof value === 'number' && value < 100 ? String(value).padStart(2, '0') : value;
+  return (
+    <Card className="stat-card" hoverable={!!action} onClick={action}>
+      <h4 className="stat-title">{title}</h4>
+      <div className="stat-value">{display}</div>
+      {description && <div className="stat-desc">{description}</div>}
+    </Card>
+  );
+});
 
 // Empty State
 export const EmptyState = memo(({ icon: Icon, title, description, children, helperText }) => (

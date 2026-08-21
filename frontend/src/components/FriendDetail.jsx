@@ -21,7 +21,7 @@ export default function FriendDetail({ friend, timetable, onClose, initialDay = 
   return (
     <>
       <div className="overlay-backdrop" onClick={onClose} />
-      <div className="friend-detail slide-in-up">
+      <div className="friend-detail">
         <div className="friend-detail__header">
           <div className="friend-detail__identity">
             <h2 className="friend-detail__name">{friend.name}</h2>
@@ -47,7 +47,7 @@ export default function FriendDetail({ friend, timetable, onClose, initialDay = 
         <div className="friend-detail__body">
           {schedule.slots.length === 0 ? (
             <div className="friend-detail__error">
-              <p>📋 No schedule data available for this batch.</p>
+              <p>No schedule data available for this batch.</p>
             </div>
           ) : (
             <Timeline slots={schedule.slots} dayName={schedule.dayName} currentDay={day} />

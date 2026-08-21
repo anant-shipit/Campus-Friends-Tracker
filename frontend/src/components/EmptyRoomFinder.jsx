@@ -226,65 +226,55 @@ export default function EmptyRoomFinder() {
     return `${h > 0 ? h + 'h ' : ''}${m}m`;
   };
 
-  if (loading) return <div className="text-center p-8 text-white">Loading room data...</div>;
+  if (loading) return <div className="w-full max-w-4xl mx-auto py-16 text-center text-[var(--text-secondary)]">Loading room data…</div>;
 
   if (error) {
     return (
-      <div className="text-center p-8 text-white">
-        <p className="mb-4 text-red-400 font-semibold">{error}</p>
-        <button 
-          onClick={loadData}
-          className="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg text-sm font-semibold transition-colors"
-        >
-          Retry
-        </button>
+      <div className="w-full max-w-4xl mx-auto py-16 text-center">
+        <p className="mb-4 font-semibold" style={{ color: 'var(--color-lecture)' }}>{error}</p>
+        <button onClick={loadData} className="btn btn-secondary">Retry</button>
       </div>
     );
   }
 
   return (
     <div className="w-full max-w-4xl mx-auto pb-20">
-      
+
       {activeSession && getSessionTimeLeft() && (
-        <div className="mb-6 bg-purple-600 rounded-xl p-4 shadow-lg text-white flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <div className="panel mb-6 p-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4" style={{ borderLeft: '3px solid var(--color-free)' }}>
           <div>
-            <h3 className="text-lg font-bold">You are using Room {activeSession.room}</h3>
-            <p className="text-purple-100 text-sm">Time remaining: {getSessionTimeLeft()} (Until {activeSession.endTimeStr})</p>
+            <h3 className="text-base font-semibold text-[var(--text-primary)]">Using Room <span className="mono">{activeSession.room}</span></h3>
+            <p className="text-[var(--text-secondary)] text-sm">Time remaining <span className="mono">{getSessionTimeLeft()}</span> · until <span className="mono">{activeSession.endTimeStr}</span></p>
           </div>
-          <button 
-            onClick={handleLeaveRoom}
-            className="px-4 py-2 bg-purple-800 hover:bg-purple-900 rounded-lg text-sm font-semibold transition-colors"
-          >
-            Leave Room
-          </button>
+          <button onClick={handleLeaveRoom} className="btn btn-secondary btn-sm">Leave Room</button>
         </div>
       )}
 
       {currentStatus.isOver ? (
-        <div className="bg-transparent rounded-2xl p-8 text-center flex flex-col items-center justify-center min-h-[60vh]">
-          <div className="text-8xl mb-8">🎉</div>
-          <h2 className="text-4xl md:text-5xl font-extrabold text-white mb-6">{currentStatus.message}</h2>
-          <p className="text-2xl text-slate-400">Enjoy your free time!</p>
+        <div className="py-24 text-center flex flex-col items-center justify-center min-h-[50vh]">
+          <p className="mono text-xs uppercase tracking-[0.2em] text-[var(--text-tertiary)] mb-3">No classes</p>
+          <h2 className="text-2xl font-bold text-[var(--text-primary)] mb-2">{currentStatus.message}</h2>
+          <p className="text-[var(--text-secondary)]">Enjoy your free time.</p>
         </div>
       ) : (
         <>
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
             <div>
-              <h2 className="text-2xl font-bold text-white mb-1">Empty Rooms</h2>
-              <p className="text-slate-400 text-sm">
-                Current slot: <span className="text-purple-400 font-semibold">{currentStatus.activeSlotStr}</span>
+              <h2 className="text-2xl font-bold text-[var(--text-primary)] mb-1">Empty Rooms</h2>
+              <p className="text-[var(--text-secondary)] text-sm">
+                Current slot <span className="mono font-semibold text-[var(--text-primary)]">{currentStatus.activeSlotStr}</span>
               </p>
             </div>
             <div className="flex items-center gap-2">
-              <label htmlFor="sort-by-select" className="text-slate-400 text-sm mr-2">Sort by:</label>
-              <select 
+              <label htmlFor="sort-by-select" className="text-[var(--text-secondary)] text-sm">Sort</label>
+              <select
                 id="sort-by-select"
-                value={sortBy} 
+                value={sortBy}
                 onChange={e => setSortBy(e.target.value)}
-                className="bg-[#1c212d] text-white border border-white/10 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-purple-500"
+                className="bg-[var(--bg-tertiary)] text-[var(--text-primary)] border border-[var(--border)] rounded-[var(--radius-sm)] px-3 py-2 text-sm focus:outline-none focus:border-[var(--border-strong)]"
               >
-                <option value="most_time">Most Time Left</option>
-                <option value="least_time">Least Time Left</option>
+                <option value="most_time">Most time left</option>
+                <option value="least_time">Least time left</option>
               </select>
             </div>
           </div>
@@ -294,40 +284,38 @@ export default function EmptyRoomFinder() {
               <button
                 key={b}
                 onClick={() => setSelectedBlock(b)}
-                className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all ${
-                  selectedBlock === b 
-                    ? 'bg-purple-600 text-white shadow-md shadow-purple-900/50' 
-                    : 'bg-[#1c212d] text-slate-300 hover:bg-white/10 border border-white/5'
+                className={`mono text-xs px-3 py-1.5 rounded-[var(--radius-sm)] border transition-colors ${
+                  selectedBlock === b
+                    ? 'bg-[var(--accent)] text-[var(--text-inverse)] border-[var(--accent)] font-semibold'
+                    : 'bg-[var(--bg-tertiary)] text-[var(--text-secondary)] border-[var(--border)] hover:text-[var(--text-primary)]'
                 }`}
               >
-                {b === 'All' ? 'All Blocks' : `${b} Block`}
+                {b === 'All' ? 'ALL BLOCKS' : `${b} BLOCK`}
               </button>
             ))}
           </div>
 
           {displayRooms.length === 0 ? (
-            <div className="text-center p-8 text-slate-400 bg-[#1c212d] rounded-xl border border-white/5">
+            <div className="panel text-center p-8 text-[var(--text-secondary)]">
               No empty rooms found for this block.
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
               {displayRooms.map(room => (
-                <div key={room.room} className="bg-[#1c212d] border border-white/5 rounded-xl p-5 hover:border-white/10 transition-colors flex flex-col justify-between">
+                <div key={room.room} className="panel p-4 flex flex-col justify-between transition-colors hover:border-[var(--border-strong)]" style={{ borderLeft: '3px solid var(--color-free)' }}>
                   <div>
-                    <div className="flex justify-between items-start mb-2">
-                      <h3 className="text-xl font-bold text-white">{room.room}</h3>
-                      <span className="bg-green-500/20 text-green-400 text-xs px-2 py-1 rounded-md font-medium border border-green-500/20">
-                        {room.block} Block
-                      </span>
+                    <div className="flex justify-between items-start mb-3">
+                      <h3 className="text-lg font-bold mono text-[var(--text-primary)]">{room.room}</h3>
+                      <span className="chip chip-free">{room.block}</span>
                     </div>
                     <div className="mb-4">
-                      <p className="text-slate-300 text-lg font-semibold">{formatMinutes(room.minutesLeft)} left</p>
-                      <p className="text-slate-500 text-sm">Free until {room.endTimeStr}</p>
+                      <p className="text-[var(--text-primary)] text-base font-semibold"><span className="mono">{formatMinutes(room.minutesLeft)}</span> left</p>
+                      <p className="text-[var(--text-tertiary)] text-sm">Free until <span className="mono">{room.endTimeStr}</span></p>
                     </div>
                   </div>
-                  <button 
+                  <button
                     onClick={() => handleUseRoom(room.room, room.endTimeStr)}
-                    className="w-full py-2.5 bg-white/5 hover:bg-purple-600 text-white rounded-lg text-sm font-medium transition-colors border border-white/10 hover:border-purple-500"
+                    className="btn btn-secondary btn-sm w-full"
                   >
                     Use it Now
                   </button>

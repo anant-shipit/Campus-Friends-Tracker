@@ -58,7 +58,7 @@ export default function FriendCard({ friend, onTap, onDelete, onToggleRoommate, 
 
   return (
     <div
-      className={`friend-card glass-card friend-card--${classType} fade-in-up`}
+      className={`friend-card friend-card--${classType}`}
       onClick={() => onTap(friend)}
       role="button"
       tabIndex={0}
@@ -120,7 +120,7 @@ export default function FriendCard({ friend, onTap, onDelete, onToggleRoommate, 
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" style={{color: 'var(--color-free)'}}><polyline points="20 6 9 17 4 12"></polyline></svg>
             </span>
             {friend.nextClass
-              ? `Free until ${formatTime(friend.nextClass.startsAt)}`
+              ? <>Free until <time className="mono">{formatTime(friend.nextClass.startsAt)}</time></>
               : 'Free for the rest of the day'}
           </p>
         ) : (
@@ -142,14 +142,14 @@ export default function FriendCard({ friend, onTap, onDelete, onToggleRoommate, 
 
         {!isFree && friend.currentClass && (
           <p className="friend-card__ends">
-            Ends at {formatTime(friend.currentClass.endsAt)}
+            Ends at <time className="mono">{formatTime(friend.currentClass.endsAt)}</time>
           </p>
         )}
 
         {friend.nextClass && !isFree && (
           <p className="friend-card__next">
             Next: {friend.nextClass.subjectName} at{' '}
-            {formatTime(friend.nextClass.startsAt)}
+            <time className="mono">{formatTime(friend.nextClass.startsAt)}</time>
           </p>
         )}
       </div>

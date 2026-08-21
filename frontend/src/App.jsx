@@ -7,15 +7,12 @@ import CommonFreeTime from './components/CommonFreeTime';
 import PrivateSession from './components/PrivateSession';
 import EmptyRoomFinder from './components/EmptyRoomFinder';
 import { ToastProvider } from './components/ToastProvider';
+import StarField from './components/StarField';
 import { fetchAndCacheTimetable, getCachedTimetable } from './utils/timetableCache';
 import { getTodayIndex } from './utils/timeUtils';
-import { useCursorSpotlight } from './hooks/useCursorSpotlight';
 
-// Assets
-import headerIcon from './assets/header_icon.png';
-import friendsIcon from './assets/friends_icon.png';
-import commonFreeTimeIcon from './assets/common_free_time_icon.png';
-import privateSessionIcon from './assets/private_session_icon.png';
+// Pixel icons
+import { IconGraduation, IconFriends, IconCalendar, IconLock, IconBuilding, IconHeart } from './components/PixelIcons';
 
 const ViewContext = createContext();
 
@@ -30,7 +27,6 @@ function App() {
 }
 
 function MainApp() {
-  useCursorSpotlight();
   const [view, setView] = useState('dashboard');
   const [showAddFriend, setShowAddFriend] = useState(false);
   const [addFriendDefaultRoommate, setAddFriendDefaultRoommate] = useState(false);
@@ -76,19 +72,20 @@ function MainApp() {
 
   return (
     <ViewContext.Provider value={{ view, setView, triggerRefresh, timetable }}>
+      <StarField />
       <div className="app">
         {/* Header */}
         <header className="app-header">
           <div className="app-header__inner app-container">
             <div className="app-header__brand">
               <span className="app-header__emoji">
-                <img src={headerIcon} alt="" aria-hidden="true" style={{ width: 40, height: 40, objectFit: 'contain' }} />
+                <IconGraduation size={40} />
               </span>
               <div>
                 <h1 className="app-header__title">Campus Friends</h1>
                 <p className="app-header__subtitle">
                   {todayName} • {timeStr}
-                  {isWeekend && ' • Everyone is free! 🎉'}
+                  {isWeekend && ' • weekend — everyone free'}
                 </p>
               </div>
             </div>
@@ -98,28 +95,28 @@ function MainApp() {
                   className={`app-nav-btn ${view === 'dashboard' ? 'app-nav-btn--active' : ''}`}
                   onClick={() => setView('dashboard')}
                 >
-                  <img src={friendsIcon} alt="" aria-hidden="true" className="nav-icon" style={{ display: 'block', margin: '0 auto 6px', width: 28, height: 28, objectFit: 'contain' }} />
+                  <IconFriends size={28} className="nav-icon" style={{ display: 'block', margin: '0 auto 6px' }} />
                   Friends
                 </button>
                 <button
                   className={`app-nav-btn ${view === 'common' ? 'app-nav-btn--active' : ''}`}
                   onClick={() => setView('common')}
                 >
-                  <img src={commonFreeTimeIcon} alt="" aria-hidden="true" className="nav-icon" style={{ display: 'block', margin: '0 auto 6px', width: 28, height: 28, objectFit: 'contain' }} />
+                  <IconCalendar size={28} className="nav-icon" style={{ display: 'block', margin: '0 auto 6px' }} />
                   Common Free
                 </button>
                 <button
                   className={`app-nav-btn ${view === 'private' ? 'app-nav-btn--active' : ''}`}
                   onClick={() => setView('private')}
                 >
-                  <img src={privateSessionIcon} alt="" aria-hidden="true" className="nav-icon" style={{ display: 'block', margin: '0 auto 6px', width: 28, height: 28, objectFit: 'contain' }} />
+                  <IconLock size={28} className="nav-icon" style={{ display: 'block', margin: '0 auto 6px' }} />
                   Private Session
                 </button>
                 <button
                   className={`app-nav-btn ${view === 'rooms' ? 'app-nav-btn--active' : ''}`}
                   onClick={() => setView('rooms')}
                 >
-                  <div style={{ fontSize: '24px', marginBottom: '4px' }}>🏢</div>
+                  <IconBuilding size={28} className="nav-icon" style={{ display: 'block', margin: '0 auto 6px' }} />
                   Find Room
                 </button>
               </nav>
@@ -177,7 +174,7 @@ function MainApp() {
         {/* Footer */}
         <footer className="app-footer">
           <p className="app-footer__text">
-            Made with <span className="app-footer__heart" role="img" aria-label="love">❤️</span> by{' '}
+            Made with <IconHeart size={14} title="love" className="app-footer__heart" style={{ color: 'var(--color-lecture)', display: 'inline-block', verticalAlign: 'middle' }} /> by{' '}
             <a
               href="https://github.com/anant-shipit"
               target="_blank"

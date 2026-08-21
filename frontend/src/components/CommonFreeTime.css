@@ -1,30 +1,28 @@
 /* =========================================
-   Common Free Time Styles
+   Common Free Time
    ========================================= */
 
-/* --- CLS Prevention & Layout Stability --- */
 .stats-row-wrapper {
   margin-bottom: var(--space-2xl);
-  min-height: 88px; /* Reserves space for stat cards */
+  min-height: 88px;
   contain: layout style;
 }
 
 .cft-empty-wrapper {
-  min-height: 280px;
+  min-height: 240px;
   contain: layout style;
 }
 
 .schedule-content {
-  min-height: 200px;
+  min-height: 160px;
   position: relative;
   contain: layout style;
 }
 
-/* --- Stats Row --- */
 .stats-row {
   overflow-x: auto;
   scrollbar-width: none;
-  padding-bottom: 8px; /* Space for focus rings */
+  padding-bottom: 8px;
 }
 .stats-row::-webkit-scrollbar {
   display: none;
@@ -50,31 +48,29 @@
   gap: var(--space-md);
   padding: var(--space-md) var(--space-lg);
   cursor: pointer;
-  transition: all 200ms cubic-bezier(.22,1,.36,1);
 }
 
 .cft-friend-card.selected {
-  border-color: hsla(260, 60%, 55%, 0.4);
-  background: var(--gradient-accent-soft);
+  border-color: var(--border-strong);
+  background: var(--bg-tertiary);
 }
 
 .cft-checkbox {
-  width: 22px;
-  height: 22px;
-  border-radius: 6px;
-  border: 2px solid var(--glass-border);
+  width: 20px;
+  height: 20px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-strong);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: white;
+  color: var(--text-inverse);
   flex-shrink: 0;
-  transition: all 200ms cubic-bezier(.22,1,.36,1);
+  transition: background var(--transition-fast), border-color var(--transition-fast);
 }
 
 .cft-checkbox.checked {
-  background: var(--brand-primary);
-  border-color: transparent;
-  box-shadow: 0 0 8px rgba(var(--brand-primary-rgb), 0.4);
+  background: var(--accent);
+  border-color: var(--accent);
 }
 
 .cft-friend-info {
@@ -92,6 +88,7 @@
 }
 
 .cft-friend-batch {
+  font-family: var(--font-mono);
   font-size: 12px;
   color: var(--text-tertiary);
 }
@@ -117,10 +114,9 @@
 .slots-list {
   display: flex;
   flex-direction: column;
-  gap: var(--space-md);
+  gap: var(--space-sm);
 }
 
-/* --- Responsive --- */
 @media (max-width: 768px) {
   .stats-row {
     flex-direction: column;

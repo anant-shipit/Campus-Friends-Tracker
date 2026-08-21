@@ -122,7 +122,7 @@ export default function Timeline({ slots, dayName }) {
                 <span className={`chip chip-${item.classType}`}>
                   {classTypeShort(item.classType) || classTypeLabel(item.classType)}
                 </span>
-                {item.room && <span className="timeline__room">📍 {item.room}</span>}
+                {item.room && <span className="timeline__room">{item.room}</span>}
                 {item.subjectCode && (
                   <span className="timeline__code">{item.subjectCode}</span>
                 )}

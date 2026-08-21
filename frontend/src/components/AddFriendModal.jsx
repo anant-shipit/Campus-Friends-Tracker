@@ -3,7 +3,7 @@ import { addFriend } from '../utils/friendsStore';
 import { getCachedBatches, fetchAndCacheTimetable } from '../utils/timetableCache';
 import { useToast } from './ToastProvider';
 import './AddFriendModal.css';
-import friendsIcon from '../assets/friends_icon.png';
+import { IconFriends } from './PixelIcons';
 
 // SVG Icons
 const UserIcon = () => (
@@ -16,25 +16,16 @@ const BatchIcon = () => (
 
 const FriendHeaderIcon = () => (
   <div style={{
-    width: 56, height: 56, 
-    borderRadius: 16,
-    background: 'rgba(255,255,255,0.05)',
-    border: '1px solid rgba(255,255,255,0.1)',
+    width: 44, height: 44,
+    borderRadius: 4,
+    background: 'var(--bg-tertiary)',
+    border: '1px solid var(--border)',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    boxShadow: '0 4px 12px rgba(0,0,0,0.3)'
+    color: 'var(--text-primary)'
   }}>
-    <img 
-      src={friendsIcon} 
-      alt="Friends Icon" 
-      style={{ 
-        width: 32, 
-        height: 32, 
-        objectFit: 'contain', 
-        filter: 'invert(1) brightness(1.2)' 
-      }} 
-    />
+    <IconFriends size={26} style={{ opacity: 0.85 }} />
   </div>
 );
 
@@ -147,8 +138,10 @@ export default function AddFriendModal({ onClose, onSuccess, defaultIsRoommate =
           <div className="pm-illustration">
             <FriendHeaderIcon />
           </div>
-          <h2 id="modal-title" className="pm-title">Add Friend</h2>
-          <p className="pm-subtitle">Grow your campus network by adding classmates.</p>
+          <div>
+            <h2 id="modal-title" className="pm-title">Add Friend</h2>
+            <p className="pm-subtitle">Enter a name and pick their batch.</p>
+          </div>
         </div>
 
         <form className="pm-form" onSubmit={handleSubmit}>
