@@ -2,23 +2,16 @@ import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { getFriends } from '../utils/friendsStore';
 import { getPrivateSessionSlots, getTodayIndex, formatTime } from '../utils/timeUtils';
 import { Container, Section, Stack, Card } from './Layout';
-import { StatCard, SegmentedControl, EmptyState, ScheduleCard, SkeletonScheduleCard } from './DashboardComponents';
+import { StatCard, SegmentedControl, EmptyState, ScheduleCard } from './DashboardComponents';
 import './PrivateSession.css';
 
 const DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
 
-// Premium Monochrome Line-Art SVG for Empty State
 const RoommatesEmptyIcon = () => (
-  <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect x="8" y="12" width="48" height="40" rx="8" stroke="url(#emptyGrad)" strokeWidth="1.5" strokeDasharray="4 4" fill="rgba(255,255,255,0.02)" />
-    <path d="M32 24C28.6863 24 26 26.6863 26 30C26 33.3137 28.6863 36 32 36C35.3137 36 38 33.3137 38 30C38 26.6863 35.3137 24 32 24Z" stroke="url(#emptyGrad)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-    <path d="M22 44C22 39.5817 26.4772 36 32 36C37.5228 36 42 39.5817 42 44" stroke="url(#emptyGrad)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-    <defs>
-      <linearGradient id="emptyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stopColor="#818cf8" />
-        <stop offset="100%" stopColor="#c084fc" />
-      </linearGradient>
-    </defs>
+  <svg width="56" height="56" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect x="8" y="12" width="48" height="40" rx="4" stroke="currentColor" strokeWidth="1.5" strokeDasharray="4 4" />
+    <path d="M32 24C28.6863 24 26 26.6863 26 30C26 33.3137 28.6863 36 32 36C35.3137 36 38 33.3137 38 30C38 26.6863 35.3137 24 32 24Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M22 44C22 39.5817 26.4772 36 32 36C37.5228 36 42 39.5817 42 44" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
   </svg>
 );
 
@@ -129,11 +122,6 @@ export default function PrivateSession({ refreshKey, timetable, onAddRoommate, o
                 <button className="btn btn-primary" onClick={onAddRoommate}>
                   Add First Roommate
                 </button>
-                <div className="skeleton-previews">
-                  <SkeletonScheduleCard style={{ transform: 'scale(0.98)', opacity: 0.6 }} />
-                  <SkeletonScheduleCard style={{ transform: 'scale(0.95)', opacity: 0.4 }} />
-                  <SkeletonScheduleCard style={{ transform: 'scale(0.92)', opacity: 0.2 }} />
-                </div>
               </EmptyState>
             ) : slots.length === 0 ? (
               <Card className="empty-slots">

@@ -1,82 +1,79 @@
-/* ═══════════════════════════════════════════
-   Timeline Styles
-   ═══════════════════════════════════════════ */
+/* =========================================
+   Timeline
+   ========================================= */
 
 .timeline {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 4px;
   position: relative;
 }
 
-/* Left timeline line */
 .timeline::before {
   content: '';
   position: absolute;
   left: 12px;
   top: 16px;
   bottom: 16px;
-  width: 2px;
-  background: linear-gradient(180deg, var(--glass-border) 0%, rgba(255,255,255,0.02) 100%);
-  border-radius: 1px;
+  width: 1px;
+  background: var(--border);
 }
 
-/* ─── Block ─── */
+/* --- Block --- */
 .timeline__block {
   display: flex;
   gap: var(--space-md);
   padding: var(--space-md);
   border-radius: var(--radius-md);
   position: relative;
-  animation: fadeInUp var(--transition-slow) ease-out both;
-  transition: all var(--transition-fast);
+  transition: background var(--transition-fast);
 }
 
 .timeline__block:hover {
-  background: rgba(255, 255, 255, 0.02);
+  background: var(--bg-tertiary);
 }
 
-/* Block color accents */
 .timeline__block--lecture {
   border-left: 3px solid var(--color-lecture);
-  background: var(--color-lecture-bg);
+  background: color-mix(in srgb, var(--color-lecture) 8%, transparent);
 }
 
 .timeline__block--tutorial {
   border-left: 3px solid var(--color-tutorial);
-  background: var(--color-tutorial-bg);
+  background: color-mix(in srgb, var(--color-tutorial) 8%, transparent);
 }
 
 .timeline__block--lab {
   border-left: 3px solid var(--color-lab);
-  background: var(--color-lab-bg);
+  background: color-mix(in srgb, var(--color-lab) 8%, transparent);
 }
 
 .timeline__block--other {
   border-left: 3px solid var(--text-tertiary);
-  background: rgba(255, 255, 255, 0.03);
+  background: var(--bg-secondary);
 }
 
 .timeline__block--free {
-  border-left: 3px solid rgba(255, 255, 255, 0.06);
-  opacity: 0.6;
+  border-left: 3px solid var(--border);
+  opacity: 0.7;
 }
 
 .timeline__block--free:hover {
-  opacity: 0.8;
+  opacity: 1;
 }
 
-/* Current slot highlight */
+/* Current slot */
 .timeline__block--current {
-  box-shadow: 0 0 0 1px hsla(210, 80%, 60%, 0.3), 0 0 20px hsla(210, 80%, 60%, 0.1);
+  box-shadow: inset 0 0 0 1px var(--border-strong);
 }
 
-/* ─── Time Column ─── */
+/* --- Time Column --- */
 .timeline__time {
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-width: 56px;
+  min-width: 60px;
+  font-family: var(--font-mono);
   font-size: var(--font-size-xs);
   color: var(--text-secondary);
   font-weight: 500;
@@ -90,7 +87,7 @@
   line-height: 1;
 }
 
-/* ─── Content ─── */
+/* --- Content --- */
 .timeline__content {
   flex: 1;
   min-width: 0;
@@ -105,7 +102,6 @@
   font-size: var(--font-size-sm);
   color: var(--text-tertiary);
   font-weight: 400;
-  font-style: italic;
 }
 
 .timeline__subject {
@@ -119,7 +115,7 @@
 .timeline__meta {
   display: flex;
   align-items: center;
-  gap: var(--space-sm);
+  gap: var(--space-md);
   flex-wrap: wrap;
 }
 
@@ -131,26 +127,25 @@
 .timeline__code {
   font-size: var(--font-size-xs);
   color: var(--text-tertiary);
-  font-family: monospace;
+  font-family: var(--font-mono);
 }
 
-/* ─── NOW Badge ─── */
+/* --- NOW tag --- */
 .timeline__now-badge {
   position: absolute;
-  top: 6px;
+  top: 8px;
   right: 8px;
+  font-family: var(--font-mono);
   font-size: 9px;
-  font-weight: 800;
-  letter-spacing: 0.1em;
-  color: var(--color-lab);
-  background: var(--color-lab-bg);
-  padding: 1px 6px;
-  border-radius: var(--radius-full);
-  border: 1px solid hsla(210, 80%, 60%, 0.3);
-  animation: pulse 2s ease-in-out infinite;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--text-inverse);
+  background: var(--accent);
+  padding: 1px 5px;
+  border-radius: var(--radius-sm);
 }
 
-/* ─── Empty ─── */
+/* --- Empty --- */
 .timeline__empty {
   text-align: center;
   padding: var(--space-2xl);

@@ -1,35 +1,34 @@
 /* =========================================
-   Dashboard Components CSS
+   Dashboard Components — Status Board
    ========================================= */
 
 /* --- State Transitions --- */
 .fade-transition {
-  transition: opacity 200ms cubic-bezier(.22,1,.36,1), transform 200ms cubic-bezier(.22,1,.36,1);
+  transition: opacity var(--transition-base), transform var(--transition-base);
 }
 .fade-transition.exiting {
   opacity: 0;
   transform: translateY(4px);
-  transition: opacity 100ms ease-out, transform 100ms ease-out;
 }
 .fade-transition.entering {
   opacity: 0;
-  transform: translateY(8px);
+  transform: translateY(6px);
 }
 
 /* --- Dashboard Hero --- */
 .dashboard-hero {
-  padding: var(--space-xl) 0;
-  min-height: 100px;
+  padding: var(--space-lg) 0 var(--space-xl);
+  min-height: 92px;
 }
 .hero-title {
-  font-size: 28px;
+  font-size: 26px;
   font-weight: 700;
   letter-spacing: -0.02em;
   color: var(--text-primary);
   margin: 0;
 }
 .hero-subtitle {
-  font-size: 15px;
+  font-size: 14px;
   color: var(--text-secondary);
   margin: 0;
 }
@@ -56,63 +55,75 @@
   margin-bottom: var(--space-md);
 }
 .section-title {
-  font-size: 15px;
+  font-family: var(--font-mono);
+  font-size: 12px;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.1em;
   color: var(--text-secondary);
   margin: 0;
 }
 
-/* --- Segmented Control --- */
+/* --- Segmented Control (board tabs) --- */
 .segmented-control {
   position: relative;
   display: inline-flex;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid var(--pm-border, rgba(255, 255, 255, 0.06));
-  border-radius: 12px;
-  padding: 4px;
-  gap: 4px;
+  background: var(--bg-primary);
+  border: 2px solid var(--border-strong);
+  border-radius: 0;
+  padding: 3px;
+  gap: 2px;
+  box-shadow: var(--pixel-shadow-sm);
 }
 
 .sc-indicator {
   position: absolute;
-  top: 4px;
-  bottom: 4px;
+  top: 3px;
+  bottom: 3px;
   left: 0;
-  background: var(--pm-surface, #11131A);
-  border: 1px solid var(--pm-border, rgba(255, 255, 255, 0.06));
-  border-radius: 8px;
-  transition: transform 0.25s cubic-bezier(.22, 1, .36, 1);
+  background: var(--accent);
+  border-radius: 0;
+  /* stepped slide — snaps like a menu cursor, no smooth glide */
+  transition: transform var(--transition-slow) steps(5), width var(--transition-slow) steps(5);
   pointer-events: none;
+}
+
+/* ► menu selector before the active option */
+.sc-btn.active::before {
+  content: '\25B6';
+  margin-right: 5px;
+  font-size: 9px;
+  vertical-align: middle;
 }
 
 .sc-btn {
   flex: 1;
   min-width: max-content;
-  padding: 8px 16px;
+  padding: 7px 14px;
   background: transparent;
   border: none;
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   color: var(--text-secondary);
-  font-size: 13px;
+  font-family: var(--font-mono);
+  font-size: 12px;
   font-weight: 600;
+  letter-spacing: 0.03em;
   cursor: pointer;
   z-index: 1;
-  transition: color 0.2s ease;
-  min-height: 36px; /* Touch target */
+  transition: color var(--transition-fast);
+  min-height: 34px;
 }
 
 .sc-btn.active {
-  color: var(--text-primary);
+  color: var(--text-inverse);
 }
 
 .sc-btn:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 2px var(--brand-primary);
+  box-shadow: 0 0 0 2px var(--focus-ring);
 }
 
-/* Stat Card */
+/* --- Stat Card --- */
 .stat-card {
   padding: var(--space-lg);
   display: flex;
@@ -123,27 +134,32 @@
 }
 
 .stat-title {
-  font-size: 13px;
+  font-family: var(--font-mono);
+  font-size: 11px;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.08em;
   color: var(--text-secondary);
   margin: 0;
 }
 
 .stat-value {
-  font-size: 24px;
-  font-weight: 700;
-  color: var(--text-primary);
+  font-family: var(--font-sans); /* Pixelify — arcade scoreboard digits */
+  font-variant-numeric: tabular-nums;
+  font-size: 30px;
+  font-weight: 500;
+  color: var(--accent);
+  line-height: 1;
+  letter-spacing: 0.03em;
+  text-shadow: 1px 1px 0 #00030a;
 }
 
 .stat-desc {
   font-size: 13px;
   color: var(--text-secondary);
-  opacity: 0.8;
 }
 
-/* Empty State */
+/* --- Empty State --- */
 .empty-state {
   text-align: center;
   padding: var(--space-2xl) var(--space-lg);
@@ -155,12 +171,11 @@
 
 .empty-state-icon {
   margin-bottom: var(--space-md);
-  opacity: 0.9;
-  filter: drop-shadow(0 4px 12px rgba(0,0,0,0.5));
+  color: var(--text-tertiary);
 }
 
 .empty-state-title {
-  font-size: 18px;
+  font-size: 17px;
   font-weight: 600;
   margin: 0;
 }
@@ -174,30 +189,37 @@
 }
 
 .empty-state-helper {
-  font-size: 13px;
-  color: var(--text-tertiary);
-  font-style: italic;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  color: var(--accent);
   margin: 0;
   margin-top: var(--space-md);
+  animation: blink 1.6s steps(1) infinite;
 }
 
-/* Schedule Card */
+@media (prefers-reduced-motion: reduce) {
+  .empty-state-helper { animation: none; }
+}
+
+/* --- Schedule Card --- */
 .schedule-card {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: var(--space-lg) var(--space-xl);
-  margin-bottom: var(--space-md);
-  /* Entrance animation applied via inline style delay if needed */
+  padding: var(--space-md) var(--space-lg);
+  margin-bottom: var(--space-sm);
 }
 
 .sc-time {
-  font-size: 15px;
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-size: 14px;
   font-weight: 600;
 }
 
 .sc-label {
-  font-size: 14px;
+  font-size: 13px;
   color: var(--text-secondary);
   display: flex;
   align-items: center;
@@ -205,35 +227,33 @@
 }
 
 .status-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
+  width: 7px;
+  height: 7px;
+  border-radius: 1px;
   display: inline-block;
+  background: var(--text-secondary);
 }
 
 .status-dot.green {
-  background: var(--brand-primary); /* Simplified to brand for consistency */
-  box-shadow: 0 0 8px rgba(var(--brand-primary-rgb), 0.6);
+  background: var(--color-free);
+  animation: blink 1.4s steps(1) infinite;
 }
 
-/* --- Skeletons --- */
-@keyframes skeleton-shimmer {
-  0% { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
+@media (prefers-reduced-motion: reduce) {
+  .status-dot.green { animation: none; }
 }
 
+/* --- Skeletons (plain) --- */
 .skeleton-card {
-  opacity: 0.5;
-  filter: blur(2px);
+  opacity: 0.6;
   pointer-events: none;
-  border-color: rgba(255, 255, 255, 0.03);
+  border-color: var(--border);
 }
 
 .skeleton-text,
 .skeleton-dot {
-  background: linear-gradient(90deg, rgba(255,255,255,0.03) 25%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.03) 75%);
-  background-size: 400% 100%;
-  animation: skeleton-shimmer 1.5s ease-in-out infinite;
+  background: var(--bg-tertiary);
+  animation: skeletonPulse 1.4s ease-in-out infinite;
   border-radius: var(--radius-sm);
 }
 
@@ -244,10 +264,9 @@
 .skeleton-dot {
   width: 12px;
   height: 12px;
-  border-radius: 50%;
+  border-radius: var(--radius-sm);
 }
 
-/* Skeleton Friend Card */
 .skeleton-friend-card {
   padding: var(--space-lg);
   margin-bottom: var(--space-md);

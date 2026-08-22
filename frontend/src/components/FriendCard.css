@@ -1,11 +1,30 @@
+/* Friend row — the board line item */
 .friend-card {
-  padding: var(--space-lg);
+  background: var(--bg-secondary);
+  border: 2px solid var(--border-strong);
+  border-radius: 0;
+  padding: var(--space-md) var(--space-lg);
   cursor: pointer;
   position: relative;
   overflow: hidden;
-  animation: fadeInUp var(--transition-slow) ease-out both;
+  box-shadow: var(--pixel-shadow-sm);
+  transition: background var(--transition-fast), border-color var(--transition-fast),
+    transform var(--transition-fast), box-shadow var(--transition-fast);
 }
 
+.friend-card:hover {
+  background: var(--bg-row-hover);
+  border-color: var(--accent);
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 5px 0 #00030a;
+}
+
+.friend-card:active {
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0 #00030a;
+}
+
+/* Status stripe (flat, no glow) */
 .friend-card::before {
   content: '';
   position: absolute;
@@ -13,30 +32,13 @@
   left: 0;
   width: 3px;
   height: 100%;
-  border-radius: var(--radius-full) 0 0 var(--radius-full);
-  transition: width var(--transition-fast);
+  background: var(--text-tertiary);
 }
 
-.friend-card--free::before {
-  background: var(--color-free);
-  box-shadow: 0 0 12px var(--color-free-glow);
-}
-
-.friend-card--lecture::before {
-  background: var(--color-lecture);
-}
-
-.friend-card--tutorial::before {
-  background: var(--color-tutorial);
-}
-
-.friend-card--lab::before {
-  background: var(--color-lab);
-}
-
-.friend-card:hover::before {
-  width: 5px;
-}
+.friend-card--free::before { background: var(--color-free); }
+.friend-card--lecture::before { background: var(--color-lecture); }
+.friend-card--tutorial::before { background: var(--color-tutorial); }
+.friend-card--lab::before { background: var(--color-lab); }
 
 .friend-card__header {
   display: flex;
@@ -64,6 +66,7 @@
 }
 
 .friend-card__batch {
+  font-family: var(--font-mono);
   font-size: var(--font-size-xs);
   color: var(--text-tertiary);
   font-weight: 500;
@@ -83,8 +86,7 @@
   justify-content: center;
   border-radius: var(--radius-sm);
   color: var(--text-tertiary);
-  font-size: var(--font-size-sm);
-  transition: all var(--transition-fast);
+  transition: background var(--transition-fast), color var(--transition-fast);
   opacity: 0;
 }
 
@@ -93,18 +95,17 @@
 }
 
 .friend-card__delete-btn:hover {
-  background: hsla(0, 75%, 60%, 0.15);
+  background: var(--bg-tertiary);
   color: var(--color-lecture);
 }
 
 .friend-card__confirm {
   display: flex;
   gap: var(--space-xs);
-  animation: scaleIn var(--transition-fast) ease-out;
 }
 
 .friend-card__body {
-  margin-top: var(--space-md);
+  margin-top: var(--space-sm);
   padding-left: 28px;
 }
 
@@ -126,15 +127,23 @@
   color: var(--text-secondary);
 }
 
+/* Times inside status text render monospace */
+.friend-card__status-text time,
+.friend-card__ends,
+.friend-card__next {
+  font-variant-numeric: tabular-nums;
+}
+
 .friend-card__status-icon {
-  font-size: var(--font-size-sm);
   flex-shrink: 0;
 }
 
+.friend-card__ends,
 .friend-card__next {
   font-size: var(--font-size-xs);
   color: var(--text-tertiary);
   margin-top: var(--space-xs);
+  padding-left: 0;
 }
 
 /* Mobile: always show delete button */

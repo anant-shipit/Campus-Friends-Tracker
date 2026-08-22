@@ -1,19 +1,18 @@
-/* ═══════════════════════════════════════════
-   PrivateSession Redesign (Dashboard)
-   ═══════════════════════════════════════════ */
+/* =========================================
+   Private Session — Room Availability
+   ========================================= */
 
 .dashboard-page {
   padding-top: var(--space-xl);
   padding-bottom: var(--space-2xl);
 }
 
-/* ─── Hero ─── */
 .hero-top {
   margin-bottom: var(--space-xl);
 }
 
 .hero-title {
-  font-size: 28px;
+  font-size: 26px;
   font-weight: 700;
   letter-spacing: -0.02em;
   color: var(--text-primary);
@@ -21,29 +20,37 @@
 }
 
 .hero-subtitle {
-  font-size: 15px;
+  font-size: 14px;
   color: var(--text-secondary);
   margin: 0;
 }
 
-/* ─── Stats Row ─── */
 .stats-row {
   margin-bottom: var(--space-2xl);
   overflow-x: auto;
   scrollbar-width: none;
-  padding-bottom: 8px; /* For focus rings */
+  padding-bottom: 8px;
 }
 .stats-row::-webkit-scrollbar {
   display: none;
 }
 
-/* ─── Roommates List ─── */
+/* --- Roommate tags --- */
+.horizontal-scroll {
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding-bottom: 4px;
+}
+.horizontal-scroll::-webkit-scrollbar {
+  display: none;
+}
+
 .roommate-chip {
-  padding: var(--space-sm) var(--space-lg);
-  border-radius: var(--radius-full);
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius-md);
   display: flex;
   align-items: center;
-  gap: var(--space-md);
+  gap: var(--space-sm);
   cursor: pointer;
   white-space: nowrap;
 }
@@ -54,19 +61,21 @@
 }
 
 .roommate-chip .batch {
-  font-size: 12px;
+  font-family: var(--font-mono);
+  font-size: 11px;
   color: var(--text-secondary);
-  background: rgba(255,255,255,0.05);
-  padding: 2px 8px;
-  border-radius: 12px;
+  background: var(--bg-tertiary);
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
 }
 
-/* ─── Schedule Section ─── */
+/* --- Schedule Section --- */
 .section-title {
-  font-size: 15px;
+  font-family: var(--font-mono);
+  font-size: 12px;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.1em;
   color: var(--text-secondary);
   margin: 0;
 }
@@ -75,7 +84,6 @@
   flex-shrink: 0;
 }
 
-/* ─── Empty States ─── */
 .empty-slots {
   text-align: center;
   padding: var(--space-2xl) var(--space-lg);
@@ -94,49 +102,23 @@
   color: var(--text-secondary);
 }
 
-/* Skeleton Previews in Empty State */
-.skeleton-previews {
-  margin-top: var(--space-xl);
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-xs);
-  pointer-events: none;
-  user-select: none;
-  position: relative;
-}
-
-/* Add a fade-out mask to the skeletons */
-.skeleton-previews::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to bottom, transparent, var(--bg-primary) 100%);
-  pointer-events: none;
-}
-
-/* ─── Responsive ─── */
 @media (max-width: 768px) {
   .hero-top {
     flex-direction: column !important;
     align-items: flex-start;
     gap: var(--space-lg);
   }
-  
   .hero-cta {
     align-self: flex-start;
   }
-  
   .stats-row {
     flex-direction: column !important;
   }
-  
   .schedule-header {
     flex-direction: column !important;
     align-items: flex-start;
     gap: var(--space-md);
   }
-  
   .segmented-control-wrapper {
     width: 100%;
     overflow-x: auto;

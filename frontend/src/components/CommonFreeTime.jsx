@@ -2,23 +2,17 @@ import React, { useState, useMemo, useCallback } from 'react';
 import { getFriends } from '../utils/friendsStore';
 import { findCommonFreeSlots, formatTime, getTodayIndex } from '../utils/timeUtils';
 import { DashboardContainer, Section, Stack, Card } from './Layout';
-import { DashboardHero, StatCard, SegmentedControl, EmptyState, ScheduleCard, SkeletonScheduleCard, SectionHeader } from './DashboardComponents';
+import { DashboardHero, StatCard, SegmentedControl, EmptyState, ScheduleCard, SectionHeader } from './DashboardComponents';
 import './CommonFreeTime.css';
 
 const DAY_NAMES = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
 
 const CommonFreeEmptyIcon = () => (
-  <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect x="12" y="12" width="40" height="40" rx="8" stroke="url(#cftEmptyGrad)" strokeWidth="1.5" strokeDasharray="4 4" fill="rgba(255,255,255,0.02)" />
-    <circle cx="32" cy="32" r="8" stroke="url(#cftEmptyGrad)" strokeWidth="1.5" />
-    <path d="M32 28V32L35 35" stroke="url(#cftEmptyGrad)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-    <path d="M12 24H52" stroke="url(#cftEmptyGrad)" strokeWidth="1.5" strokeDasharray="2 4" />
-    <defs>
-      <linearGradient id="cftEmptyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stopColor="#818cf8" />
-        <stop offset="100%" stopColor="#c084fc" />
-      </linearGradient>
-    </defs>
+  <svg width="56" height="56" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect x="12" y="12" width="40" height="40" rx="4" stroke="currentColor" strokeWidth="1.5" strokeDasharray="4 4" />
+    <circle cx="32" cy="32" r="8" stroke="currentColor" strokeWidth="1.5" />
+    <path d="M32 28V32L35 35" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M12 24H52" stroke="currentColor" strokeWidth="1.5" strokeDasharray="2 4" />
   </svg>
 );
 
@@ -107,12 +101,7 @@ export default function CommonFreeTime({ timetable }) {
               title="No Friends Added"
               description="You need to add at least two friends to find common free time."
               helperText="Once added, select them here to compare schedules."
-            >
-              <div className="skeleton-previews">
-                <SkeletonScheduleCard style={{ transform: 'scale(0.98)', opacity: 0.6 }} />
-                <SkeletonScheduleCard style={{ transform: 'scale(0.95)', opacity: 0.4 }} />
-              </div>
-            </EmptyState>
+            />
           </div>
         ) : (
           <Stack gap="lg">
@@ -169,11 +158,10 @@ export default function CommonFreeTime({ timetable }) {
           
           <div className="schedule-content">
             {freeSlots === null ? (
-              <div className="skeleton-previews">
-                <SkeletonScheduleCard style={{ transform: 'scale(0.98)', opacity: 0.6 }} />
-                <SkeletonScheduleCard style={{ transform: 'scale(0.95)', opacity: 0.4 }} />
-                <SkeletonScheduleCard style={{ transform: 'scale(0.92)', opacity: 0.2 }} />
-              </div>
+              <Card className="no-results-card">
+                <p className="no-results-title">Pick two or more friends</p>
+                <p className="no-results-desc">Then tap “Find Free Slots” to compare their schedules for {DAY_NAMES[dayIndex]}.</p>
+              </Card>
             ) : freeSlots.length === 0 ? (
               <Card className="no-results-card fade-transition">
                 <p className="no-results-title">No overlapping free time on {DAY_NAMES[dayIndex]}.</p>

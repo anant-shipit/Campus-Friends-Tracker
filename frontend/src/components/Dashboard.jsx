@@ -4,24 +4,18 @@ import { computeFriendStatus } from '../utils/timeUtils';
 import FriendCard from './FriendCard';
 import { useToast } from './ToastProvider';
 import { DashboardContainer, Section, Stack, Card } from './Layout';
-import { DashboardHero, StatCard, SegmentedControl, EmptyState, SkeletonFriendCard, SectionHeader } from './DashboardComponents';
+import { DashboardHero, StatCard, SegmentedControl, EmptyState, SectionHeader } from './DashboardComponents';
 import './Dashboard.css';
 
 const FILTER_OPTIONS = ['All', 'Free Now', 'In Class'];
 
 const FriendsEmptyIcon = () => (
-  <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect x="8" y="12" width="48" height="40" rx="8" stroke="url(#friendsEmptyGrad)" strokeWidth="1.5" strokeDasharray="4 4" fill="rgba(255,255,255,0.02)" />
-    <circle cx="26" cy="28" r="5" stroke="url(#friendsEmptyGrad)" strokeWidth="1.5" />
-    <path d="M18 42C18 38 21.5 35 26 35C30.5 35 34 38 34 42" stroke="url(#friendsEmptyGrad)" strokeWidth="1.5" strokeLinecap="round" />
-    <circle cx="42" cy="32" r="4" stroke="url(#friendsEmptyGrad)" strokeWidth="1.5" opacity="0.6" />
-    <path d="M36 42C36 39 38.5 37 42 37C45.5 37 48 39 48 42" stroke="url(#friendsEmptyGrad)" strokeWidth="1.5" strokeLinecap="round" opacity="0.6" />
-    <defs>
-      <linearGradient id="friendsEmptyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stopColor="#818cf8" />
-        <stop offset="100%" stopColor="#c084fc" />
-      </linearGradient>
-    </defs>
+  <svg width="56" height="56" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect x="8" y="12" width="48" height="40" rx="4" stroke="currentColor" strokeWidth="1.5" strokeDasharray="4 4" />
+    <circle cx="26" cy="28" r="5" stroke="currentColor" strokeWidth="1.5" />
+    <path d="M18 42C18 38 21.5 35 26 35C30.5 35 34 38 34 42" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+    <circle cx="42" cy="32" r="4" stroke="currentColor" strokeWidth="1.5" opacity="0.55" />
+    <path d="M36 42C36 39 38.5 37 42 37C45.5 37 48 39 48 42" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" opacity="0.55" />
   </svg>
 );
 
@@ -89,9 +83,9 @@ export default function Dashboard({ refreshKey, timetable, onSelectFriend, onRef
 
   return (
     <DashboardContainer className="fade-in-up">
-      <DashboardHero 
-        title="Friends" 
-        subtitle="Track your classmates' schedules and find free time together."
+      <DashboardHero
+        title="Friends"
+        subtitle="Who's in class, who's free — right now."
         action={
           <button className="btn btn-primary" onClick={onAddFriend}>
             + Add Friend
@@ -140,16 +134,11 @@ export default function Dashboard({ refreshKey, timetable, onSelectFriend, onRef
               icon={FriendsEmptyIcon}
               title="No Friends Added Yet"
               description="Add your first friend to start tracking schedules and finding free time."
-              helperText="Friends you add will appear here with their live availability status."
+              helperText="▶ INSERT COIN — friends you add appear here with live availability."
             >
-              <button className="btn btn-primary" onClick={onAddFriend}>
+              <button className="btn btn-primary press-start" onClick={onAddFriend}>
                 Add Your First Friend
               </button>
-              <div className="skeleton-previews">
-                <SkeletonFriendCard style={{ transform: 'scale(0.98)', opacity: 0.6 }} />
-                <SkeletonFriendCard style={{ transform: 'scale(0.95)', opacity: 0.4 }} />
-                <SkeletonFriendCard style={{ transform: 'scale(0.92)', opacity: 0.2 }} />
-              </div>
             </EmptyState>
           ) : (
             <div className="friends-list">

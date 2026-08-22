@@ -7,9 +7,8 @@
 .status-badge__dot {
   width: 10px;
   height: 10px;
-  border-radius: 50%;
+  border-radius: 2px;
   flex-shrink: 0;
-  position: relative;
 }
 
 .status-badge--sm .status-badge__dot {
@@ -22,36 +21,17 @@
   height: 12px;
 }
 
-/* Free — pulsing */
-.status-badge--free .status-badge__dot {
-  background: var(--color-free);
-  box-shadow: 0 0 6px var(--color-free-glow);
-  animation: pulseGlow 2s ease-in-out infinite;
-}
-
-/* Lecture */
-.status-badge--lecture .status-badge__dot {
-  background: var(--color-lecture);
-  box-shadow: 0 0 4px var(--color-lecture-glow);
-}
-
-/* Tutorial */
-.status-badge--tutorial .status-badge__dot {
-  background: var(--color-tutorial);
-  box-shadow: 0 0 4px var(--color-tutorial-glow);
-}
-
-/* Lab */
-.status-badge--lab .status-badge__dot {
-  background: var(--color-lab);
-  box-shadow: 0 0 4px var(--color-lab-glow);
-}
+.status-badge--free .status-badge__dot { background: var(--color-free); }
+.status-badge--lecture .status-badge__dot { background: var(--color-lecture); }
+.status-badge--tutorial .status-badge__dot { background: var(--color-tutorial); }
+.status-badge--lab .status-badge__dot { background: var(--color-lab); }
 
 .status-badge__label {
+  font-family: var(--font-mono);
   font-size: var(--font-size-xs);
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.06em;
 }
 
 .status-badge--free .status-badge__label { color: var(--color-free); }
